@@ -25,6 +25,8 @@ rpc CreateInvasion(MsgCreateInvasion) returns (MsgCreateInvasionResponse);
   rpc DeleteInvasion(MsgDeleteInvasion) returns (MsgDeleteInvasionResponse);
   rpc MsgFundCountry(MsgMsgFundCountry) returns (MsgMsgFundCountryResponse);
   rpc MsgFallCountry(MsgMsgFallCountry) returns (MsgMsgFallCountryResponse);
+  rpc MsgBelongContry(MsgMsgBelongContry) returns (MsgMsgBelongContryResponse);
+  rpc MsgLeaveCountry(MsgMsgLeaveCountry) returns (MsgMsgLeaveCountryResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -142,6 +144,21 @@ message MsgMsgFallCountry {
 }
 
 message MsgMsgFallCountryResponse {
+}
+
+message MsgMsgBelongContry {
+  string creator = 1;
+  string countryAddress = 2;
+}
+
+message MsgMsgBelongContryResponse {
+}
+
+message MsgMsgLeaveCountry {
+  string creator = 1;
+}
+
+message MsgMsgLeaveCountryResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

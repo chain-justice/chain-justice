@@ -44,6 +44,8 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdDeleteInvasion())
 	cmd.AddCommand(CmdMsgFundCountry())
 	cmd.AddCommand(CmdMsgFallCountry())
+	cmd.AddCommand(CmdMsgBelongContry())
+	cmd.AddCommand(CmdMsgLeaveCountry())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

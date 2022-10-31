@@ -46204,9 +46204,13 @@ definitions:
     type: object
   chainjustice.chainjustice.justice.MsgDeletePrepareResponse:
     type: object
+  chainjustice.chainjustice.justice.MsgMsgBelongContryResponse:
+    type: object
   chainjustice.chainjustice.justice.MsgMsgFallCountryResponse:
     type: object
   chainjustice.chainjustice.justice.MsgMsgFundCountryResponse:
+    type: object
+  chainjustice.chainjustice.justice.MsgMsgLeaveCountryResponse:
     type: object
   chainjustice.chainjustice.justice.MsgUpdateBelongingResponse:
     type: object
