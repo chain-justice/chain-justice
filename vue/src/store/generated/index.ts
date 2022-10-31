@@ -1,10 +1,12 @@
 // THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY.
 
 import ChainjusticeChainjusticeChainjustice from './chainjustice.chainjustice.chainjustice'
+import ChainjusticeChainjusticePlayer from './chainjustice.chainjustice.player'
 
 
 export default { 
   ChainjusticeChainjusticeChainjustice: load(ChainjusticeChainjusticeChainjustice, 'chainjustice.chainjustice.chainjustice'),
+  ChainjusticeChainjusticePlayer: load(ChainjusticeChainjusticePlayer, 'chainjustice.chainjustice.player'),
   
 }
 
