@@ -1,13 +1,41 @@
 syntax = "proto3";
 package chainjustice.chainjustice.justice;
 
+import "justice/belonging.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc CreateBelonging(MsgCreateBelonging) returns (MsgCreateBelongingResponse);
+  rpc UpdateBelonging(MsgUpdateBelonging) returns (MsgUpdateBelongingResponse);
+  rpc DeleteBelonging(MsgDeleteBelonging) returns (MsgDeleteBelongingResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
 }
+
+message MsgCreateBelonging {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string country = 4;
+}
+message MsgCreateBelongingResponse {}
+
+message MsgUpdateBelonging {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string country = 4;
+}
+message MsgUpdateBelongingResponse {}
+
+message MsgDeleteBelonging {
+  string creator = 1;
+  string index = 2;
+}
+message MsgDeleteBelongingResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

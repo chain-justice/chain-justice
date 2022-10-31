@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "justice/params.proto";
+import "justice/belonging.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -15,7 +16,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/chain-justice/chain-justice/justice/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a Belonging by index.
+	rpc Belonging(QueryGetBelongingRequest) returns (QueryGetBelongingResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/belonging/{index}";
+	}
+
+	// Queries a list of Belonging items.
+	rpc BelongingAll(QueryAllBelongingRequest) returns (QueryAllBelongingResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/belonging";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +36,24 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetBelongingRequest {
+	  string index = 1;
+
+}
+
+message QueryGetBelongingResponse {
+	Belonging belonging = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllBelongingRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllBelongingResponse {
+	repeated Belonging belonging = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

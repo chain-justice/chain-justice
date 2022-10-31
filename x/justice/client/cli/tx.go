@@ -30,6 +30,9 @@ func GetTxCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
+	cmd.AddCommand(CmdCreateBelonging())
+	cmd.AddCommand(CmdUpdateBelonging())
+	cmd.AddCommand(CmdDeleteBelonging())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

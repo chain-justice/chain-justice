@@ -1,9 +1,10 @@
 import { Client, registry, MissingWalletError } from 'chain-justice-chain-justice-client-ts'
 
+import { Belonging } from "chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice/types"
 import { Params } from "chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice/types"
 
 
-export { Params };
+export { Belonging, Params };
 
 function initClient(vuexGetters) {
 	return new Client(vuexGetters['common/env/getEnv'], vuexGetters['common/wallet/signer'])
@@ -35,8 +36,11 @@ function getStructure(template) {
 const getDefaultState = () => {
 	return {
 				Params: {},
+				Belonging: {},
+				BelongingAll: {},
 				
 				_Structure: {
+						Belonging: getStructure(Belonging.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
 		},
@@ -71,6 +75,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.Params[JSON.stringify(params)] ?? {}
+		},
+				getBelonging: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Belonging[JSON.stringify(params)] ?? {}
+		},
+				getBelongingAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.BelongingAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -129,6 +145,132 @@ export default {
 		
 		
 		
+		
+		 		
+		
+		
+		async QueryBelonging({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.ChainjusticeChainjusticeJustice.query.queryBelonging( key.index)).data
+				
+					
+				commit('QUERY', { query: 'Belonging', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryBelonging', payload: { options: { all }, params: {...key},query }})
+				return getters['getBelonging']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryBelonging API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryBelongingAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.ChainjusticeChainjusticeJustice.query.queryBelongingAll(query ?? undefined)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await client.ChainjusticeChainjusticeJustice.query.queryBelongingAll({...query ?? {}, 'pagination.key':(<any> value).pagination.next_key} as any)).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'BelongingAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryBelongingAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getBelongingAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryBelongingAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		async sendMsgCreateBelonging({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgCreateBelonging({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateBelonging:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateBelonging:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgDeleteBelonging({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgDeleteBelonging({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDeleteBelonging:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgDeleteBelonging:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgUpdateBelonging({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgUpdateBelonging({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateBelonging:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgUpdateBelonging:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		
+		async MsgCreateBelonging({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgCreateBelonging({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateBelonging:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateBelonging:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgDeleteBelonging({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgDeleteBelonging({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDeleteBelonging:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgDeleteBelonging:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgUpdateBelonging({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgUpdateBelonging({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateBelonging:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgUpdateBelonging:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		
 	}
 }

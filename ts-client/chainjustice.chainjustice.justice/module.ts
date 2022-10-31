@@ -7,10 +7,43 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
+import { MsgCreateBelonging } from "./types/justice/tx";
+import { MsgDeleteBelonging } from "./types/justice/tx";
+import { MsgUpdateBelonging } from "./types/justice/tx";
 
 
-export {  };
+export { MsgCreateBelonging, MsgDeleteBelonging, MsgUpdateBelonging };
 
+type sendMsgCreateBelongingParams = {
+  value: MsgCreateBelonging,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgDeleteBelongingParams = {
+  value: MsgDeleteBelonging,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgUpdateBelongingParams = {
+  value: MsgUpdateBelonging,
+  fee?: StdFee,
+  memo?: string
+};
+
+
+type msgCreateBelongingParams = {
+  value: MsgCreateBelonging,
+};
+
+type msgDeleteBelongingParams = {
+  value: MsgDeleteBelonging,
+};
+
+type msgUpdateBelongingParams = {
+  value: MsgUpdateBelonging,
+};
 
 
 export const registry = new Registry(msgTypes);
@@ -30,6 +63,72 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
+		async sendMsgCreateBelonging({ value, fee, memo }: sendMsgCreateBelongingParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateBelonging: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateBelonging({ value: MsgCreateBelonging.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateBelonging: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgDeleteBelonging({ value, fee, memo }: sendMsgDeleteBelongingParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgDeleteBelonging: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgDeleteBelonging({ value: MsgDeleteBelonging.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgDeleteBelonging: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgUpdateBelonging({ value, fee, memo }: sendMsgUpdateBelongingParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgUpdateBelonging: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgUpdateBelonging({ value: MsgUpdateBelonging.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgUpdateBelonging: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		
+		msgCreateBelonging({ value }: msgCreateBelongingParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateBelonging", value: MsgCreateBelonging.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreateBelonging: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgDeleteBelonging({ value }: msgDeleteBelongingParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgDeleteBelonging", value: MsgDeleteBelonging.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgDeleteBelonging: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgUpdateBelonging({ value }: msgUpdateBelongingParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgUpdateBelonging", value: MsgUpdateBelonging.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgUpdateBelonging: Could not create message: ' + e.message)
+			}
+		},
 		
 	}
 };
