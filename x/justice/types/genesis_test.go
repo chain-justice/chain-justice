@@ -47,6 +47,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				PrepareCount: 2,
+				InvasionList: []types.Invasion{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				InvasionCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -102,6 +111,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				PrepareCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated invasion",
+			genState: &types.GenesisState{
+				InvasionList: []types.Invasion{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid invasion count",
+			genState: &types.GenesisState{
+				InvasionList: []types.Invasion{
+					{
+						Id: 1,
+					},
+				},
+				InvasionCount: 0,
 			},
 			valid: false,
 		},

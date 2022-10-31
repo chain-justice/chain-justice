@@ -17,6 +17,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreatePrepare{}, "justice/CreatePrepare", nil)
 	cdc.RegisterConcrete(&MsgUpdatePrepare{}, "justice/UpdatePrepare", nil)
 	cdc.RegisterConcrete(&MsgDeletePrepare{}, "justice/DeletePrepare", nil)
+	cdc.RegisterConcrete(&MsgCreateInvasion{}, "justice/CreateInvasion", nil)
+	cdc.RegisterConcrete(&MsgUpdateInvasion{}, "justice/UpdateInvasion", nil)
+	cdc.RegisterConcrete(&MsgDeleteInvasion{}, "justice/DeleteInvasion", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -35,6 +38,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreatePrepare{},
 		&MsgUpdatePrepare{},
 		&MsgDeletePrepare{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateInvasion{},
+		&MsgUpdateInvasion{},
+		&MsgDeleteInvasion{},
 	)
 	// this line is used by starport scaffolding # 3
 

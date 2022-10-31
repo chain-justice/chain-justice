@@ -39,6 +39,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		PrepareCount: 2,
+		InvasionList: []types.Invasion{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		InvasionCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -54,5 +63,7 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.CountryList, got.CountryList)
 	require.ElementsMatch(t, genesisState.PrepareList, got.PrepareList)
 	require.Equal(t, genesisState.PrepareCount, got.PrepareCount)
+	require.ElementsMatch(t, genesisState.InvasionList, got.InvasionList)
+	require.Equal(t, genesisState.InvasionCount, got.InvasionCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

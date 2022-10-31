@@ -9,6 +9,7 @@ import {
 } from "../cosmos/base/query/v1beta1/pagination";
 import { Country } from "../justice/country";
 import { Prepare } from "../justice/prepare";
+import { Invasion } from "../justice/invasion";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -69,6 +70,23 @@ export interface QueryAllPrepareRequest {
 
 export interface QueryAllPrepareResponse {
   Prepare: Prepare[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetInvasionRequest {
+  id: number;
+}
+
+export interface QueryGetInvasionResponse {
+  Invasion: Invasion | undefined;
+}
+
+export interface QueryAllInvasionRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllInvasionResponse {
+  Invasion: Invasion[];
   pagination: PageResponse | undefined;
 }
 
@@ -1063,6 +1081,314 @@ export const QueryAllPrepareResponse = {
   },
 };
 
+const baseQueryGetInvasionRequest: object = { id: 0 };
+
+export const QueryGetInvasionRequest = {
+  encode(
+    message: QueryGetInvasionRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetInvasionRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetInvasionRequest,
+    } as QueryGetInvasionRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetInvasionRequest {
+    const message = {
+      ...baseQueryGetInvasionRequest,
+    } as QueryGetInvasionRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetInvasionRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetInvasionRequest>
+  ): QueryGetInvasionRequest {
+    const message = {
+      ...baseQueryGetInvasionRequest,
+    } as QueryGetInvasionRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetInvasionResponse: object = {};
+
+export const QueryGetInvasionResponse = {
+  encode(
+    message: QueryGetInvasionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.Invasion !== undefined) {
+      Invasion.encode(message.Invasion, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetInvasionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetInvasionResponse,
+    } as QueryGetInvasionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Invasion = Invasion.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetInvasionResponse {
+    const message = {
+      ...baseQueryGetInvasionResponse,
+    } as QueryGetInvasionResponse;
+    if (object.Invasion !== undefined && object.Invasion !== null) {
+      message.Invasion = Invasion.fromJSON(object.Invasion);
+    } else {
+      message.Invasion = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetInvasionResponse): unknown {
+    const obj: any = {};
+    message.Invasion !== undefined &&
+      (obj.Invasion = message.Invasion
+        ? Invasion.toJSON(message.Invasion)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetInvasionResponse>
+  ): QueryGetInvasionResponse {
+    const message = {
+      ...baseQueryGetInvasionResponse,
+    } as QueryGetInvasionResponse;
+    if (object.Invasion !== undefined && object.Invasion !== null) {
+      message.Invasion = Invasion.fromPartial(object.Invasion);
+    } else {
+      message.Invasion = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllInvasionRequest: object = {};
+
+export const QueryAllInvasionRequest = {
+  encode(
+    message: QueryAllInvasionRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllInvasionRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllInvasionRequest,
+    } as QueryAllInvasionRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllInvasionRequest {
+    const message = {
+      ...baseQueryAllInvasionRequest,
+    } as QueryAllInvasionRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllInvasionRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllInvasionRequest>
+  ): QueryAllInvasionRequest {
+    const message = {
+      ...baseQueryAllInvasionRequest,
+    } as QueryAllInvasionRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllInvasionResponse: object = {};
+
+export const QueryAllInvasionResponse = {
+  encode(
+    message: QueryAllInvasionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.Invasion) {
+      Invasion.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllInvasionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllInvasionResponse,
+    } as QueryAllInvasionResponse;
+    message.Invasion = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Invasion.push(Invasion.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllInvasionResponse {
+    const message = {
+      ...baseQueryAllInvasionResponse,
+    } as QueryAllInvasionResponse;
+    message.Invasion = [];
+    if (object.Invasion !== undefined && object.Invasion !== null) {
+      for (const e of object.Invasion) {
+        message.Invasion.push(Invasion.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllInvasionResponse): unknown {
+    const obj: any = {};
+    if (message.Invasion) {
+      obj.Invasion = message.Invasion.map((e) =>
+        e ? Invasion.toJSON(e) : undefined
+      );
+    } else {
+      obj.Invasion = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllInvasionResponse>
+  ): QueryAllInvasionResponse {
+    const message = {
+      ...baseQueryAllInvasionResponse,
+    } as QueryAllInvasionResponse;
+    message.Invasion = [];
+    if (object.Invasion !== undefined && object.Invasion !== null) {
+      for (const e of object.Invasion) {
+        message.Invasion.push(Invasion.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1083,6 +1409,12 @@ export interface Query {
   Prepare(request: QueryGetPrepareRequest): Promise<QueryGetPrepareResponse>;
   /** Queries a list of Prepare items. */
   PrepareAll(request: QueryAllPrepareRequest): Promise<QueryAllPrepareResponse>;
+  /** Queries a Invasion by id. */
+  Invasion(request: QueryGetInvasionRequest): Promise<QueryGetInvasionResponse>;
+  /** Queries a list of Invasion items. */
+  InvasionAll(
+    request: QueryAllInvasionRequest
+  ): Promise<QueryAllInvasionResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1177,6 +1509,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllPrepareResponse.decode(new Reader(data))
+    );
+  }
+
+  Invasion(
+    request: QueryGetInvasionRequest
+  ): Promise<QueryGetInvasionResponse> {
+    const data = QueryGetInvasionRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Query",
+      "Invasion",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetInvasionResponse.decode(new Reader(data))
+    );
+  }
+
+  InvasionAll(
+    request: QueryAllInvasionRequest
+  ): Promise<QueryAllInvasionResponse> {
+    const data = QueryAllInvasionRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Query",
+      "InvasionAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllInvasionResponse.decode(new Reader(data))
     );
   }
 }

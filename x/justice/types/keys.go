@@ -22,3 +22,8 @@ const (
 	PrepareKey      = "Prepare/value/"
 	PrepareCountKey = "Prepare/count/"
 )
+
+const (
+	InvasionKey      = "Invasion/value/"
+	InvasionCountKey = "Invasion/count/"
+)

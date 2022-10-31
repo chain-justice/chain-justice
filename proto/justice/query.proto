@@ -8,6 +8,7 @@ import "justice/params.proto";
 import "justice/belonging.proto";
 import "justice/country.proto";
 import "justice/prepare.proto";
+import "justice/invasion.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -46,6 +47,16 @@ service Query {
 	// Queries a list of Prepare items.
 	rpc PrepareAll(QueryAllPrepareRequest) returns (QueryAllPrepareResponse) {
 		option (google.api.http).get = "/chain-justice/chain-justice/justice/prepare";
+	}
+
+// Queries a Invasion by id.
+	rpc Invasion(QueryGetInvasionRequest) returns (QueryGetInvasionResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/invasion/{id}";
+	}
+
+	// Queries a list of Invasion items.
+	rpc InvasionAll(QueryAllInvasionRequest) returns (QueryAllInvasionResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/invasion";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -110,6 +121,23 @@ message QueryAllPrepareRequest {
 
 message QueryAllPrepareResponse {
 	repeated Prepare Prepare = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetInvasionRequest {
+	uint64 id = 1;
+}
+
+message QueryGetInvasionResponse {
+	Invasion Invasion = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllInvasionRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllInvasionResponse {
+	repeated Invasion Invasion = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

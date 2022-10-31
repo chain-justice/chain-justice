@@ -80,6 +80,34 @@ export interface MsgDeletePrepare {
 
 export interface MsgDeletePrepareResponse {}
 
+export interface MsgCreateInvasion {
+  creator: string;
+  fromAddress: string;
+  toAddress: string;
+  requireBlockHeigt: string;
+}
+
+export interface MsgCreateInvasionResponse {
+  id: number;
+}
+
+export interface MsgUpdateInvasion {
+  creator: string;
+  id: number;
+  fromAddress: string;
+  toAddress: string;
+  requireBlockHeigt: string;
+}
+
+export interface MsgUpdateInvasionResponse {}
+
+export interface MsgDeleteInvasion {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteInvasionResponse {}
+
 const baseMsgCreateBelonging: object = {
   creator: "",
   index: "",
@@ -1452,6 +1480,507 @@ export const MsgDeletePrepareResponse = {
   },
 };
 
+const baseMsgCreateInvasion: object = {
+  creator: "",
+  fromAddress: "",
+  toAddress: "",
+  requireBlockHeigt: "",
+};
+
+export const MsgCreateInvasion = {
+  encode(message: MsgCreateInvasion, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.fromAddress !== "") {
+      writer.uint32(18).string(message.fromAddress);
+    }
+    if (message.toAddress !== "") {
+      writer.uint32(26).string(message.toAddress);
+    }
+    if (message.requireBlockHeigt !== "") {
+      writer.uint32(34).string(message.requireBlockHeigt);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateInvasion {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateInvasion } as MsgCreateInvasion;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.fromAddress = reader.string();
+          break;
+        case 3:
+          message.toAddress = reader.string();
+          break;
+        case 4:
+          message.requireBlockHeigt = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateInvasion {
+    const message = { ...baseMsgCreateInvasion } as MsgCreateInvasion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.fromAddress !== undefined && object.fromAddress !== null) {
+      message.fromAddress = String(object.fromAddress);
+    } else {
+      message.fromAddress = "";
+    }
+    if (object.toAddress !== undefined && object.toAddress !== null) {
+      message.toAddress = String(object.toAddress);
+    } else {
+      message.toAddress = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = String(object.requireBlockHeigt);
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateInvasion): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.fromAddress !== undefined &&
+      (obj.fromAddress = message.fromAddress);
+    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
+    message.requireBlockHeigt !== undefined &&
+      (obj.requireBlockHeigt = message.requireBlockHeigt);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreateInvasion>): MsgCreateInvasion {
+    const message = { ...baseMsgCreateInvasion } as MsgCreateInvasion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.fromAddress !== undefined && object.fromAddress !== null) {
+      message.fromAddress = object.fromAddress;
+    } else {
+      message.fromAddress = "";
+    }
+    if (object.toAddress !== undefined && object.toAddress !== null) {
+      message.toAddress = object.toAddress;
+    } else {
+      message.toAddress = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = object.requireBlockHeigt;
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateInvasionResponse: object = { id: 0 };
+
+export const MsgCreateInvasionResponse = {
+  encode(
+    message: MsgCreateInvasionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateInvasionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateInvasionResponse,
+    } as MsgCreateInvasionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateInvasionResponse {
+    const message = {
+      ...baseMsgCreateInvasionResponse,
+    } as MsgCreateInvasionResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateInvasionResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateInvasionResponse>
+  ): MsgCreateInvasionResponse {
+    const message = {
+      ...baseMsgCreateInvasionResponse,
+    } as MsgCreateInvasionResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateInvasion: object = {
+  creator: "",
+  id: 0,
+  fromAddress: "",
+  toAddress: "",
+  requireBlockHeigt: "",
+};
+
+export const MsgUpdateInvasion = {
+  encode(message: MsgUpdateInvasion, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.fromAddress !== "") {
+      writer.uint32(26).string(message.fromAddress);
+    }
+    if (message.toAddress !== "") {
+      writer.uint32(34).string(message.toAddress);
+    }
+    if (message.requireBlockHeigt !== "") {
+      writer.uint32(42).string(message.requireBlockHeigt);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateInvasion {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateInvasion } as MsgUpdateInvasion;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.fromAddress = reader.string();
+          break;
+        case 4:
+          message.toAddress = reader.string();
+          break;
+        case 5:
+          message.requireBlockHeigt = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateInvasion {
+    const message = { ...baseMsgUpdateInvasion } as MsgUpdateInvasion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.fromAddress !== undefined && object.fromAddress !== null) {
+      message.fromAddress = String(object.fromAddress);
+    } else {
+      message.fromAddress = "";
+    }
+    if (object.toAddress !== undefined && object.toAddress !== null) {
+      message.toAddress = String(object.toAddress);
+    } else {
+      message.toAddress = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = String(object.requireBlockHeigt);
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateInvasion): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.fromAddress !== undefined &&
+      (obj.fromAddress = message.fromAddress);
+    message.toAddress !== undefined && (obj.toAddress = message.toAddress);
+    message.requireBlockHeigt !== undefined &&
+      (obj.requireBlockHeigt = message.requireBlockHeigt);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdateInvasion>): MsgUpdateInvasion {
+    const message = { ...baseMsgUpdateInvasion } as MsgUpdateInvasion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.fromAddress !== undefined && object.fromAddress !== null) {
+      message.fromAddress = object.fromAddress;
+    } else {
+      message.fromAddress = "";
+    }
+    if (object.toAddress !== undefined && object.toAddress !== null) {
+      message.toAddress = object.toAddress;
+    } else {
+      message.toAddress = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = object.requireBlockHeigt;
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateInvasionResponse: object = {};
+
+export const MsgUpdateInvasionResponse = {
+  encode(
+    _: MsgUpdateInvasionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdateInvasionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdateInvasionResponse,
+    } as MsgUpdateInvasionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateInvasionResponse {
+    const message = {
+      ...baseMsgUpdateInvasionResponse,
+    } as MsgUpdateInvasionResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateInvasionResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdateInvasionResponse>
+  ): MsgUpdateInvasionResponse {
+    const message = {
+      ...baseMsgUpdateInvasionResponse,
+    } as MsgUpdateInvasionResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteInvasion: object = { creator: "", id: 0 };
+
+export const MsgDeleteInvasion = {
+  encode(message: MsgDeleteInvasion, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteInvasion {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeleteInvasion } as MsgDeleteInvasion;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteInvasion {
+    const message = { ...baseMsgDeleteInvasion } as MsgDeleteInvasion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteInvasion): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgDeleteInvasion>): MsgDeleteInvasion {
+    const message = { ...baseMsgDeleteInvasion } as MsgDeleteInvasion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteInvasionResponse: object = {};
+
+export const MsgDeleteInvasionResponse = {
+  encode(
+    _: MsgDeleteInvasionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeleteInvasionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeleteInvasionResponse,
+    } as MsgDeleteInvasionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteInvasionResponse {
+    const message = {
+      ...baseMsgDeleteInvasionResponse,
+    } as MsgDeleteInvasionResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteInvasionResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeleteInvasionResponse>
+  ): MsgDeleteInvasionResponse {
+    const message = {
+      ...baseMsgDeleteInvasionResponse,
+    } as MsgDeleteInvasionResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateBelonging(
@@ -1468,8 +1997,17 @@ export interface Msg {
   DeleteCountry(request: MsgDeleteCountry): Promise<MsgDeleteCountryResponse>;
   CreatePrepare(request: MsgCreatePrepare): Promise<MsgCreatePrepareResponse>;
   UpdatePrepare(request: MsgUpdatePrepare): Promise<MsgUpdatePrepareResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeletePrepare(request: MsgDeletePrepare): Promise<MsgDeletePrepareResponse>;
+  CreateInvasion(
+    request: MsgCreateInvasion
+  ): Promise<MsgCreateInvasionResponse>;
+  UpdateInvasion(
+    request: MsgUpdateInvasion
+  ): Promise<MsgUpdateInvasionResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeleteInvasion(
+    request: MsgDeleteInvasion
+  ): Promise<MsgDeleteInvasionResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -1588,6 +2126,48 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeletePrepareResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateInvasion(
+    request: MsgCreateInvasion
+  ): Promise<MsgCreateInvasionResponse> {
+    const data = MsgCreateInvasion.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Msg",
+      "CreateInvasion",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateInvasionResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateInvasion(
+    request: MsgUpdateInvasion
+  ): Promise<MsgUpdateInvasionResponse> {
+    const data = MsgUpdateInvasion.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Msg",
+      "UpdateInvasion",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateInvasionResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteInvasion(
+    request: MsgDeleteInvasion
+  ): Promise<MsgDeleteInvasionResponse> {
+    const data = MsgDeleteInvasion.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Msg",
+      "DeleteInvasion",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteInvasionResponse.decode(new Reader(data))
     );
   }
 }

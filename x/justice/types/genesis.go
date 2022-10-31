@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 		BelongingList: []Belonging{},
 		CountryList:   []Country{},
 		PrepareList:   []Prepare{},
+		InvasionList:  []Invasion{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -52,6 +53,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("prepare id should be lower or equal than the last id")
 		}
 		prepareIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in invasion
+	invasionIdMap := make(map[uint64]bool)
+	invasionCount := gs.GetInvasionCount()
+	for _, elem := range gs.InvasionList {
+		if _, ok := invasionIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for invasion")
+		}
+		if elem.Id >= invasionCount {
+			return fmt.Errorf("invasion id should be lower or equal than the last id")
+		}
+		invasionIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

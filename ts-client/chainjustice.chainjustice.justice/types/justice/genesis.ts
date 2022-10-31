@@ -5,6 +5,7 @@ import { Params } from "../justice/params";
 import { Belonging } from "../justice/belonging";
 import { Country } from "../justice/country";
 import { Prepare } from "../justice/prepare";
+import { Invasion } from "../justice/invasion";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -14,11 +15,13 @@ export interface GenesisState {
   belongingList: Belonging[];
   countryList: Country[];
   prepareList: Prepare[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   prepareCount: number;
+  invasionList: Invasion[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  invasionCount: number;
 }
 
-const baseGenesisState: object = { prepareCount: 0 };
+const baseGenesisState: object = { prepareCount: 0, invasionCount: 0 };
 
 export const GenesisState = {
   encode(message: GenesisState, writer: Writer = Writer.create()): Writer {
@@ -37,6 +40,12 @@ export const GenesisState = {
     if (message.prepareCount !== 0) {
       writer.uint32(40).uint64(message.prepareCount);
     }
+    for (const v of message.invasionList) {
+      Invasion.encode(v!, writer.uint32(50).fork()).ldelim();
+    }
+    if (message.invasionCount !== 0) {
+      writer.uint32(56).uint64(message.invasionCount);
+    }
     return writer;
   },
 
@@ -47,6 +56,7 @@ export const GenesisState = {
     message.belongingList = [];
     message.countryList = [];
     message.prepareList = [];
+    message.invasionList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -65,6 +75,12 @@ export const GenesisState = {
         case 5:
           message.prepareCount = longToNumber(reader.uint64() as Long);
           break;
+        case 6:
+          message.invasionList.push(Invasion.decode(reader, reader.uint32()));
+          break;
+        case 7:
+          message.invasionCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -78,6 +94,7 @@ export const GenesisState = {
     message.belongingList = [];
     message.countryList = [];
     message.prepareList = [];
+    message.invasionList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -102,6 +119,16 @@ export const GenesisState = {
       message.prepareCount = Number(object.prepareCount);
     } else {
       message.prepareCount = 0;
+    }
+    if (object.invasionList !== undefined && object.invasionList !== null) {
+      for (const e of object.invasionList) {
+        message.invasionList.push(Invasion.fromJSON(e));
+      }
+    }
+    if (object.invasionCount !== undefined && object.invasionCount !== null) {
+      message.invasionCount = Number(object.invasionCount);
+    } else {
+      message.invasionCount = 0;
     }
     return message;
   },
@@ -133,6 +160,15 @@ export const GenesisState = {
     }
     message.prepareCount !== undefined &&
       (obj.prepareCount = message.prepareCount);
+    if (message.invasionList) {
+      obj.invasionList = message.invasionList.map((e) =>
+        e ? Invasion.toJSON(e) : undefined
+      );
+    } else {
+      obj.invasionList = [];
+    }
+    message.invasionCount !== undefined &&
+      (obj.invasionCount = message.invasionCount);
     return obj;
   },
 
@@ -141,6 +177,7 @@ export const GenesisState = {
     message.belongingList = [];
     message.countryList = [];
     message.prepareList = [];
+    message.invasionList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -165,6 +202,16 @@ export const GenesisState = {
       message.prepareCount = object.prepareCount;
     } else {
       message.prepareCount = 0;
+    }
+    if (object.invasionList !== undefined && object.invasionList !== null) {
+      for (const e of object.invasionList) {
+        message.invasionList.push(Invasion.fromPartial(e));
+      }
+    }
+    if (object.invasionCount !== undefined && object.invasionCount !== null) {
+      message.invasionCount = object.invasionCount;
+    } else {
+      message.invasionCount = 0;
     }
     return message;
   },

@@ -23,9 +23,23 @@ export interface JusticeCountry {
   creator?: string;
 }
 
+export interface JusticeInvasion {
+  /** @format uint64 */
+  id?: string;
+  fromAddress?: string;
+  toAddress?: string;
+  requireBlockHeigt?: string;
+  creator?: string;
+}
+
 export type JusticeMsgCreateBelongingResponse = object;
 
 export type JusticeMsgCreateCountryResponse = object;
+
+export interface JusticeMsgCreateInvasionResponse {
+  /** @format uint64 */
+  id?: string;
+}
 
 export interface JusticeMsgCreatePrepareResponse {
   /** @format uint64 */
@@ -36,11 +50,15 @@ export type JusticeMsgDeleteBelongingResponse = object;
 
 export type JusticeMsgDeleteCountryResponse = object;
 
+export type JusticeMsgDeleteInvasionResponse = object;
+
 export type JusticeMsgDeletePrepareResponse = object;
 
 export type JusticeMsgUpdateBelongingResponse = object;
 
 export type JusticeMsgUpdateCountryResponse = object;
+
+export type JusticeMsgUpdateInvasionResponse = object;
 
 export type JusticeMsgUpdatePrepareResponse = object;
 
@@ -87,6 +105,21 @@ export interface JusticeQueryAllCountryResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface JusticeQueryAllInvasionResponse {
+  Invasion?: JusticeInvasion[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface JusticeQueryAllPrepareResponse {
   Prepare?: JusticePrepare[];
 
@@ -108,6 +141,10 @@ export interface JusticeQueryGetBelongingResponse {
 
 export interface JusticeQueryGetCountryResponse {
   country?: JusticeCountry;
+}
+
+export interface JusticeQueryGetInvasionResponse {
+  Invasion?: JusticeInvasion;
 }
 
 export interface JusticeQueryGetPrepareResponse {
@@ -476,6 +513,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryCountry = (index: string, params: RequestParams = {}) =>
     this.request<JusticeQueryGetCountryResponse, RpcStatus>({
       path: `/chain-justice/chain-justice/justice/country/${index}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryInvasionAll
+   * @summary Queries a list of Invasion items.
+   * @request GET:/chain-justice/chain-justice/justice/invasion
+   */
+  queryInvasionAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<JusticeQueryAllInvasionResponse, RpcStatus>({
+      path: `/chain-justice/chain-justice/justice/invasion`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryInvasion
+   * @summary Queries a Invasion by id.
+   * @request GET:/chain-justice/chain-justice/justice/invasion/{id}
+   */
+  queryInvasion = (id: string, params: RequestParams = {}) =>
+    this.request<JusticeQueryGetInvasionResponse, RpcStatus>({
+      path: `/chain-justice/chain-justice/justice/invasion/${id}`,
       method: "GET",
       format: "json",
       ...params,

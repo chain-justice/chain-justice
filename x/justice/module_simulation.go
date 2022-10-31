@@ -60,6 +60,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeletePrepare int = 100
 
+	opWeightMsgCreateInvasion = "op_weight_msg_invasion"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateInvasion int = 100
+
+	opWeightMsgUpdateInvasion = "op_weight_msg_invasion"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateInvasion int = 100
+
+	opWeightMsgDeleteInvasion = "op_weight_msg_invasion"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteInvasion int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -102,6 +114,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		PrepareCount: 2,
+		InvasionList: []types.Invasion{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		InvasionCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&justiceGenesis)
@@ -222,6 +245,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeletePrepare,
 		justicesimulation.SimulateMsgDeletePrepare(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateInvasion int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateInvasion, &weightMsgCreateInvasion, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateInvasion = defaultWeightMsgCreateInvasion
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateInvasion,
+		justicesimulation.SimulateMsgCreateInvasion(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateInvasion int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateInvasion, &weightMsgUpdateInvasion, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateInvasion = defaultWeightMsgUpdateInvasion
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateInvasion,
+		justicesimulation.SimulateMsgUpdateInvasion(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteInvasion int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteInvasion, &weightMsgDeleteInvasion, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteInvasion = defaultWeightMsgDeleteInvasion
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteInvasion,
+		justicesimulation.SimulateMsgDeleteInvasion(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

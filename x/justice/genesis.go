@@ -23,6 +23,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set prepare count
 	k.SetPrepareCount(ctx, genState.PrepareCount)
+	// Set all the invasion
+	for _, elem := range genState.InvasionList {
+		k.SetInvasion(ctx, elem)
+	}
+
+	// Set invasion count
+	k.SetInvasionCount(ctx, genState.InvasionCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -36,6 +43,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.CountryList = k.GetAllCountry(ctx)
 	genesis.PrepareList = k.GetAllPrepare(ctx)
 	genesis.PrepareCount = k.GetPrepareCount(ctx)
+	genesis.InvasionList = k.GetAllInvasion(ctx)
+	genesis.InvasionCount = k.GetInvasionCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis
