@@ -1,0 +1,24 @@
+syntax = "proto3";
+package chainjustice.chainjustice.justice;
+
+import "gogoproto/gogo.proto";
+import "justice/params.proto";
+import "justice/belonging.proto";
+import "justice/country.proto";
+import "justice/prepare.proto";
+import "justice/invasion.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
+
+// GenesisState defines the justice module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  repeated Belonging belongingList = 2 [(gogoproto.nullable) = false];
+  repeated Country countryList = 3 [(gogoproto.nullable) = false];
+  repeated Prepare prepareList = 4 [(gogoproto.nullable) = false];
+  uint64 prepareCount = 5;
+  repeated Invasion invasionList = 6 [(gogoproto.nullable) = false];
+  uint64 invasionCount = 7;
+  // this line is used by starport scaffolding # genesis/proto/state
+}

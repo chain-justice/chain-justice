@@ -1,0 +1,131 @@
+syntax = "proto3";
+package chainjustice.chainjustice.justice;
+
+import "justice/belonging.proto";
+import "justice/country.proto";
+import "justice/prepare.proto";
+import "justice/invasion.proto";
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc CreateBelonging(MsgCreateBelonging) returns (MsgCreateBelongingResponse);
+  rpc UpdateBelonging(MsgUpdateBelonging) returns (MsgUpdateBelongingResponse);
+  rpc DeleteBelonging(MsgDeleteBelonging) returns (MsgDeleteBelongingResponse);
+  rpc CreateCountry(MsgCreateCountry) returns (MsgCreateCountryResponse);
+  rpc UpdateCountry(MsgUpdateCountry) returns (MsgUpdateCountryResponse);
+  rpc DeleteCountry(MsgDeleteCountry) returns (MsgDeleteCountryResponse);
+rpc CreatePrepare(MsgCreatePrepare) returns (MsgCreatePrepareResponse);
+  rpc UpdatePrepare(MsgUpdatePrepare) returns (MsgUpdatePrepareResponse);
+  rpc DeletePrepare(MsgDeletePrepare) returns (MsgDeletePrepareResponse);
+rpc CreateInvasion(MsgCreateInvasion) returns (MsgCreateInvasionResponse);
+  rpc UpdateInvasion(MsgUpdateInvasion) returns (MsgUpdateInvasionResponse);
+  rpc DeleteInvasion(MsgDeleteInvasion) returns (MsgDeleteInvasionResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgCreateBelonging {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string country = 4;
+}
+message MsgCreateBelongingResponse {}
+
+message MsgUpdateBelonging {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string country = 4;
+}
+message MsgUpdateBelongingResponse {}
+
+message MsgDeleteBelonging {
+  string creator = 1;
+  string index = 2;
+}
+message MsgDeleteBelongingResponse {}
+
+message MsgCreateCountry {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string food = 4;
+}
+message MsgCreateCountryResponse {}
+
+message MsgUpdateCountry {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string food = 4;
+}
+message MsgUpdateCountryResponse {}
+
+message MsgDeleteCountry {
+  string creator = 1;
+  string index = 2;
+}
+message MsgDeleteCountryResponse {}
+
+message MsgCreatePrepare {
+  string creator = 1;
+  string address = 2;
+  string requireBlockHeigt = 3;
+}
+
+message MsgCreatePrepareResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdatePrepare {
+  string creator = 1;
+  uint64 id = 2;
+  string address = 3;
+  string requireBlockHeigt = 4;
+}
+
+message MsgUpdatePrepareResponse {}
+
+message MsgDeletePrepare {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeletePrepareResponse {}
+
+message MsgCreateInvasion {
+  string creator = 1;
+  string fromAddress = 2;
+  string toAddress = 3;
+  string requireBlockHeigt = 4;
+}
+
+message MsgCreateInvasionResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateInvasion {
+  string creator = 1;
+  uint64 id = 2;
+  string fromAddress = 3;
+  string toAddress = 4;
+  string requireBlockHeigt = 5;
+}
+
+message MsgUpdateInvasionResponse {}
+
+message MsgDeleteInvasion {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteInvasionResponse {}
+
+// this line is used by starport scaffolding # proto/tx/message
