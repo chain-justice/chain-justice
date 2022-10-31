@@ -36,6 +36,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteBelonging int = 100
 
+	opWeightMsgCreateCountry = "op_weight_msg_country"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateCountry int = 100
+
+	opWeightMsgUpdateCountry = "op_weight_msg_country"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateCountry int = 100
+
+	opWeightMsgDeleteCountry = "op_weight_msg_country"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteCountry int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -48,6 +60,16 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	justiceGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
 		BelongingList: []types.Belonging{
+			{
+				Creator: sample.AccAddress(),
+				Index:   "0",
+			},
+			{
+				Creator: sample.AccAddress(),
+				Index:   "1",
+			},
+		},
+		CountryList: []types.Country{
 			{
 				Creator: sample.AccAddress(),
 				Index:   "0",
@@ -111,6 +133,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteBelonging,
 		justicesimulation.SimulateMsgDeleteBelonging(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateCountry int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateCountry, &weightMsgCreateCountry, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateCountry = defaultWeightMsgCreateCountry
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateCountry,
+		justicesimulation.SimulateMsgCreateCountry(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateCountry int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateCountry, &weightMsgUpdateCountry, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateCountry = defaultWeightMsgUpdateCountry
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateCountry,
+		justicesimulation.SimulateMsgUpdateCountry(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteCountry int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteCountry, &weightMsgDeleteCountry, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteCountry = defaultWeightMsgDeleteCountry
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteCountry,
+		justicesimulation.SimulateMsgDeleteCountry(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

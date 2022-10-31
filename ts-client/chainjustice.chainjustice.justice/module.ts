@@ -7,18 +7,15 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgCreateBelonging } from "./types/justice/tx";
 import { MsgDeleteBelonging } from "./types/justice/tx";
 import { MsgUpdateBelonging } from "./types/justice/tx";
+import { MsgUpdateCountry } from "./types/justice/tx";
+import { MsgCreateCountry } from "./types/justice/tx";
+import { MsgDeleteCountry } from "./types/justice/tx";
+import { MsgCreateBelonging } from "./types/justice/tx";
 
 
-export { MsgCreateBelonging, MsgDeleteBelonging, MsgUpdateBelonging };
-
-type sendMsgCreateBelongingParams = {
-  value: MsgCreateBelonging,
-  fee?: StdFee,
-  memo?: string
-};
+export { MsgDeleteBelonging, MsgUpdateBelonging, MsgUpdateCountry, MsgCreateCountry, MsgDeleteCountry, MsgCreateBelonging };
 
 type sendMsgDeleteBelongingParams = {
   value: MsgDeleteBelonging,
@@ -32,10 +29,30 @@ type sendMsgUpdateBelongingParams = {
   memo?: string
 };
 
-
-type msgCreateBelongingParams = {
-  value: MsgCreateBelonging,
+type sendMsgUpdateCountryParams = {
+  value: MsgUpdateCountry,
+  fee?: StdFee,
+  memo?: string
 };
+
+type sendMsgCreateCountryParams = {
+  value: MsgCreateCountry,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgDeleteCountryParams = {
+  value: MsgDeleteCountry,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgCreateBelongingParams = {
+  value: MsgCreateBelonging,
+  fee?: StdFee,
+  memo?: string
+};
+
 
 type msgDeleteBelongingParams = {
   value: MsgDeleteBelonging,
@@ -43,6 +60,22 @@ type msgDeleteBelongingParams = {
 
 type msgUpdateBelongingParams = {
   value: MsgUpdateBelonging,
+};
+
+type msgUpdateCountryParams = {
+  value: MsgUpdateCountry,
+};
+
+type msgCreateCountryParams = {
+  value: MsgCreateCountry,
+};
+
+type msgDeleteCountryParams = {
+  value: MsgDeleteCountry,
+};
+
+type msgCreateBelongingParams = {
+  value: MsgCreateBelonging,
 };
 
 
@@ -62,20 +95,6 @@ interface TxClientOptions {
 export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "http://localhost:26657", prefix: "cosmos" }) => {
 
   return {
-		
-		async sendMsgCreateBelonging({ value, fee, memo }: sendMsgCreateBelongingParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateBelonging: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateBelonging({ value: MsgCreateBelonging.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateBelonging: Could not broadcast Tx: '+ e.message)
-			}
-		},
 		
 		async sendMsgDeleteBelonging({ value, fee, memo }: sendMsgDeleteBelongingParams): Promise<DeliverTxResponse> {
 			if (!signer) {
@@ -105,14 +124,62 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		
-		msgCreateBelonging({ value }: msgCreateBelongingParams): EncodeObject {
-			try {
-				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateBelonging", value: MsgCreateBelonging.fromPartial( value ) }  
+		async sendMsgUpdateCountry({ value, fee, memo }: sendMsgUpdateCountryParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgUpdateCountry: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgUpdateCountry({ value: MsgUpdateCountry.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateBelonging: Could not create message: ' + e.message)
+				throw new Error('TxClient:sendMsgUpdateCountry: Could not broadcast Tx: '+ e.message)
 			}
 		},
+		
+		async sendMsgCreateCountry({ value, fee, memo }: sendMsgCreateCountryParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateCountry: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateCountry({ value: MsgCreateCountry.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateCountry: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgDeleteCountry({ value, fee, memo }: sendMsgDeleteCountryParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgDeleteCountry: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgDeleteCountry({ value: MsgDeleteCountry.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgDeleteCountry: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgCreateBelonging({ value, fee, memo }: sendMsgCreateBelongingParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateBelonging: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateBelonging({ value: MsgCreateBelonging.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateBelonging: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		
 		msgDeleteBelonging({ value }: msgDeleteBelongingParams): EncodeObject {
 			try {
@@ -127,6 +194,38 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return { typeUrl: "/chainjustice.chainjustice.justice.MsgUpdateBelonging", value: MsgUpdateBelonging.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgUpdateBelonging: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgUpdateCountry({ value }: msgUpdateCountryParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgUpdateCountry", value: MsgUpdateCountry.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgUpdateCountry: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgCreateCountry({ value }: msgCreateCountryParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateCountry", value: MsgCreateCountry.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreateCountry: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgDeleteCountry({ value }: msgDeleteCountryParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgDeleteCountry", value: MsgDeleteCountry.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgDeleteCountry: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgCreateBelonging({ value }: msgCreateBelongingParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateBelonging", value: MsgCreateBelonging.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreateBelonging: Could not create message: ' + e.message)
 			}
 		},
 		

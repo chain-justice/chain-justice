@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "justice/params.proto";
 import "justice/belonging.proto";
+import "justice/country.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -24,6 +25,16 @@ service Query {
 	// Queries a list of Belonging items.
 	rpc BelongingAll(QueryAllBelongingRequest) returns (QueryAllBelongingResponse) {
 		option (google.api.http).get = "/chain-justice/chain-justice/justice/belonging";
+	}
+
+// Queries a Country by index.
+	rpc Country(QueryGetCountryRequest) returns (QueryGetCountryResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/country/{index}";
+	}
+
+	// Queries a list of Country items.
+	rpc CountryAll(QueryAllCountryRequest) returns (QueryAllCountryResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/country";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -53,6 +64,24 @@ message QueryAllBelongingRequest {
 
 message QueryAllBelongingResponse {
 	repeated Belonging belonging = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCountryRequest {
+	  string index = 1;
+
+}
+
+message QueryGetCountryResponse {
+	Country country = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCountryRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCountryResponse {
+	repeated Country country = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

@@ -2,6 +2,7 @@ syntax = "proto3";
 package chainjustice.chainjustice.justice;
 
 import "justice/belonging.proto";
+import "justice/country.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -11,6 +12,9 @@ service Msg {
       rpc CreateBelonging(MsgCreateBelonging) returns (MsgCreateBelongingResponse);
   rpc UpdateBelonging(MsgUpdateBelonging) returns (MsgUpdateBelongingResponse);
   rpc DeleteBelonging(MsgDeleteBelonging) returns (MsgDeleteBelongingResponse);
+  rpc CreateCountry(MsgCreateCountry) returns (MsgCreateCountryResponse);
+  rpc UpdateCountry(MsgUpdateCountry) returns (MsgUpdateCountryResponse);
+  rpc DeleteCountry(MsgDeleteCountry) returns (MsgDeleteCountryResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -37,5 +41,29 @@ message MsgDeleteBelonging {
   string index = 2;
 }
 message MsgDeleteBelongingResponse {}
+
+message MsgCreateCountry {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string food = 4;
+}
+message MsgCreateCountryResponse {}
+
+message MsgUpdateCountry {
+  string creator = 1;
+  string index = 2;
+
+  string address = 3;
+  string food = 4;
+}
+message MsgUpdateCountryResponse {}
+
+message MsgDeleteCountry {
+  string creator = 1;
+  string index = 2;
+}
+message MsgDeleteCountryResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

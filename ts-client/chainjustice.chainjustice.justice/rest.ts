@@ -16,11 +16,24 @@ export interface JusticeBelonging {
   creator?: string;
 }
 
+export interface JusticeCountry {
+  index?: string;
+  address?: string;
+  food?: string;
+  creator?: string;
+}
+
 export type JusticeMsgCreateBelongingResponse = object;
+
+export type JusticeMsgCreateCountryResponse = object;
 
 export type JusticeMsgDeleteBelongingResponse = object;
 
+export type JusticeMsgDeleteCountryResponse = object;
+
 export type JusticeMsgUpdateBelongingResponse = object;
+
+export type JusticeMsgUpdateCountryResponse = object;
 
 /**
  * Params defines the parameters for the module.
@@ -42,8 +55,27 @@ export interface JusticeQueryAllBelongingResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface JusticeQueryAllCountryResponse {
+  country?: JusticeCountry[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface JusticeQueryGetBelongingResponse {
   belonging?: JusticeBelonging;
+}
+
+export interface JusticeQueryGetCountryResponse {
+  country?: JusticeCountry;
 }
 
 /**
@@ -366,6 +398,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryBelonging = (index: string, params: RequestParams = {}) =>
     this.request<JusticeQueryGetBelongingResponse, RpcStatus>({
       path: `/chain-justice/chain-justice/justice/belonging/${index}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCountryAll
+   * @summary Queries a list of Country items.
+   * @request GET:/chain-justice/chain-justice/justice/country
+   */
+  queryCountryAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<JusticeQueryAllCountryResponse, RpcStatus>({
+      path: `/chain-justice/chain-justice/justice/country`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCountry
+   * @summary Queries a Country by index.
+   * @request GET:/chain-justice/chain-justice/justice/country/{index}
+   */
+  queryCountry = (index: string, params: RequestParams = {}) =>
+    this.request<JusticeQueryGetCountryResponse, RpcStatus>({
+      path: `/chain-justice/chain-justice/justice/country/${index}`,
       method: "GET",
       format: "json",
       ...params,

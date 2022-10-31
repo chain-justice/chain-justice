@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Params } from "../justice/params";
 import { Belonging } from "../justice/belonging";
+import { Country } from "../justice/country";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
@@ -8,8 +9,9 @@ export const protobufPackage = "chainjustice.chainjustice.justice";
 /** GenesisState defines the justice module's genesis state. */
 export interface GenesisState {
   params: Params | undefined;
-  /** this line is used by starport scaffolding # genesis/proto/state */
   belongingList: Belonging[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  countryList: Country[];
 }
 
 const baseGenesisState: object = {};
@@ -22,6 +24,9 @@ export const GenesisState = {
     for (const v of message.belongingList) {
       Belonging.encode(v!, writer.uint32(18).fork()).ldelim();
     }
+    for (const v of message.countryList) {
+      Country.encode(v!, writer.uint32(26).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -30,6 +35,7 @@ export const GenesisState = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGenesisState } as GenesisState;
     message.belongingList = [];
+    message.countryList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -38,6 +44,9 @@ export const GenesisState = {
           break;
         case 2:
           message.belongingList.push(Belonging.decode(reader, reader.uint32()));
+          break;
+        case 3:
+          message.countryList.push(Country.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -50,6 +59,7 @@ export const GenesisState = {
   fromJSON(object: any): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
     message.belongingList = [];
+    message.countryList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -58,6 +68,11 @@ export const GenesisState = {
     if (object.belongingList !== undefined && object.belongingList !== null) {
       for (const e of object.belongingList) {
         message.belongingList.push(Belonging.fromJSON(e));
+      }
+    }
+    if (object.countryList !== undefined && object.countryList !== null) {
+      for (const e of object.countryList) {
+        message.countryList.push(Country.fromJSON(e));
       }
     }
     return message;
@@ -74,12 +89,20 @@ export const GenesisState = {
     } else {
       obj.belongingList = [];
     }
+    if (message.countryList) {
+      obj.countryList = message.countryList.map((e) =>
+        e ? Country.toJSON(e) : undefined
+      );
+    } else {
+      obj.countryList = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
     message.belongingList = [];
+    message.countryList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -88,6 +111,11 @@ export const GenesisState = {
     if (object.belongingList !== undefined && object.belongingList !== null) {
       for (const e of object.belongingList) {
         message.belongingList.push(Belonging.fromPartial(e));
+      }
+    }
+    if (object.countryList !== undefined && object.countryList !== null) {
+      for (const e of object.countryList) {
+        message.countryList.push(Country.fromPartial(e));
       }
     }
     return message;

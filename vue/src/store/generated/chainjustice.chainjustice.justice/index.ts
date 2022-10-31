@@ -1,10 +1,11 @@
 import { Client, registry, MissingWalletError } from 'chain-justice-chain-justice-client-ts'
 
 import { Belonging } from "chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice/types"
+import { Country } from "chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice/types"
 import { Params } from "chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice/types"
 
 
-export { Belonging, Params };
+export { Belonging, Country, Params };
 
 function initClient(vuexGetters) {
 	return new Client(vuexGetters['common/env/getEnv'], vuexGetters['common/wallet/signer'])
@@ -38,9 +39,12 @@ const getDefaultState = () => {
 				Params: {},
 				Belonging: {},
 				BelongingAll: {},
+				Country: {},
+				CountryAll: {},
 				
 				_Structure: {
 						Belonging: getStructure(Belonging.fromPartial({})),
+						Country: getStructure(Country.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
 		},
@@ -87,6 +91,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.BelongingAll[JSON.stringify(params)] ?? {}
+		},
+				getCountry: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Country[JSON.stringify(params)] ?? {}
+		},
+				getCountryAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.CountryAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -192,19 +208,54 @@ export default {
 		},
 		
 		
-		async sendMsgCreateBelonging({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryCountry({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const client=await initClient(rootGetters)
-				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgCreateBelonging({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.ChainjusticeChainjusticeJustice.query.queryCountry( key.index)).data
+				
+					
+				commit('QUERY', { query: 'Country', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryCountry', payload: { options: { all }, params: {...key},query }})
+				return getters['getCountry']( { params: {...key}, query}) ?? {}
 			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateBelonging:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateBelonging:Send Could not broadcast Tx: '+ e.message)
-				}
+				throw new Error('QueryClient:QueryCountry API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryCountryAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.ChainjusticeChainjusticeJustice.query.queryCountryAll(query ?? undefined)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await client.ChainjusticeChainjusticeJustice.query.queryCountryAll({...query ?? {}, 'pagination.key':(<any> value).pagination.next_key} as any)).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'CountryAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryCountryAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getCountryAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryCountryAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
 		async sendMsgDeleteBelonging({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -231,20 +282,59 @@ export default {
 				}
 			}
 		},
-		
-		async MsgCreateBelonging({ rootGetters }, { value }) {
+		async sendMsgUpdateCountry({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgCreateBelonging({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgUpdateCountry({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateBelonging:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateBelonging:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgUpdateCountry:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgUpdateCountry:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		async sendMsgCreateCountry({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgCreateCountry({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateCountry:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateCountry:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgDeleteCountry({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgDeleteCountry({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDeleteCountry:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgDeleteCountry:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgCreateBelonging({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgCreateBelonging({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateBelonging:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateBelonging:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		
 		async MsgDeleteBelonging({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -268,6 +358,58 @@ export default {
 					throw new Error('TxClient:MsgUpdateBelonging:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgUpdateBelonging:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgUpdateCountry({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgUpdateCountry({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateCountry:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgUpdateCountry:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateCountry({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgCreateCountry({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateCountry:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateCountry:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgDeleteCountry({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgDeleteCountry({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDeleteCountry:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgDeleteCountry:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateBelonging({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgCreateBelonging({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateBelonging:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateBelonging:Create Could not create message: ' + e.message)
 				}
 			}
 		},

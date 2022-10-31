@@ -6,6 +6,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
+import { Country } from "../justice/country";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -32,6 +33,23 @@ export interface QueryAllBelongingRequest {
 
 export interface QueryAllBelongingResponse {
   belonging: Belonging[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetCountryRequest {
+  index: string;
+}
+
+export interface QueryGetCountryResponse {
+  country: Country | undefined;
+}
+
+export interface QueryAllCountryRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllCountryResponse {
+  country: Country[];
   pagination: PageResponse | undefined;
 }
 
@@ -446,6 +464,296 @@ export const QueryAllBelongingResponse = {
   },
 };
 
+const baseQueryGetCountryRequest: object = { index: "" };
+
+export const QueryGetCountryRequest = {
+  encode(
+    message: QueryGetCountryRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.index !== "") {
+      writer.uint32(10).string(message.index);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetCountryRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetCountryRequest } as QueryGetCountryRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.index = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCountryRequest {
+    const message = { ...baseQueryGetCountryRequest } as QueryGetCountryRequest;
+    if (object.index !== undefined && object.index !== null) {
+      message.index = String(object.index);
+    } else {
+      message.index = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCountryRequest): unknown {
+    const obj: any = {};
+    message.index !== undefined && (obj.index = message.index);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCountryRequest>
+  ): QueryGetCountryRequest {
+    const message = { ...baseQueryGetCountryRequest } as QueryGetCountryRequest;
+    if (object.index !== undefined && object.index !== null) {
+      message.index = object.index;
+    } else {
+      message.index = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCountryResponse: object = {};
+
+export const QueryGetCountryResponse = {
+  encode(
+    message: QueryGetCountryResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.country !== undefined) {
+      Country.encode(message.country, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetCountryResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCountryResponse,
+    } as QueryGetCountryResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.country = Country.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCountryResponse {
+    const message = {
+      ...baseQueryGetCountryResponse,
+    } as QueryGetCountryResponse;
+    if (object.country !== undefined && object.country !== null) {
+      message.country = Country.fromJSON(object.country);
+    } else {
+      message.country = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCountryResponse): unknown {
+    const obj: any = {};
+    message.country !== undefined &&
+      (obj.country = message.country
+        ? Country.toJSON(message.country)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCountryResponse>
+  ): QueryGetCountryResponse {
+    const message = {
+      ...baseQueryGetCountryResponse,
+    } as QueryGetCountryResponse;
+    if (object.country !== undefined && object.country !== null) {
+      message.country = Country.fromPartial(object.country);
+    } else {
+      message.country = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCountryRequest: object = {};
+
+export const QueryAllCountryRequest = {
+  encode(
+    message: QueryAllCountryRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllCountryRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryAllCountryRequest } as QueryAllCountryRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCountryRequest {
+    const message = { ...baseQueryAllCountryRequest } as QueryAllCountryRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCountryRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCountryRequest>
+  ): QueryAllCountryRequest {
+    const message = { ...baseQueryAllCountryRequest } as QueryAllCountryRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllCountryResponse: object = {};
+
+export const QueryAllCountryResponse = {
+  encode(
+    message: QueryAllCountryResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.country) {
+      Country.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllCountryResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllCountryResponse,
+    } as QueryAllCountryResponse;
+    message.country = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.country.push(Country.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllCountryResponse {
+    const message = {
+      ...baseQueryAllCountryResponse,
+    } as QueryAllCountryResponse;
+    message.country = [];
+    if (object.country !== undefined && object.country !== null) {
+      for (const e of object.country) {
+        message.country.push(Country.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllCountryResponse): unknown {
+    const obj: any = {};
+    if (message.country) {
+      obj.country = message.country.map((e) =>
+        e ? Country.toJSON(e) : undefined
+      );
+    } else {
+      obj.country = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllCountryResponse>
+  ): QueryAllCountryResponse {
+    const message = {
+      ...baseQueryAllCountryResponse,
+    } as QueryAllCountryResponse;
+    message.country = [];
+    if (object.country !== undefined && object.country !== null) {
+      for (const e of object.country) {
+        message.country.push(Country.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -458,6 +766,10 @@ export interface Query {
   BelongingAll(
     request: QueryAllBelongingRequest
   ): Promise<QueryAllBelongingResponse>;
+  /** Queries a Country by index. */
+  Country(request: QueryGetCountryRequest): Promise<QueryGetCountryResponse>;
+  /** Queries a list of Country items. */
+  CountryAll(request: QueryAllCountryRequest): Promise<QueryAllCountryResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -500,6 +812,32 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllBelongingResponse.decode(new Reader(data))
+    );
+  }
+
+  Country(request: QueryGetCountryRequest): Promise<QueryGetCountryResponse> {
+    const data = QueryGetCountryRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Query",
+      "Country",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetCountryResponse.decode(new Reader(data))
+    );
+  }
+
+  CountryAll(
+    request: QueryAllCountryRequest
+  ): Promise<QueryAllCountryResponse> {
+    const data = QueryAllCountryRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Query",
+      "CountryAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllCountryResponse.decode(new Reader(data))
     );
   }
 }

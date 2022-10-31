@@ -4,6 +4,7 @@ package chainjustice.chainjustice.justice;
 import "gogoproto/gogo.proto";
 import "justice/params.proto";
 import "justice/belonging.proto";
+import "justice/country.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -12,5 +13,6 @@ option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated Belonging belongingList = 2 [(gogoproto.nullable) = false];
+  repeated Country countryList = 3 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }
