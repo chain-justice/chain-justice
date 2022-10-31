@@ -46210,6 +46210,8 @@ definitions:
     type: object
   chainjustice.chainjustice.justice.MsgMsgFundCountryResponse:
     type: object
+  chainjustice.chainjustice.justice.MsgMsgLeaveCountryResponse:
+    type: object
   chainjustice.chainjustice.justice.MsgUpdateBelongingResponse:
     type: object
   chainjustice.chainjustice.justice.MsgUpdateCountryResponse:

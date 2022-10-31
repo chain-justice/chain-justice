@@ -84,6 +84,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgMsgBelongContry int = 100
 
+	opWeightMsgMsgLeaveCountry = "op_weight_msg_msg_leave_country"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgMsgLeaveCountry int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -323,6 +327,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgMsgBelongContry,
 		justicesimulation.SimulateMsgMsgBelongContry(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgMsgLeaveCountry int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgMsgLeaveCountry, &weightMsgMsgLeaveCountry, nil,
+		func(_ *rand.Rand) {
+			weightMsgMsgLeaveCountry = defaultWeightMsgMsgLeaveCountry
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgMsgLeaveCountry,
+		justicesimulation.SimulateMsgMsgLeaveCountry(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
