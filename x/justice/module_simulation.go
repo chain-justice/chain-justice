@@ -72,6 +72,14 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteInvasion int = 100
 
+	opWeightMsgMsgFundCountry = "op_weight_msg_msg_fund_country"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgMsgFundCountry int = 100
+
+	opWeightMsgMsgFallCountry = "op_weight_msg_msg_fall_country"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgMsgFallCountry int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -278,6 +286,28 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteInvasion,
 		justicesimulation.SimulateMsgDeleteInvasion(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgMsgFundCountry int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgMsgFundCountry, &weightMsgMsgFundCountry, nil,
+		func(_ *rand.Rand) {
+			weightMsgMsgFundCountry = defaultWeightMsgMsgFundCountry
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgMsgFundCountry,
+		justicesimulation.SimulateMsgMsgFundCountry(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgMsgFallCountry int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgMsgFallCountry, &weightMsgMsgFallCountry, nil,
+		func(_ *rand.Rand) {
+			weightMsgMsgFallCountry = defaultWeightMsgMsgFallCountry
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgMsgFallCountry,
+		justicesimulation.SimulateMsgMsgFallCountry(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
