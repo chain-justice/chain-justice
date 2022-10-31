@@ -1,0 +1,12 @@
+syntax = "proto3";
+package chainjustice.chainjustice.justice;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}
