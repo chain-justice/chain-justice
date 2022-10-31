@@ -168,7 +168,7 @@ paths:
           type: boolean
       tags:
         - Query
-  '/chain-justice/chain-justice/justice/belonging/{index}':
+  /chain-justice/chain-justice/justice/belonging/{index}:
     get:
       summary: Queries a Belonging by index.
       operationId: ChainjusticeChainjusticeJusticeBelonging
@@ -342,7 +342,7 @@ paths:
           type: boolean
       tags:
         - Query
-  '/chain-justice/chain-justice/justice/country/{index}':
+  /chain-justice/chain-justice/justice/country/{index}:
     get:
       summary: Queries a Country by index.
       operationId: ChainjusticeChainjusticeJusticeCountry
@@ -519,7 +519,7 @@ paths:
           type: boolean
       tags:
         - Query
-  '/chain-justice/chain-justice/justice/invasion/{id}':
+  /chain-justice/chain-justice/justice/invasion/{id}:
     get:
       summary: Queries a Invasion by id.
       operationId: ChainjusticeChainjusticeJusticeInvasion
@@ -734,7 +734,7 @@ paths:
           type: boolean
       tags:
         - Query
-  '/chain-justice/chain-justice/justice/prepare/{id}':
+  /chain-justice/chain-justice/justice/prepare/{id}:
     get:
       summary: Queries a Prepare by id.
       operationId: ChainjusticeChainjusticeJusticePrepare
