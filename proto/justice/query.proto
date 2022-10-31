@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "justice/params.proto";
 import "justice/belonging.proto";
 import "justice/country.proto";
+import "justice/prepare.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -35,6 +36,16 @@ service Query {
 	// Queries a list of Country items.
 	rpc CountryAll(QueryAllCountryRequest) returns (QueryAllCountryResponse) {
 		option (google.api.http).get = "/chain-justice/chain-justice/justice/country";
+	}
+
+// Queries a Prepare by id.
+	rpc Prepare(QueryGetPrepareRequest) returns (QueryGetPrepareResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/prepare/{id}";
+	}
+
+	// Queries a list of Prepare items.
+	rpc PrepareAll(QueryAllPrepareRequest) returns (QueryAllPrepareResponse) {
+		option (google.api.http).get = "/chain-justice/chain-justice/justice/prepare";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -82,6 +93,23 @@ message QueryAllCountryRequest {
 
 message QueryAllCountryResponse {
 	repeated Country country = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetPrepareRequest {
+	uint64 id = 1;
+}
+
+message QueryGetPrepareResponse {
+	Prepare Prepare = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPrepareRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPrepareResponse {
+	repeated Prepare Prepare = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

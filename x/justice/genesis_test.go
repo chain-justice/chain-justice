@@ -30,6 +30,15 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		PrepareList: []types.Prepare{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		PrepareCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -43,5 +52,7 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.BelongingList, got.BelongingList)
 	require.ElementsMatch(t, genesisState.CountryList, got.CountryList)
+	require.ElementsMatch(t, genesisState.PrepareList, got.PrepareList)
+	require.Equal(t, genesisState.PrepareCount, got.PrepareCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

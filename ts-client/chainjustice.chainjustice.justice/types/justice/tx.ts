@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
+import { Reader, util, configure, Writer } from "protobufjs/minimal";
+import * as Long from "long";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -52,6 +53,32 @@ export interface MsgDeleteCountry {
 }
 
 export interface MsgDeleteCountryResponse {}
+
+export interface MsgCreatePrepare {
+  creator: string;
+  address: string;
+  requireBlockHeigt: string;
+}
+
+export interface MsgCreatePrepareResponse {
+  id: number;
+}
+
+export interface MsgUpdatePrepare {
+  creator: string;
+  id: number;
+  address: string;
+  requireBlockHeigt: string;
+}
+
+export interface MsgUpdatePrepareResponse {}
+
+export interface MsgDeletePrepare {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeletePrepareResponse {}
 
 const baseMsgCreateBelonging: object = {
   creator: "",
@@ -962,6 +989,469 @@ export const MsgDeleteCountryResponse = {
   },
 };
 
+const baseMsgCreatePrepare: object = {
+  creator: "",
+  address: "",
+  requireBlockHeigt: "",
+};
+
+export const MsgCreatePrepare = {
+  encode(message: MsgCreatePrepare, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.address !== "") {
+      writer.uint32(18).string(message.address);
+    }
+    if (message.requireBlockHeigt !== "") {
+      writer.uint32(26).string(message.requireBlockHeigt);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreatePrepare {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreatePrepare } as MsgCreatePrepare;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.address = reader.string();
+          break;
+        case 3:
+          message.requireBlockHeigt = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreatePrepare {
+    const message = { ...baseMsgCreatePrepare } as MsgCreatePrepare;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = String(object.address);
+    } else {
+      message.address = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = String(object.requireBlockHeigt);
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreatePrepare): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.address !== undefined && (obj.address = message.address);
+    message.requireBlockHeigt !== undefined &&
+      (obj.requireBlockHeigt = message.requireBlockHeigt);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreatePrepare>): MsgCreatePrepare {
+    const message = { ...baseMsgCreatePrepare } as MsgCreatePrepare;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    } else {
+      message.address = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = object.requireBlockHeigt;
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreatePrepareResponse: object = { id: 0 };
+
+export const MsgCreatePrepareResponse = {
+  encode(
+    message: MsgCreatePrepareResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreatePrepareResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreatePrepareResponse,
+    } as MsgCreatePrepareResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreatePrepareResponse {
+    const message = {
+      ...baseMsgCreatePrepareResponse,
+    } as MsgCreatePrepareResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreatePrepareResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreatePrepareResponse>
+  ): MsgCreatePrepareResponse {
+    const message = {
+      ...baseMsgCreatePrepareResponse,
+    } as MsgCreatePrepareResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdatePrepare: object = {
+  creator: "",
+  id: 0,
+  address: "",
+  requireBlockHeigt: "",
+};
+
+export const MsgUpdatePrepare = {
+  encode(message: MsgUpdatePrepare, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.address !== "") {
+      writer.uint32(26).string(message.address);
+    }
+    if (message.requireBlockHeigt !== "") {
+      writer.uint32(34).string(message.requireBlockHeigt);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdatePrepare {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdatePrepare } as MsgUpdatePrepare;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.address = reader.string();
+          break;
+        case 4:
+          message.requireBlockHeigt = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdatePrepare {
+    const message = { ...baseMsgUpdatePrepare } as MsgUpdatePrepare;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = String(object.address);
+    } else {
+      message.address = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = String(object.requireBlockHeigt);
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdatePrepare): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.address !== undefined && (obj.address = message.address);
+    message.requireBlockHeigt !== undefined &&
+      (obj.requireBlockHeigt = message.requireBlockHeigt);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdatePrepare>): MsgUpdatePrepare {
+    const message = { ...baseMsgUpdatePrepare } as MsgUpdatePrepare;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.address !== undefined && object.address !== null) {
+      message.address = object.address;
+    } else {
+      message.address = "";
+    }
+    if (
+      object.requireBlockHeigt !== undefined &&
+      object.requireBlockHeigt !== null
+    ) {
+      message.requireBlockHeigt = object.requireBlockHeigt;
+    } else {
+      message.requireBlockHeigt = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdatePrepareResponse: object = {};
+
+export const MsgUpdatePrepareResponse = {
+  encode(
+    _: MsgUpdatePrepareResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgUpdatePrepareResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgUpdatePrepareResponse,
+    } as MsgUpdatePrepareResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdatePrepareResponse {
+    const message = {
+      ...baseMsgUpdatePrepareResponse,
+    } as MsgUpdatePrepareResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdatePrepareResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgUpdatePrepareResponse>
+  ): MsgUpdatePrepareResponse {
+    const message = {
+      ...baseMsgUpdatePrepareResponse,
+    } as MsgUpdatePrepareResponse;
+    return message;
+  },
+};
+
+const baseMsgDeletePrepare: object = { creator: "", id: 0 };
+
+export const MsgDeletePrepare = {
+  encode(message: MsgDeletePrepare, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeletePrepare {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeletePrepare } as MsgDeletePrepare;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeletePrepare {
+    const message = { ...baseMsgDeletePrepare } as MsgDeletePrepare;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeletePrepare): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgDeletePrepare>): MsgDeletePrepare {
+    const message = { ...baseMsgDeletePrepare } as MsgDeletePrepare;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeletePrepareResponse: object = {};
+
+export const MsgDeletePrepareResponse = {
+  encode(
+    _: MsgDeletePrepareResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgDeletePrepareResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgDeletePrepareResponse,
+    } as MsgDeletePrepareResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeletePrepareResponse {
+    const message = {
+      ...baseMsgDeletePrepareResponse,
+    } as MsgDeletePrepareResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeletePrepareResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgDeletePrepareResponse>
+  ): MsgDeletePrepareResponse {
+    const message = {
+      ...baseMsgDeletePrepareResponse,
+    } as MsgDeletePrepareResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateBelonging(
@@ -975,8 +1465,11 @@ export interface Msg {
   ): Promise<MsgDeleteBelongingResponse>;
   CreateCountry(request: MsgCreateCountry): Promise<MsgCreateCountryResponse>;
   UpdateCountry(request: MsgUpdateCountry): Promise<MsgUpdateCountryResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteCountry(request: MsgDeleteCountry): Promise<MsgDeleteCountryResponse>;
+  CreatePrepare(request: MsgCreatePrepare): Promise<MsgCreatePrepareResponse>;
+  UpdatePrepare(request: MsgUpdatePrepare): Promise<MsgUpdatePrepareResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeletePrepare(request: MsgDeletePrepare): Promise<MsgDeletePrepareResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -1061,6 +1554,42 @@ export class MsgClientImpl implements Msg {
       MsgDeleteCountryResponse.decode(new Reader(data))
     );
   }
+
+  CreatePrepare(request: MsgCreatePrepare): Promise<MsgCreatePrepareResponse> {
+    const data = MsgCreatePrepare.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Msg",
+      "CreatePrepare",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreatePrepareResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdatePrepare(request: MsgUpdatePrepare): Promise<MsgUpdatePrepareResponse> {
+    const data = MsgUpdatePrepare.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Msg",
+      "UpdatePrepare",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdatePrepareResponse.decode(new Reader(data))
+    );
+  }
+
+  DeletePrepare(request: MsgDeletePrepare): Promise<MsgDeletePrepareResponse> {
+    const data = MsgDeletePrepare.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Msg",
+      "DeletePrepare",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeletePrepareResponse.decode(new Reader(data))
+    );
+  }
 }
 
 interface Rpc {
@@ -1070,6 +1599,16 @@ interface Rpc {
     data: Uint8Array
   ): Promise<Uint8Array>;
 }
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -1081,3 +1620,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

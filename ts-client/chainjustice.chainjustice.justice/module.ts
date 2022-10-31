@@ -7,18 +7,27 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgDeleteBelonging } from "./types/justice/tx";
+import { MsgDeletePrepare } from "./types/justice/tx";
+import { MsgCreatePrepare } from "./types/justice/tx";
 import { MsgUpdateBelonging } from "./types/justice/tx";
+import { MsgDeleteBelonging } from "./types/justice/tx";
 import { MsgUpdateCountry } from "./types/justice/tx";
-import { MsgCreateCountry } from "./types/justice/tx";
 import { MsgDeleteCountry } from "./types/justice/tx";
+import { MsgCreateCountry } from "./types/justice/tx";
 import { MsgCreateBelonging } from "./types/justice/tx";
+import { MsgUpdatePrepare } from "./types/justice/tx";
 
 
-export { MsgDeleteBelonging, MsgUpdateBelonging, MsgUpdateCountry, MsgCreateCountry, MsgDeleteCountry, MsgCreateBelonging };
+export { MsgDeletePrepare, MsgCreatePrepare, MsgUpdateBelonging, MsgDeleteBelonging, MsgUpdateCountry, MsgDeleteCountry, MsgCreateCountry, MsgCreateBelonging, MsgUpdatePrepare };
 
-type sendMsgDeleteBelongingParams = {
-  value: MsgDeleteBelonging,
+type sendMsgDeletePrepareParams = {
+  value: MsgDeletePrepare,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgCreatePrepareParams = {
+  value: MsgCreatePrepare,
   fee?: StdFee,
   memo?: string
 };
@@ -29,14 +38,14 @@ type sendMsgUpdateBelongingParams = {
   memo?: string
 };
 
-type sendMsgUpdateCountryParams = {
-  value: MsgUpdateCountry,
+type sendMsgDeleteBelongingParams = {
+  value: MsgDeleteBelonging,
   fee?: StdFee,
   memo?: string
 };
 
-type sendMsgCreateCountryParams = {
-  value: MsgCreateCountry,
+type sendMsgUpdateCountryParams = {
+  value: MsgUpdateCountry,
   fee?: StdFee,
   memo?: string
 };
@@ -47,35 +56,59 @@ type sendMsgDeleteCountryParams = {
   memo?: string
 };
 
+type sendMsgCreateCountryParams = {
+  value: MsgCreateCountry,
+  fee?: StdFee,
+  memo?: string
+};
+
 type sendMsgCreateBelongingParams = {
   value: MsgCreateBelonging,
   fee?: StdFee,
   memo?: string
 };
 
+type sendMsgUpdatePrepareParams = {
+  value: MsgUpdatePrepare,
+  fee?: StdFee,
+  memo?: string
+};
 
-type msgDeleteBelongingParams = {
-  value: MsgDeleteBelonging,
+
+type msgDeletePrepareParams = {
+  value: MsgDeletePrepare,
+};
+
+type msgCreatePrepareParams = {
+  value: MsgCreatePrepare,
 };
 
 type msgUpdateBelongingParams = {
   value: MsgUpdateBelonging,
 };
 
-type msgUpdateCountryParams = {
-  value: MsgUpdateCountry,
+type msgDeleteBelongingParams = {
+  value: MsgDeleteBelonging,
 };
 
-type msgCreateCountryParams = {
-  value: MsgCreateCountry,
+type msgUpdateCountryParams = {
+  value: MsgUpdateCountry,
 };
 
 type msgDeleteCountryParams = {
   value: MsgDeleteCountry,
 };
 
+type msgCreateCountryParams = {
+  value: MsgCreateCountry,
+};
+
 type msgCreateBelongingParams = {
   value: MsgCreateBelonging,
+};
+
+type msgUpdatePrepareParams = {
+  value: MsgUpdatePrepare,
 };
 
 
@@ -96,17 +129,31 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
-		async sendMsgDeleteBelonging({ value, fee, memo }: sendMsgDeleteBelongingParams): Promise<DeliverTxResponse> {
+		async sendMsgDeletePrepare({ value, fee, memo }: sendMsgDeletePrepareParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgDeleteBelonging: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgDeletePrepare: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgDeleteBelonging({ value: MsgDeleteBelonging.fromPartial(value) })
+				let msg = this.msgDeletePrepare({ value: MsgDeletePrepare.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgDeleteBelonging: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgDeletePrepare: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgCreatePrepare({ value, fee, memo }: sendMsgCreatePrepareParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreatePrepare: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreatePrepare({ value: MsgCreatePrepare.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreatePrepare: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -124,6 +171,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		async sendMsgDeleteBelonging({ value, fee, memo }: sendMsgDeleteBelongingParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgDeleteBelonging: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgDeleteBelonging({ value: MsgDeleteBelonging.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgDeleteBelonging: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		async sendMsgUpdateCountry({ value, fee, memo }: sendMsgUpdateCountryParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgUpdateCountry: Unable to sign Tx. Signer is not present.')
@@ -135,20 +196,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
 				throw new Error('TxClient:sendMsgUpdateCountry: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
-		async sendMsgCreateCountry({ value, fee, memo }: sendMsgCreateCountryParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateCountry: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateCountry({ value: MsgCreateCountry.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateCountry: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -166,6 +213,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		async sendMsgCreateCountry({ value, fee, memo }: sendMsgCreateCountryParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateCountry: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateCountry({ value: MsgCreateCountry.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateCountry: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		async sendMsgCreateBelonging({ value, fee, memo }: sendMsgCreateBelongingParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgCreateBelonging: Unable to sign Tx. Signer is not present.')
@@ -180,12 +241,34 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		
-		msgDeleteBelonging({ value }: msgDeleteBelongingParams): EncodeObject {
-			try {
-				return { typeUrl: "/chainjustice.chainjustice.justice.MsgDeleteBelonging", value: MsgDeleteBelonging.fromPartial( value ) }  
+		async sendMsgUpdatePrepare({ value, fee, memo }: sendMsgUpdatePrepareParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgUpdatePrepare: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgUpdatePrepare({ value: MsgUpdatePrepare.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:MsgDeleteBelonging: Could not create message: ' + e.message)
+				throw new Error('TxClient:sendMsgUpdatePrepare: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		
+		msgDeletePrepare({ value }: msgDeletePrepareParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgDeletePrepare", value: MsgDeletePrepare.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgDeletePrepare: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgCreatePrepare({ value }: msgCreatePrepareParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreatePrepare", value: MsgCreatePrepare.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreatePrepare: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -197,19 +280,19 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		msgDeleteBelonging({ value }: msgDeleteBelongingParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgDeleteBelonging", value: MsgDeleteBelonging.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgDeleteBelonging: Could not create message: ' + e.message)
+			}
+		},
+		
 		msgUpdateCountry({ value }: msgUpdateCountryParams): EncodeObject {
 			try {
 				return { typeUrl: "/chainjustice.chainjustice.justice.MsgUpdateCountry", value: MsgUpdateCountry.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgUpdateCountry: Could not create message: ' + e.message)
-			}
-		},
-		
-		msgCreateCountry({ value }: msgCreateCountryParams): EncodeObject {
-			try {
-				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateCountry", value: MsgCreateCountry.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateCountry: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -221,11 +304,27 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		msgCreateCountry({ value }: msgCreateCountryParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateCountry", value: MsgCreateCountry.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreateCountry: Could not create message: ' + e.message)
+			}
+		},
+		
 		msgCreateBelonging({ value }: msgCreateBelongingParams): EncodeObject {
 			try {
 				return { typeUrl: "/chainjustice.chainjustice.justice.MsgCreateBelonging", value: MsgCreateBelonging.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgCreateBelonging: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgUpdatePrepare({ value }: msgUpdatePrepareParams): EncodeObject {
+			try {
+				return { typeUrl: "/chainjustice.chainjustice.justice.MsgUpdatePrepare", value: MsgUpdatePrepare.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgUpdatePrepare: Could not create message: ' + e.message)
 			}
 		},
 		

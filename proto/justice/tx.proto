@@ -3,6 +3,7 @@ package chainjustice.chainjustice.justice;
 
 import "justice/belonging.proto";
 import "justice/country.proto";
+import "justice/prepare.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
@@ -15,6 +16,9 @@ service Msg {
   rpc CreateCountry(MsgCreateCountry) returns (MsgCreateCountryResponse);
   rpc UpdateCountry(MsgUpdateCountry) returns (MsgUpdateCountryResponse);
   rpc DeleteCountry(MsgDeleteCountry) returns (MsgDeleteCountryResponse);
+rpc CreatePrepare(MsgCreatePrepare) returns (MsgCreatePrepareResponse);
+  rpc UpdatePrepare(MsgUpdatePrepare) returns (MsgUpdatePrepareResponse);
+  rpc DeletePrepare(MsgDeletePrepare) returns (MsgDeletePrepareResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -65,5 +69,31 @@ message MsgDeleteCountry {
   string index = 2;
 }
 message MsgDeleteCountryResponse {}
+
+message MsgCreatePrepare {
+  string creator = 1;
+  string address = 2;
+  string requireBlockHeigt = 3;
+}
+
+message MsgCreatePrepareResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdatePrepare {
+  string creator = 1;
+  uint64 id = 2;
+  string address = 3;
+  string requireBlockHeigt = 4;
+}
+
+message MsgUpdatePrepareResponse {}
+
+message MsgDeletePrepare {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeletePrepareResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

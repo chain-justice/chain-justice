@@ -12,6 +12,7 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		BelongingList: []Belonging{},
 		CountryList:   []Country{},
+		PrepareList:   []Prepare{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -39,6 +40,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for country")
 		}
 		countryIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated ID in prepare
+	prepareIdMap := make(map[uint64]bool)
+	prepareCount := gs.GetPrepareCount()
+	for _, elem := range gs.PrepareList {
+		if _, ok := prepareIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for prepare")
+		}
+		if elem.Id >= prepareCount {
+			return fmt.Errorf("prepare id should be lower or equal than the last id")
+		}
+		prepareIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

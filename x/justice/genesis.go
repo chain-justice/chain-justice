@@ -16,6 +16,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.CountryList {
 		k.SetCountry(ctx, elem)
 	}
+	// Set all the prepare
+	for _, elem := range genState.PrepareList {
+		k.SetPrepare(ctx, elem)
+	}
+
+	// Set prepare count
+	k.SetPrepareCount(ctx, genState.PrepareCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -27,6 +34,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 
 	genesis.BelongingList = k.GetAllBelonging(ctx)
 	genesis.CountryList = k.GetAllCountry(ctx)
+	genesis.PrepareList = k.GetAllPrepare(ctx)
+	genesis.PrepareCount = k.GetPrepareCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

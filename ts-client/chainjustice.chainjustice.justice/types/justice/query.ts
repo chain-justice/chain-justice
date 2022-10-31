@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
+import { Reader, util, configure, Writer } from "protobufjs/minimal";
+import * as Long from "long";
 import { Params } from "../justice/params";
 import { Belonging } from "../justice/belonging";
 import {
@@ -7,6 +8,7 @@ import {
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
 import { Country } from "../justice/country";
+import { Prepare } from "../justice/prepare";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -50,6 +52,23 @@ export interface QueryAllCountryRequest {
 
 export interface QueryAllCountryResponse {
   country: Country[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetPrepareRequest {
+  id: number;
+}
+
+export interface QueryGetPrepareResponse {
+  Prepare: Prepare | undefined;
+}
+
+export interface QueryAllPrepareRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllPrepareResponse {
+  Prepare: Prepare[];
   pagination: PageResponse | undefined;
 }
 
@@ -754,6 +773,296 @@ export const QueryAllCountryResponse = {
   },
 };
 
+const baseQueryGetPrepareRequest: object = { id: 0 };
+
+export const QueryGetPrepareRequest = {
+  encode(
+    message: QueryGetPrepareRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetPrepareRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetPrepareRequest } as QueryGetPrepareRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetPrepareRequest {
+    const message = { ...baseQueryGetPrepareRequest } as QueryGetPrepareRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetPrepareRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetPrepareRequest>
+  ): QueryGetPrepareRequest {
+    const message = { ...baseQueryGetPrepareRequest } as QueryGetPrepareRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetPrepareResponse: object = {};
+
+export const QueryGetPrepareResponse = {
+  encode(
+    message: QueryGetPrepareResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.Prepare !== undefined) {
+      Prepare.encode(message.Prepare, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetPrepareResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetPrepareResponse,
+    } as QueryGetPrepareResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Prepare = Prepare.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetPrepareResponse {
+    const message = {
+      ...baseQueryGetPrepareResponse,
+    } as QueryGetPrepareResponse;
+    if (object.Prepare !== undefined && object.Prepare !== null) {
+      message.Prepare = Prepare.fromJSON(object.Prepare);
+    } else {
+      message.Prepare = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetPrepareResponse): unknown {
+    const obj: any = {};
+    message.Prepare !== undefined &&
+      (obj.Prepare = message.Prepare
+        ? Prepare.toJSON(message.Prepare)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetPrepareResponse>
+  ): QueryGetPrepareResponse {
+    const message = {
+      ...baseQueryGetPrepareResponse,
+    } as QueryGetPrepareResponse;
+    if (object.Prepare !== undefined && object.Prepare !== null) {
+      message.Prepare = Prepare.fromPartial(object.Prepare);
+    } else {
+      message.Prepare = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllPrepareRequest: object = {};
+
+export const QueryAllPrepareRequest = {
+  encode(
+    message: QueryAllPrepareRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllPrepareRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryAllPrepareRequest } as QueryAllPrepareRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllPrepareRequest {
+    const message = { ...baseQueryAllPrepareRequest } as QueryAllPrepareRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllPrepareRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllPrepareRequest>
+  ): QueryAllPrepareRequest {
+    const message = { ...baseQueryAllPrepareRequest } as QueryAllPrepareRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllPrepareResponse: object = {};
+
+export const QueryAllPrepareResponse = {
+  encode(
+    message: QueryAllPrepareResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.Prepare) {
+      Prepare.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryAllPrepareResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllPrepareResponse,
+    } as QueryAllPrepareResponse;
+    message.Prepare = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Prepare.push(Prepare.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllPrepareResponse {
+    const message = {
+      ...baseQueryAllPrepareResponse,
+    } as QueryAllPrepareResponse;
+    message.Prepare = [];
+    if (object.Prepare !== undefined && object.Prepare !== null) {
+      for (const e of object.Prepare) {
+        message.Prepare.push(Prepare.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllPrepareResponse): unknown {
+    const obj: any = {};
+    if (message.Prepare) {
+      obj.Prepare = message.Prepare.map((e) =>
+        e ? Prepare.toJSON(e) : undefined
+      );
+    } else {
+      obj.Prepare = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllPrepareResponse>
+  ): QueryAllPrepareResponse {
+    const message = {
+      ...baseQueryAllPrepareResponse,
+    } as QueryAllPrepareResponse;
+    message.Prepare = [];
+    if (object.Prepare !== undefined && object.Prepare !== null) {
+      for (const e of object.Prepare) {
+        message.Prepare.push(Prepare.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -770,6 +1079,10 @@ export interface Query {
   Country(request: QueryGetCountryRequest): Promise<QueryGetCountryResponse>;
   /** Queries a list of Country items. */
   CountryAll(request: QueryAllCountryRequest): Promise<QueryAllCountryResponse>;
+  /** Queries a Prepare by id. */
+  Prepare(request: QueryGetPrepareRequest): Promise<QueryGetPrepareResponse>;
+  /** Queries a list of Prepare items. */
+  PrepareAll(request: QueryAllPrepareRequest): Promise<QueryAllPrepareResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -840,6 +1153,32 @@ export class QueryClientImpl implements Query {
       QueryAllCountryResponse.decode(new Reader(data))
     );
   }
+
+  Prepare(request: QueryGetPrepareRequest): Promise<QueryGetPrepareResponse> {
+    const data = QueryGetPrepareRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Query",
+      "Prepare",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetPrepareResponse.decode(new Reader(data))
+    );
+  }
+
+  PrepareAll(
+    request: QueryAllPrepareRequest
+  ): Promise<QueryAllPrepareResponse> {
+    const data = QueryAllPrepareRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "chainjustice.chainjustice.justice.Query",
+      "PrepareAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllPrepareResponse.decode(new Reader(data))
+    );
+  }
 }
 
 interface Rpc {
@@ -849,6 +1188,16 @@ interface Rpc {
     data: Uint8Array
   ): Promise<Uint8Array>;
 }
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -860,3 +1209,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}
