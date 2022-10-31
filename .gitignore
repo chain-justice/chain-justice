@@ -1,6 +1,9 @@
 vue/node_modules
 vue/dist
+ts-client
 release/
 .idea/
 .vscode/
 .DS_Store
+vue/src/store/generated
+config.yml
