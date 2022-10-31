@@ -8,27 +8,15 @@ import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
 import { MsgSubmitProposal } from "./types/cosmos/gov/v1/tx";
-import { MsgVote } from "./types/cosmos/gov/v1/tx";
-import { MsgDeposit } from "./types/cosmos/gov/v1/tx";
 import { MsgVoteWeighted } from "./types/cosmos/gov/v1/tx";
+import { MsgDeposit } from "./types/cosmos/gov/v1/tx";
+import { MsgVote } from "./types/cosmos/gov/v1/tx";
 
 
-export { MsgSubmitProposal, MsgVote, MsgDeposit, MsgVoteWeighted };
+export { MsgSubmitProposal, MsgVoteWeighted, MsgDeposit, MsgVote };
 
 type sendMsgSubmitProposalParams = {
   value: MsgSubmitProposal,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgVoteParams = {
-  value: MsgVote,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgDepositParams = {
-  value: MsgDeposit,
   fee?: StdFee,
   memo?: string
 };
@@ -39,21 +27,33 @@ type sendMsgVoteWeightedParams = {
   memo?: string
 };
 
+type sendMsgDepositParams = {
+  value: MsgDeposit,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgVoteParams = {
+  value: MsgVote,
+  fee?: StdFee,
+  memo?: string
+};
+
 
 type msgSubmitProposalParams = {
   value: MsgSubmitProposal,
 };
 
-type msgVoteParams = {
-  value: MsgVote,
+type msgVoteWeightedParams = {
+  value: MsgVoteWeighted,
 };
 
 type msgDepositParams = {
   value: MsgDeposit,
 };
 
-type msgVoteWeightedParams = {
-  value: MsgVoteWeighted,
+type msgVoteParams = {
+  value: MsgVote,
 };
 
 
@@ -88,17 +88,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgVote({ value, fee, memo }: sendMsgVoteParams): Promise<DeliverTxResponse> {
+		async sendMsgVoteWeighted({ value, fee, memo }: sendMsgVoteWeightedParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgVote: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgVoteWeighted: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgVote({ value: MsgVote.fromPartial(value) })
+				let msg = this.msgVoteWeighted({ value: MsgVoteWeighted.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgVote: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgVoteWeighted: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -116,17 +116,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgVoteWeighted({ value, fee, memo }: sendMsgVoteWeightedParams): Promise<DeliverTxResponse> {
+		async sendMsgVote({ value, fee, memo }: sendMsgVoteParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgVoteWeighted: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgVote: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgVoteWeighted({ value: MsgVoteWeighted.fromPartial(value) })
+				let msg = this.msgVote({ value: MsgVote.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgVoteWeighted: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgVote: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -139,11 +139,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgVote({ value }: msgVoteParams): EncodeObject {
+		msgVoteWeighted({ value }: msgVoteWeightedParams): EncodeObject {
 			try {
-				return { typeUrl: "/cosmos.gov.v1.MsgVote", value: MsgVote.fromPartial( value ) }  
+				return { typeUrl: "/cosmos.gov.v1.MsgVoteWeighted", value: MsgVoteWeighted.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgVote: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgVoteWeighted: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -155,11 +155,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgVoteWeighted({ value }: msgVoteWeightedParams): EncodeObject {
+		msgVote({ value }: msgVoteParams): EncodeObject {
 			try {
-				return { typeUrl: "/cosmos.gov.v1.MsgVoteWeighted", value: MsgVoteWeighted.fromPartial( value ) }  
+				return { typeUrl: "/cosmos.gov.v1.MsgVote", value: MsgVote.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgVoteWeighted: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgVote: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -171,19 +171,34 @@ interface QueryClientOptions {
 }
 
 export const queryClient = ({ addr: addr }: QueryClientOptions = { addr: "http://localhost:1317" }) => {
-  return new Api({ baseUrl: addr });
+  return new Api({ baseURL: addr });
 };
 
 class SDKModule {
 	public query: ReturnType<typeof queryClient>;
 	public tx: ReturnType<typeof txClient>;
 	
-	public registry: Array<[string, GeneratedType]>;
+	public registry: Array<[string, GeneratedType]> = [];
 
 	constructor(client: IgniteClient) {		
 	
-		this.query = queryClient({ addr: client.env.apiURL });
-		this.tx = txClient({ signer: client.signer, addr: client.env.rpcURL, prefix: client.env.prefix ?? "cosmos" });
+		this.query = queryClient({ addr: client.env.apiURL });		
+		this.updateTX(client);
+		client.on('signer-changed',(signer) => {			
+		 this.updateTX(client);
+		})
+	}
+	updateTX(client: IgniteClient) {
+    const methods = txClient({
+        signer: client.signer,
+        addr: client.env.rpcURL,
+        prefix: client.env.prefix ?? "cosmos",
+    })
+	
+    this.tx = methods;
+    for (let m in methods) {
+        this.tx[m] = methods[m].bind(this.tx);
+    }
 	}
 };
 
