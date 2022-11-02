@@ -1,0 +1,79 @@
+syntax = "proto3";
+package chainjustice.chainjustice.justice;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc FundCountry(MsgFundCountry) returns (MsgFundCountryResponse);
+  rpc FallCountry(MsgFallCountry) returns (MsgFallCountryResponse);
+  rpc PrepareStart(MsgPrepareStart) returns (MsgPrepareStartResponse);
+  rpc PrepareResult(MsgPrepareResult) returns (MsgPrepareResultResponse);
+  rpc BelongContry(MsgBelongContry) returns (MsgBelongContryResponse);
+  rpc LeaveCountry(MsgLeaveCountry) returns (MsgLeaveCountryResponse);
+  rpc InvasionResult(MsgInvasionResult) returns (MsgInvasionResultResponse);
+  rpc InvasionStart(MsgInvasionStart) returns (MsgInvasionStartResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgFundCountry {
+  string creator = 1;
+}
+
+message MsgFundCountryResponse {
+}
+
+message MsgFallCountry {
+  string creator = 1;
+}
+
+message MsgFallCountryResponse {
+}
+
+message MsgPrepareStart {
+  string creator = 1;
+}
+
+message MsgPrepareStartResponse {
+}
+
+message MsgPrepareResult {
+  string creator = 1;
+}
+
+message MsgPrepareResultResponse {
+}
+
+message MsgBelongContry {
+  string creator = 1;
+  string countryAddress = 2;
+}
+
+message MsgBelongContryResponse {
+}
+
+message MsgLeaveCountry {
+  string creator = 1;
+}
+
+message MsgLeaveCountryResponse {
+}
+
+message MsgInvasionResult {
+  string creator = 1;
+}
+
+message MsgInvasionResultResponse {
+}
+
+message MsgInvasionStart {
+  string creator = 1;
+  string countryAddress = 2;
+}
+
+message MsgInvasionStartResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message

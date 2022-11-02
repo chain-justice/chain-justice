@@ -1,0 +1,11 @@
+syntax = "proto3";
+package chainjustice.chainjustice.justice;
+
+option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
+
+message Prepare {
+  uint64 id = 1;
+  string address = 2; 
+  string requireBlockHeigt = 3; 
+  
+}
