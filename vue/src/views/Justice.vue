@@ -1,0 +1,51 @@
+<template>
+    <div class="container">
+      <div class="row row-sm-revers">
+        <div class="col-md-6">
+          <SpAssets />
+          <SpTokenTransferList />
+        </div>
+        <div class="col-md-5 col-lg-4 col-md-offset-1 col-lg-offset-2">
+          <SpFundCountry />
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import { SpAssets, SpFundCountry, SpTokenTransferList } from '@starport/vue'
+  import { computed } from 'vue'
+  import { useStore } from 'vuex'
+  
+  export default {
+    name: 'Portfolio',
+  
+    components: { SpFundCountry, SpAssets, SpTokenTransferList },
+  
+    setup() {
+      // store
+      const $s = useStore()
+      
+      // computed
+      const address = computed(() => $s.getters['common/wallet/address'])
+      
+      console.log(address)
+  
+      return {
+        address
+      }
+    }
+  }
+  </script>
+  
+  <style scoped>
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .col {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  </style>
+  
