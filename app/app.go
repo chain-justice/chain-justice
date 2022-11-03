@@ -109,6 +109,9 @@ import (
 	chainjusticemodule "github.com/chain-justice/chain-justice/x/chainjustice"
 	chainjusticemodulekeeper "github.com/chain-justice/chain-justice/x/chainjustice/keeper"
 	chainjusticemoduletypes "github.com/chain-justice/chain-justice/x/chainjustice/types"
+	justicemodule "github.com/chain-justice/chain-justice/x/justice"
+	justicemodulekeeper "github.com/chain-justice/chain-justice/x/justice/keeper"
+	justicemoduletypes "github.com/chain-justice/chain-justice/x/justice/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -165,6 +168,7 @@ var (
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		chainjusticemodule.AppModuleBasic{},
+		justicemodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -178,6 +182,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		justicemoduletypes.ModuleName:  {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -240,6 +245,8 @@ type App struct {
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
 
 	ChainjusticeKeeper chainjusticemodulekeeper.Keeper
+
+	JusticeKeeper justicemodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -278,6 +285,7 @@ func New(
 		paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey, evidencetypes.StoreKey,
 		ibctransfertypes.StoreKey, icahosttypes.StoreKey, capabilitytypes.StoreKey, group.StoreKey,
 		chainjusticemoduletypes.StoreKey,
+		justicemoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -494,6 +502,16 @@ func New(
 	)
 	chainjusticeModule := chainjusticemodule.NewAppModule(appCodec, app.ChainjusticeKeeper, app.AccountKeeper, app.BankKeeper)
 
+	app.JusticeKeeper = *justicemodulekeeper.NewKeeper(
+		appCodec,
+		keys[justicemoduletypes.StoreKey],
+		keys[justicemoduletypes.MemStoreKey],
+		app.GetSubspace(justicemoduletypes.ModuleName),
+
+		app.BankKeeper,
+	)
+	justiceModule := justicemodule.NewAppModule(appCodec, app.JusticeKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	// Create static IBC router, add transfer route, then set and seal it
@@ -537,6 +555,7 @@ func New(
 		transferModule,
 		icaModule,
 		chainjusticeModule,
+		justiceModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -567,6 +586,7 @@ func New(
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
 		chainjusticemoduletypes.ModuleName,
+		justicemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -592,6 +612,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		chainjusticemoduletypes.ModuleName,
+		justicemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -622,6 +643,7 @@ func New(
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
 		chainjusticemoduletypes.ModuleName,
+		justicemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -652,6 +674,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		chainjusticeModule,
+		justiceModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -853,6 +876,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(chainjusticemoduletypes.ModuleName)
+	paramsKeeper.Subspace(justicemoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper

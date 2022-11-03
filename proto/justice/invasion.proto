@@ -1,0 +1,13 @@
+syntax = "proto3";
+package chainjustice.chainjustice.justice;
+
+option go_package = "github.com/chain-justice/chain-justice/x/justice/types";
+
+message Invasion {
+  string index = 1; 
+  string fromAddress = 2; 
+  string toAddress = 3; 
+  string requireBlockHeigt = 4; 
+  
+}
+
