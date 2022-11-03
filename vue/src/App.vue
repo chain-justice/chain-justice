@@ -21,19 +21,20 @@ export default {
 
   setup() {
     // store
-    let $s = useStore()
+    const $s = useStore()
 
     // router
-    let router = useRouter()
+    const router = useRouter()
 
     // state
-    let navbarLinks = [
+    const navbarLinks = [
+      { name: 'Justice', url: '/justice'},
       { name: 'Portfolio', url: '/portfolio' },
       { name: 'Data', url: '/data' }
     ]
 
     // computed
-    let address = computed(() => $s.getters['common/wallet/address'])
+    const address = computed(() => $s.getters['common/wallet/address'])
 
     // lh
     onBeforeMount(async () => {
