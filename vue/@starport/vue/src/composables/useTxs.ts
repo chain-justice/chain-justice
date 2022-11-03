@@ -53,7 +53,7 @@ export default async function ({
 
     return {
       data: merged,
-      total: Number(pagination.total)
+      total: Number(pagination?.total || 0)
     }
   }
   let filterSupportedTypes = (tx: any) => {
@@ -183,7 +183,7 @@ export default async function ({
 
       let currentTotal = recvAndSentPager.value.total.value
       let latestTotal =
-        Number(recv.data.pagination.total) + Number(sent.data.pagination.total)
+        Number(recv.data.pagination?.total || 0) + Number(sent.data.pagination?.total || 0)
       let diff = latestTotal - currentTotal
 
       newTxs.value = diff
