@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -7,66 +7,76 @@ export interface MsgFundCountry {
   creator: string;
 }
 
-export interface MsgFundCountryResponse {}
+export interface MsgFundCountryResponse {
+}
 
 export interface MsgFallCountry {
   creator: string;
 }
 
-export interface MsgFallCountryResponse {}
+export interface MsgFallCountryResponse {
+}
 
 export interface MsgPrepareStart {
   creator: string;
 }
 
-export interface MsgPrepareStartResponse {}
+export interface MsgPrepareStartResponse {
+}
 
 export interface MsgPrepareResult {
   creator: string;
 }
 
-export interface MsgPrepareResultResponse {}
+export interface MsgPrepareResultResponse {
+}
 
 export interface MsgBelongContry {
   creator: string;
   countryAddress: string;
 }
 
-export interface MsgBelongContryResponse {}
+export interface MsgBelongContryResponse {
+}
 
 export interface MsgLeaveCountry {
   creator: string;
 }
 
-export interface MsgLeaveCountryResponse {}
+export interface MsgLeaveCountryResponse {
+}
 
 export interface MsgInvasionResult {
   creator: string;
 }
 
-export interface MsgInvasionResultResponse {}
+export interface MsgInvasionResultResponse {
+}
 
 export interface MsgInvasionStart {
   creator: string;
   countryAddress: string;
 }
 
-export interface MsgInvasionStartResponse {}
+export interface MsgInvasionStartResponse {
+}
 
-const baseMsgFundCountry: object = { creator: "" };
+function createBaseMsgFundCountry(): MsgFundCountry {
+  return { creator: "" };
+}
 
 export const MsgFundCountry = {
-  encode(message: MsgFundCountry, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgFundCountry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgFundCountry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundCountry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgFundCountry } as MsgFundCountry;
+    const message = createBaseMsgFundCountry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -82,13 +92,7 @@ export const MsgFundCountry = {
   },
 
   fromJSON(object: any): MsgFundCountry {
-    const message = { ...baseMsgFundCountry } as MsgFundCountry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    return message;
+    return { creator: isSet(object.creator) ? String(object.creator) : "" };
   },
 
   toJSON(message: MsgFundCountry): unknown {
@@ -97,28 +101,26 @@ export const MsgFundCountry = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgFundCountry>): MsgFundCountry {
-    const message = { ...baseMsgFundCountry } as MsgFundCountry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgFundCountry>, I>>(object: I): MsgFundCountry {
+    const message = createBaseMsgFundCountry();
+    message.creator = object.creator ?? "";
     return message;
   },
 };
 
-const baseMsgFundCountryResponse: object = {};
+function createBaseMsgFundCountryResponse(): MsgFundCountryResponse {
+  return {};
+}
 
 export const MsgFundCountryResponse = {
-  encode(_: MsgFundCountryResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgFundCountryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgFundCountryResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundCountryResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgFundCountryResponse } as MsgFundCountryResponse;
+    const message = createBaseMsgFundCountryResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -131,8 +133,7 @@ export const MsgFundCountryResponse = {
   },
 
   fromJSON(_: any): MsgFundCountryResponse {
-    const message = { ...baseMsgFundCountryResponse } as MsgFundCountryResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgFundCountryResponse): unknown {
@@ -140,26 +141,28 @@ export const MsgFundCountryResponse = {
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgFundCountryResponse>): MsgFundCountryResponse {
-    const message = { ...baseMsgFundCountryResponse } as MsgFundCountryResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgFundCountryResponse>, I>>(_: I): MsgFundCountryResponse {
+    const message = createBaseMsgFundCountryResponse();
     return message;
   },
 };
 
-const baseMsgFallCountry: object = { creator: "" };
+function createBaseMsgFallCountry(): MsgFallCountry {
+  return { creator: "" };
+}
 
 export const MsgFallCountry = {
-  encode(message: MsgFallCountry, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgFallCountry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgFallCountry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFallCountry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgFallCountry } as MsgFallCountry;
+    const message = createBaseMsgFallCountry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -175,13 +178,7 @@ export const MsgFallCountry = {
   },
 
   fromJSON(object: any): MsgFallCountry {
-    const message = { ...baseMsgFallCountry } as MsgFallCountry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    return message;
+    return { creator: isSet(object.creator) ? String(object.creator) : "" };
   },
 
   toJSON(message: MsgFallCountry): unknown {
@@ -190,28 +187,26 @@ export const MsgFallCountry = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgFallCountry>): MsgFallCountry {
-    const message = { ...baseMsgFallCountry } as MsgFallCountry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgFallCountry>, I>>(object: I): MsgFallCountry {
+    const message = createBaseMsgFallCountry();
+    message.creator = object.creator ?? "";
     return message;
   },
 };
 
-const baseMsgFallCountryResponse: object = {};
+function createBaseMsgFallCountryResponse(): MsgFallCountryResponse {
+  return {};
+}
 
 export const MsgFallCountryResponse = {
-  encode(_: MsgFallCountryResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgFallCountryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgFallCountryResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFallCountryResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgFallCountryResponse } as MsgFallCountryResponse;
+    const message = createBaseMsgFallCountryResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -224,8 +219,7 @@ export const MsgFallCountryResponse = {
   },
 
   fromJSON(_: any): MsgFallCountryResponse {
-    const message = { ...baseMsgFallCountryResponse } as MsgFallCountryResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgFallCountryResponse): unknown {
@@ -233,26 +227,28 @@ export const MsgFallCountryResponse = {
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgFallCountryResponse>): MsgFallCountryResponse {
-    const message = { ...baseMsgFallCountryResponse } as MsgFallCountryResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgFallCountryResponse>, I>>(_: I): MsgFallCountryResponse {
+    const message = createBaseMsgFallCountryResponse();
     return message;
   },
 };
 
-const baseMsgPrepareStart: object = { creator: "" };
+function createBaseMsgPrepareStart(): MsgPrepareStart {
+  return { creator: "" };
+}
 
 export const MsgPrepareStart = {
-  encode(message: MsgPrepareStart, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgPrepareStart, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgPrepareStart {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgPrepareStart {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgPrepareStart } as MsgPrepareStart;
+    const message = createBaseMsgPrepareStart();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -268,13 +264,7 @@ export const MsgPrepareStart = {
   },
 
   fromJSON(object: any): MsgPrepareStart {
-    const message = { ...baseMsgPrepareStart } as MsgPrepareStart;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    return message;
+    return { creator: isSet(object.creator) ? String(object.creator) : "" };
   },
 
   toJSON(message: MsgPrepareStart): unknown {
@@ -283,30 +273,26 @@ export const MsgPrepareStart = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgPrepareStart>): MsgPrepareStart {
-    const message = { ...baseMsgPrepareStart } as MsgPrepareStart;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgPrepareStart>, I>>(object: I): MsgPrepareStart {
+    const message = createBaseMsgPrepareStart();
+    message.creator = object.creator ?? "";
     return message;
   },
 };
 
-const baseMsgPrepareStartResponse: object = {};
+function createBaseMsgPrepareStartResponse(): MsgPrepareStartResponse {
+  return {};
+}
 
 export const MsgPrepareStartResponse = {
-  encode(_: MsgPrepareStartResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgPrepareStartResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgPrepareStartResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgPrepareStartResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgPrepareStartResponse,
-    } as MsgPrepareStartResponse;
+    const message = createBaseMsgPrepareStartResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -319,10 +305,7 @@ export const MsgPrepareStartResponse = {
   },
 
   fromJSON(_: any): MsgPrepareStartResponse {
-    const message = {
-      ...baseMsgPrepareStartResponse,
-    } as MsgPrepareStartResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgPrepareStartResponse): unknown {
@@ -330,30 +313,28 @@ export const MsgPrepareStartResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgPrepareStartResponse>
-  ): MsgPrepareStartResponse {
-    const message = {
-      ...baseMsgPrepareStartResponse,
-    } as MsgPrepareStartResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgPrepareStartResponse>, I>>(_: I): MsgPrepareStartResponse {
+    const message = createBaseMsgPrepareStartResponse();
     return message;
   },
 };
 
-const baseMsgPrepareResult: object = { creator: "" };
+function createBaseMsgPrepareResult(): MsgPrepareResult {
+  return { creator: "" };
+}
 
 export const MsgPrepareResult = {
-  encode(message: MsgPrepareResult, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgPrepareResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgPrepareResult {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgPrepareResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgPrepareResult } as MsgPrepareResult;
+    const message = createBaseMsgPrepareResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -369,13 +350,7 @@ export const MsgPrepareResult = {
   },
 
   fromJSON(object: any): MsgPrepareResult {
-    const message = { ...baseMsgPrepareResult } as MsgPrepareResult;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    return message;
+    return { creator: isSet(object.creator) ? String(object.creator) : "" };
   },
 
   toJSON(message: MsgPrepareResult): unknown {
@@ -384,36 +359,26 @@ export const MsgPrepareResult = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgPrepareResult>): MsgPrepareResult {
-    const message = { ...baseMsgPrepareResult } as MsgPrepareResult;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgPrepareResult>, I>>(object: I): MsgPrepareResult {
+    const message = createBaseMsgPrepareResult();
+    message.creator = object.creator ?? "";
     return message;
   },
 };
 
-const baseMsgPrepareResultResponse: object = {};
+function createBaseMsgPrepareResultResponse(): MsgPrepareResultResponse {
+  return {};
+}
 
 export const MsgPrepareResultResponse = {
-  encode(
-    _: MsgPrepareResultResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
+  encode(_: MsgPrepareResultResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): MsgPrepareResultResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgPrepareResultResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgPrepareResultResponse,
-    } as MsgPrepareResultResponse;
+    const message = createBaseMsgPrepareResultResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -426,10 +391,7 @@ export const MsgPrepareResultResponse = {
   },
 
   fromJSON(_: any): MsgPrepareResultResponse {
-    const message = {
-      ...baseMsgPrepareResultResponse,
-    } as MsgPrepareResultResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgPrepareResultResponse): unknown {
@@ -437,20 +399,18 @@ export const MsgPrepareResultResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgPrepareResultResponse>
-  ): MsgPrepareResultResponse {
-    const message = {
-      ...baseMsgPrepareResultResponse,
-    } as MsgPrepareResultResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgPrepareResultResponse>, I>>(_: I): MsgPrepareResultResponse {
+    const message = createBaseMsgPrepareResultResponse();
     return message;
   },
 };
 
-const baseMsgBelongContry: object = { creator: "", countryAddress: "" };
+function createBaseMsgBelongContry(): MsgBelongContry {
+  return { creator: "", countryAddress: "" };
+}
 
 export const MsgBelongContry = {
-  encode(message: MsgBelongContry, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgBelongContry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -460,10 +420,10 @@ export const MsgBelongContry = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgBelongContry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgBelongContry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgBelongContry } as MsgBelongContry;
+    const message = createBaseMsgBelongContry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -482,57 +442,40 @@ export const MsgBelongContry = {
   },
 
   fromJSON(object: any): MsgBelongContry {
-    const message = { ...baseMsgBelongContry } as MsgBelongContry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    if (object.countryAddress !== undefined && object.countryAddress !== null) {
-      message.countryAddress = String(object.countryAddress);
-    } else {
-      message.countryAddress = "";
-    }
-    return message;
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      countryAddress: isSet(object.countryAddress) ? String(object.countryAddress) : "",
+    };
   },
 
   toJSON(message: MsgBelongContry): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
-    message.countryAddress !== undefined &&
-      (obj.countryAddress = message.countryAddress);
+    message.countryAddress !== undefined && (obj.countryAddress = message.countryAddress);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgBelongContry>): MsgBelongContry {
-    const message = { ...baseMsgBelongContry } as MsgBelongContry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
-    if (object.countryAddress !== undefined && object.countryAddress !== null) {
-      message.countryAddress = object.countryAddress;
-    } else {
-      message.countryAddress = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgBelongContry>, I>>(object: I): MsgBelongContry {
+    const message = createBaseMsgBelongContry();
+    message.creator = object.creator ?? "";
+    message.countryAddress = object.countryAddress ?? "";
     return message;
   },
 };
 
-const baseMsgBelongContryResponse: object = {};
+function createBaseMsgBelongContryResponse(): MsgBelongContryResponse {
+  return {};
+}
 
 export const MsgBelongContryResponse = {
-  encode(_: MsgBelongContryResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgBelongContryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgBelongContryResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgBelongContryResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgBelongContryResponse,
-    } as MsgBelongContryResponse;
+    const message = createBaseMsgBelongContryResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -545,10 +488,7 @@ export const MsgBelongContryResponse = {
   },
 
   fromJSON(_: any): MsgBelongContryResponse {
-    const message = {
-      ...baseMsgBelongContryResponse,
-    } as MsgBelongContryResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgBelongContryResponse): unknown {
@@ -556,30 +496,28 @@ export const MsgBelongContryResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgBelongContryResponse>
-  ): MsgBelongContryResponse {
-    const message = {
-      ...baseMsgBelongContryResponse,
-    } as MsgBelongContryResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgBelongContryResponse>, I>>(_: I): MsgBelongContryResponse {
+    const message = createBaseMsgBelongContryResponse();
     return message;
   },
 };
 
-const baseMsgLeaveCountry: object = { creator: "" };
+function createBaseMsgLeaveCountry(): MsgLeaveCountry {
+  return { creator: "" };
+}
 
 export const MsgLeaveCountry = {
-  encode(message: MsgLeaveCountry, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgLeaveCountry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgLeaveCountry {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgLeaveCountry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgLeaveCountry } as MsgLeaveCountry;
+    const message = createBaseMsgLeaveCountry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -595,13 +533,7 @@ export const MsgLeaveCountry = {
   },
 
   fromJSON(object: any): MsgLeaveCountry {
-    const message = { ...baseMsgLeaveCountry } as MsgLeaveCountry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    return message;
+    return { creator: isSet(object.creator) ? String(object.creator) : "" };
   },
 
   toJSON(message: MsgLeaveCountry): unknown {
@@ -610,30 +542,26 @@ export const MsgLeaveCountry = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgLeaveCountry>): MsgLeaveCountry {
-    const message = { ...baseMsgLeaveCountry } as MsgLeaveCountry;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgLeaveCountry>, I>>(object: I): MsgLeaveCountry {
+    const message = createBaseMsgLeaveCountry();
+    message.creator = object.creator ?? "";
     return message;
   },
 };
 
-const baseMsgLeaveCountryResponse: object = {};
+function createBaseMsgLeaveCountryResponse(): MsgLeaveCountryResponse {
+  return {};
+}
 
 export const MsgLeaveCountryResponse = {
-  encode(_: MsgLeaveCountryResponse, writer: Writer = Writer.create()): Writer {
+  encode(_: MsgLeaveCountryResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgLeaveCountryResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgLeaveCountryResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgLeaveCountryResponse,
-    } as MsgLeaveCountryResponse;
+    const message = createBaseMsgLeaveCountryResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -646,10 +574,7 @@ export const MsgLeaveCountryResponse = {
   },
 
   fromJSON(_: any): MsgLeaveCountryResponse {
-    const message = {
-      ...baseMsgLeaveCountryResponse,
-    } as MsgLeaveCountryResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgLeaveCountryResponse): unknown {
@@ -657,30 +582,28 @@ export const MsgLeaveCountryResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgLeaveCountryResponse>
-  ): MsgLeaveCountryResponse {
-    const message = {
-      ...baseMsgLeaveCountryResponse,
-    } as MsgLeaveCountryResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgLeaveCountryResponse>, I>>(_: I): MsgLeaveCountryResponse {
+    const message = createBaseMsgLeaveCountryResponse();
     return message;
   },
 };
 
-const baseMsgInvasionResult: object = { creator: "" };
+function createBaseMsgInvasionResult(): MsgInvasionResult {
+  return { creator: "" };
+}
 
 export const MsgInvasionResult = {
-  encode(message: MsgInvasionResult, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgInvasionResult, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgInvasionResult {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgInvasionResult {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgInvasionResult } as MsgInvasionResult;
+    const message = createBaseMsgInvasionResult();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -696,13 +619,7 @@ export const MsgInvasionResult = {
   },
 
   fromJSON(object: any): MsgInvasionResult {
-    const message = { ...baseMsgInvasionResult } as MsgInvasionResult;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    return message;
+    return { creator: isSet(object.creator) ? String(object.creator) : "" };
   },
 
   toJSON(message: MsgInvasionResult): unknown {
@@ -711,36 +628,26 @@ export const MsgInvasionResult = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgInvasionResult>): MsgInvasionResult {
-    const message = { ...baseMsgInvasionResult } as MsgInvasionResult;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgInvasionResult>, I>>(object: I): MsgInvasionResult {
+    const message = createBaseMsgInvasionResult();
+    message.creator = object.creator ?? "";
     return message;
   },
 };
 
-const baseMsgInvasionResultResponse: object = {};
+function createBaseMsgInvasionResultResponse(): MsgInvasionResultResponse {
+  return {};
+}
 
 export const MsgInvasionResultResponse = {
-  encode(
-    _: MsgInvasionResultResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
+  encode(_: MsgInvasionResultResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): MsgInvasionResultResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgInvasionResultResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgInvasionResultResponse,
-    } as MsgInvasionResultResponse;
+    const message = createBaseMsgInvasionResultResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -753,10 +660,7 @@ export const MsgInvasionResultResponse = {
   },
 
   fromJSON(_: any): MsgInvasionResultResponse {
-    const message = {
-      ...baseMsgInvasionResultResponse,
-    } as MsgInvasionResultResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgInvasionResultResponse): unknown {
@@ -764,20 +668,18 @@ export const MsgInvasionResultResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgInvasionResultResponse>
-  ): MsgInvasionResultResponse {
-    const message = {
-      ...baseMsgInvasionResultResponse,
-    } as MsgInvasionResultResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgInvasionResultResponse>, I>>(_: I): MsgInvasionResultResponse {
+    const message = createBaseMsgInvasionResultResponse();
     return message;
   },
 };
 
-const baseMsgInvasionStart: object = { creator: "", countryAddress: "" };
+function createBaseMsgInvasionStart(): MsgInvasionStart {
+  return { creator: "", countryAddress: "" };
+}
 
 export const MsgInvasionStart = {
-  encode(message: MsgInvasionStart, writer: Writer = Writer.create()): Writer {
+  encode(message: MsgInvasionStart, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -787,10 +689,10 @@ export const MsgInvasionStart = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgInvasionStart {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgInvasionStart {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgInvasionStart } as MsgInvasionStart;
+    const message = createBaseMsgInvasionStart();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -809,63 +711,40 @@ export const MsgInvasionStart = {
   },
 
   fromJSON(object: any): MsgInvasionStart {
-    const message = { ...baseMsgInvasionStart } as MsgInvasionStart;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    if (object.countryAddress !== undefined && object.countryAddress !== null) {
-      message.countryAddress = String(object.countryAddress);
-    } else {
-      message.countryAddress = "";
-    }
-    return message;
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      countryAddress: isSet(object.countryAddress) ? String(object.countryAddress) : "",
+    };
   },
 
   toJSON(message: MsgInvasionStart): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
-    message.countryAddress !== undefined &&
-      (obj.countryAddress = message.countryAddress);
+    message.countryAddress !== undefined && (obj.countryAddress = message.countryAddress);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgInvasionStart>): MsgInvasionStart {
-    const message = { ...baseMsgInvasionStart } as MsgInvasionStart;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
-    if (object.countryAddress !== undefined && object.countryAddress !== null) {
-      message.countryAddress = object.countryAddress;
-    } else {
-      message.countryAddress = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<MsgInvasionStart>, I>>(object: I): MsgInvasionStart {
+    const message = createBaseMsgInvasionStart();
+    message.creator = object.creator ?? "";
+    message.countryAddress = object.countryAddress ?? "";
     return message;
   },
 };
 
-const baseMsgInvasionStartResponse: object = {};
+function createBaseMsgInvasionStartResponse(): MsgInvasionStartResponse {
+  return {};
+}
 
 export const MsgInvasionStartResponse = {
-  encode(
-    _: MsgInvasionStartResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
+  encode(_: MsgInvasionStartResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): MsgInvasionStartResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgInvasionStartResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgInvasionStartResponse,
-    } as MsgInvasionStartResponse;
+    const message = createBaseMsgInvasionStartResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -878,10 +757,7 @@ export const MsgInvasionStartResponse = {
   },
 
   fromJSON(_: any): MsgInvasionStartResponse {
-    const message = {
-      ...baseMsgInvasionStartResponse,
-    } as MsgInvasionStartResponse;
-    return message;
+    return {};
   },
 
   toJSON(_: MsgInvasionStartResponse): unknown {
@@ -889,12 +765,8 @@ export const MsgInvasionStartResponse = {
     return obj;
   },
 
-  fromPartial(
-    _: DeepPartial<MsgInvasionStartResponse>
-  ): MsgInvasionStartResponse {
-    const message = {
-      ...baseMsgInvasionStartResponse,
-    } as MsgInvasionStartResponse;
+  fromPartial<I extends Exact<DeepPartial<MsgInvasionStartResponse>, I>>(_: I): MsgInvasionStartResponse {
+    const message = createBaseMsgInvasionStartResponse();
     return message;
   },
 };
@@ -907,9 +779,7 @@ export interface Msg {
   PrepareResult(request: MsgPrepareResult): Promise<MsgPrepareResultResponse>;
   BelongContry(request: MsgBelongContry): Promise<MsgBelongContryResponse>;
   LeaveCountry(request: MsgLeaveCountry): Promise<MsgLeaveCountryResponse>;
-  InvasionResult(
-    request: MsgInvasionResult
-  ): Promise<MsgInvasionResultResponse>;
+  InvasionResult(request: MsgInvasionResult): Promise<MsgInvasionResultResponse>;
   /** this line is used by starport scaffolding # proto/tx/rpc */
   InvasionStart(request: MsgInvasionStart): Promise<MsgInvasionStartResponse>;
 }
@@ -918,121 +788,79 @@ export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
   constructor(rpc: Rpc) {
     this.rpc = rpc;
+    this.FundCountry = this.FundCountry.bind(this);
+    this.FallCountry = this.FallCountry.bind(this);
+    this.PrepareStart = this.PrepareStart.bind(this);
+    this.PrepareResult = this.PrepareResult.bind(this);
+    this.BelongContry = this.BelongContry.bind(this);
+    this.LeaveCountry = this.LeaveCountry.bind(this);
+    this.InvasionResult = this.InvasionResult.bind(this);
+    this.InvasionStart = this.InvasionStart.bind(this);
   }
   FundCountry(request: MsgFundCountry): Promise<MsgFundCountryResponse> {
     const data = MsgFundCountry.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "FundCountry",
-      data
-    );
-    return promise.then((data) =>
-      MsgFundCountryResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "FundCountry", data);
+    return promise.then((data) => MsgFundCountryResponse.decode(new _m0.Reader(data)));
   }
 
   FallCountry(request: MsgFallCountry): Promise<MsgFallCountryResponse> {
     const data = MsgFallCountry.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "FallCountry",
-      data
-    );
-    return promise.then((data) =>
-      MsgFallCountryResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "FallCountry", data);
+    return promise.then((data) => MsgFallCountryResponse.decode(new _m0.Reader(data)));
   }
 
   PrepareStart(request: MsgPrepareStart): Promise<MsgPrepareStartResponse> {
     const data = MsgPrepareStart.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "PrepareStart",
-      data
-    );
-    return promise.then((data) =>
-      MsgPrepareStartResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "PrepareStart", data);
+    return promise.then((data) => MsgPrepareStartResponse.decode(new _m0.Reader(data)));
   }
 
   PrepareResult(request: MsgPrepareResult): Promise<MsgPrepareResultResponse> {
     const data = MsgPrepareResult.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "PrepareResult",
-      data
-    );
-    return promise.then((data) =>
-      MsgPrepareResultResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "PrepareResult", data);
+    return promise.then((data) => MsgPrepareResultResponse.decode(new _m0.Reader(data)));
   }
 
   BelongContry(request: MsgBelongContry): Promise<MsgBelongContryResponse> {
     const data = MsgBelongContry.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "BelongContry",
-      data
-    );
-    return promise.then((data) =>
-      MsgBelongContryResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "BelongContry", data);
+    return promise.then((data) => MsgBelongContryResponse.decode(new _m0.Reader(data)));
   }
 
   LeaveCountry(request: MsgLeaveCountry): Promise<MsgLeaveCountryResponse> {
     const data = MsgLeaveCountry.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "LeaveCountry",
-      data
-    );
-    return promise.then((data) =>
-      MsgLeaveCountryResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "LeaveCountry", data);
+    return promise.then((data) => MsgLeaveCountryResponse.decode(new _m0.Reader(data)));
   }
 
-  InvasionResult(
-    request: MsgInvasionResult
-  ): Promise<MsgInvasionResultResponse> {
+  InvasionResult(request: MsgInvasionResult): Promise<MsgInvasionResultResponse> {
     const data = MsgInvasionResult.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "InvasionResult",
-      data
-    );
-    return promise.then((data) =>
-      MsgInvasionResultResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "InvasionResult", data);
+    return promise.then((data) => MsgInvasionResultResponse.decode(new _m0.Reader(data)));
   }
 
   InvasionStart(request: MsgInvasionStart): Promise<MsgInvasionStartResponse> {
     const data = MsgInvasionStart.encode(request).finish();
-    const promise = this.rpc.request(
-      "chainjustice.chainjustice.justice.Msg",
-      "InvasionStart",
-      data
-    );
-    return promise.then((data) =>
-      MsgInvasionStartResponse.decode(new Reader(data))
-    );
+    const promise = this.rpc.request("chainjustice.chainjustice.justice.Msg", "InvasionStart", data);
+    return promise.then((data) => MsgInvasionStartResponse.decode(new _m0.Reader(data)));
   }
 }
 
 interface Rpc {
-  request(
-    service: string,
-    method: string,
-    data: Uint8Array
-  ): Promise<Uint8Array>;
+  request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
+}

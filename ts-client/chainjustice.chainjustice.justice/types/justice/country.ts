@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -10,10 +10,12 @@ export interface Country {
   nmembers: string;
 }
 
-const baseCountry: object = { index: "", address: "", food: "", nmembers: "" };
+function createBaseCountry(): Country {
+  return { index: "", address: "", food: "", nmembers: "" };
+}
 
 export const Country = {
-  encode(message: Country, writer: Writer = Writer.create()): Writer {
+  encode(message: Country, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -29,10 +31,10 @@ export const Country = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Country {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Country {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseCountry } as Country;
+    const message = createBaseCountry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -57,28 +59,12 @@ export const Country = {
   },
 
   fromJSON(object: any): Country {
-    const message = { ...baseCountry } as Country;
-    if (object.index !== undefined && object.index !== null) {
-      message.index = String(object.index);
-    } else {
-      message.index = "";
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = String(object.address);
-    } else {
-      message.address = "";
-    }
-    if (object.food !== undefined && object.food !== null) {
-      message.food = String(object.food);
-    } else {
-      message.food = "";
-    }
-    if (object.nmembers !== undefined && object.nmembers !== null) {
-      message.nmembers = String(object.nmembers);
-    } else {
-      message.nmembers = "";
-    }
-    return message;
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      address: isSet(object.address) ? String(object.address) : "",
+      food: isSet(object.food) ? String(object.food) : "",
+      nmembers: isSet(object.nmembers) ? String(object.nmembers) : "",
+    };
   },
 
   toJSON(message: Country): unknown {
@@ -90,39 +76,27 @@ export const Country = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Country>): Country {
-    const message = { ...baseCountry } as Country;
-    if (object.index !== undefined && object.index !== null) {
-      message.index = object.index;
-    } else {
-      message.index = "";
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    } else {
-      message.address = "";
-    }
-    if (object.food !== undefined && object.food !== null) {
-      message.food = object.food;
-    } else {
-      message.food = "";
-    }
-    if (object.nmembers !== undefined && object.nmembers !== null) {
-      message.nmembers = object.nmembers;
-    } else {
-      message.nmembers = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<Country>, I>>(object: I): Country {
+    const message = createBaseCountry();
+    message.index = object.index ?? "";
+    message.address = object.address ?? "";
+    message.food = object.food ?? "";
+    message.nmembers = object.nmembers ?? "";
     return message;
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
+}

@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as Long from "long";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -11,15 +11,12 @@ export interface Invasion {
   requireBlockHeigt: string;
 }
 
-const baseInvasion: object = {
-  id: 0,
-  fromAddress: "",
-  toAddress: "",
-  requireBlockHeigt: "",
-};
+function createBaseInvasion(): Invasion {
+  return { id: 0, fromAddress: "", toAddress: "", requireBlockHeigt: "" };
+}
 
 export const Invasion = {
-  encode(message: Invasion, writer: Writer = Writer.create()): Writer {
+  encode(message: Invasion, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
@@ -35,10 +32,10 @@ export const Invasion = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Invasion {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Invasion {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseInvasion } as Invasion;
+    const message = createBaseInvasion();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -63,93 +60,62 @@ export const Invasion = {
   },
 
   fromJSON(object: any): Invasion {
-    const message = { ...baseInvasion } as Invasion;
-    if (object.id !== undefined && object.id !== null) {
-      message.id = Number(object.id);
-    } else {
-      message.id = 0;
-    }
-    if (object.fromAddress !== undefined && object.fromAddress !== null) {
-      message.fromAddress = String(object.fromAddress);
-    } else {
-      message.fromAddress = "";
-    }
-    if (object.toAddress !== undefined && object.toAddress !== null) {
-      message.toAddress = String(object.toAddress);
-    } else {
-      message.toAddress = "";
-    }
-    if (
-      object.requireBlockHeigt !== undefined &&
-      object.requireBlockHeigt !== null
-    ) {
-      message.requireBlockHeigt = String(object.requireBlockHeigt);
-    } else {
-      message.requireBlockHeigt = "";
-    }
-    return message;
+    return {
+      id: isSet(object.id) ? Number(object.id) : 0,
+      fromAddress: isSet(object.fromAddress) ? String(object.fromAddress) : "",
+      toAddress: isSet(object.toAddress) ? String(object.toAddress) : "",
+      requireBlockHeigt: isSet(object.requireBlockHeigt) ? String(object.requireBlockHeigt) : "",
+    };
   },
 
   toJSON(message: Invasion): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
-    message.fromAddress !== undefined &&
-      (obj.fromAddress = message.fromAddress);
+    message.id !== undefined && (obj.id = Math.round(message.id));
+    message.fromAddress !== undefined && (obj.fromAddress = message.fromAddress);
     message.toAddress !== undefined && (obj.toAddress = message.toAddress);
-    message.requireBlockHeigt !== undefined &&
-      (obj.requireBlockHeigt = message.requireBlockHeigt);
+    message.requireBlockHeigt !== undefined && (obj.requireBlockHeigt = message.requireBlockHeigt);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Invasion>): Invasion {
-    const message = { ...baseInvasion } as Invasion;
-    if (object.id !== undefined && object.id !== null) {
-      message.id = object.id;
-    } else {
-      message.id = 0;
-    }
-    if (object.fromAddress !== undefined && object.fromAddress !== null) {
-      message.fromAddress = object.fromAddress;
-    } else {
-      message.fromAddress = "";
-    }
-    if (object.toAddress !== undefined && object.toAddress !== null) {
-      message.toAddress = object.toAddress;
-    } else {
-      message.toAddress = "";
-    }
-    if (
-      object.requireBlockHeigt !== undefined &&
-      object.requireBlockHeigt !== null
-    ) {
-      message.requireBlockHeigt = object.requireBlockHeigt;
-    } else {
-      message.requireBlockHeigt = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<Invasion>, I>>(object: I): Invasion {
+    const message = createBaseInvasion();
+    message.id = object.id ?? 0;
+    message.fromAddress = object.fromAddress ?? "";
+    message.toAddress = object.toAddress ?? "";
+    message.requireBlockHeigt = object.requireBlockHeigt ?? "";
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
+declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
@@ -158,7 +124,11 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

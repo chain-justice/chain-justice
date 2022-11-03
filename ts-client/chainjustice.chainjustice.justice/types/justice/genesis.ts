@@ -1,11 +1,11 @@
 /* eslint-disable */
-import * as Long from "long";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { Params } from "../justice/params";
-import { Belonging } from "../justice/belonging";
-import { Country } from "../justice/country";
-import { Prepare } from "../justice/prepare";
-import { Invasion } from "../justice/invasion";
+import Long from "long";
+import _m0 from "protobufjs/minimal";
+import { Belonging } from "./belonging";
+import { Country } from "./country";
+import { Invasion } from "./invasion";
+import { Params } from "./params";
+import { Prepare } from "./prepare";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -21,10 +21,20 @@ export interface GenesisState {
   invasionCount: number;
 }
 
-const baseGenesisState: object = { prepareCount: 0, invasionCount: 0 };
+function createBaseGenesisState(): GenesisState {
+  return {
+    params: undefined,
+    belongingList: [],
+    countryList: [],
+    prepareList: [],
+    prepareCount: 0,
+    invasionList: [],
+    invasionCount: 0,
+  };
+}
 
 export const GenesisState = {
-  encode(message: GenesisState, writer: Writer = Writer.create()): Writer {
+  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
@@ -49,14 +59,10 @@ export const GenesisState = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseGenesisState } as GenesisState;
-    message.belongingList = [];
-    message.countryList = [];
-    message.prepareList = [];
-    message.invasionList = [];
+    const message = createBaseGenesisState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -90,153 +96,93 @@ export const GenesisState = {
   },
 
   fromJSON(object: any): GenesisState {
-    const message = { ...baseGenesisState } as GenesisState;
-    message.belongingList = [];
-    message.countryList = [];
-    message.prepareList = [];
-    message.invasionList = [];
-    if (object.params !== undefined && object.params !== null) {
-      message.params = Params.fromJSON(object.params);
-    } else {
-      message.params = undefined;
-    }
-    if (object.belongingList !== undefined && object.belongingList !== null) {
-      for (const e of object.belongingList) {
-        message.belongingList.push(Belonging.fromJSON(e));
-      }
-    }
-    if (object.countryList !== undefined && object.countryList !== null) {
-      for (const e of object.countryList) {
-        message.countryList.push(Country.fromJSON(e));
-      }
-    }
-    if (object.prepareList !== undefined && object.prepareList !== null) {
-      for (const e of object.prepareList) {
-        message.prepareList.push(Prepare.fromJSON(e));
-      }
-    }
-    if (object.prepareCount !== undefined && object.prepareCount !== null) {
-      message.prepareCount = Number(object.prepareCount);
-    } else {
-      message.prepareCount = 0;
-    }
-    if (object.invasionList !== undefined && object.invasionList !== null) {
-      for (const e of object.invasionList) {
-        message.invasionList.push(Invasion.fromJSON(e));
-      }
-    }
-    if (object.invasionCount !== undefined && object.invasionCount !== null) {
-      message.invasionCount = Number(object.invasionCount);
-    } else {
-      message.invasionCount = 0;
-    }
-    return message;
+    return {
+      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
+      belongingList: Array.isArray(object?.belongingList)
+        ? object.belongingList.map((e: any) => Belonging.fromJSON(e))
+        : [],
+      countryList: Array.isArray(object?.countryList) ? object.countryList.map((e: any) => Country.fromJSON(e)) : [],
+      prepareList: Array.isArray(object?.prepareList) ? object.prepareList.map((e: any) => Prepare.fromJSON(e)) : [],
+      prepareCount: isSet(object.prepareCount) ? Number(object.prepareCount) : 0,
+      invasionList: Array.isArray(object?.invasionList)
+        ? object.invasionList.map((e: any) => Invasion.fromJSON(e))
+        : [],
+      invasionCount: isSet(object.invasionCount) ? Number(object.invasionCount) : 0,
+    };
   },
 
   toJSON(message: GenesisState): unknown {
     const obj: any = {};
-    message.params !== undefined &&
-      (obj.params = message.params ? Params.toJSON(message.params) : undefined);
+    message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     if (message.belongingList) {
-      obj.belongingList = message.belongingList.map((e) =>
-        e ? Belonging.toJSON(e) : undefined
-      );
+      obj.belongingList = message.belongingList.map((e) => e ? Belonging.toJSON(e) : undefined);
     } else {
       obj.belongingList = [];
     }
     if (message.countryList) {
-      obj.countryList = message.countryList.map((e) =>
-        e ? Country.toJSON(e) : undefined
-      );
+      obj.countryList = message.countryList.map((e) => e ? Country.toJSON(e) : undefined);
     } else {
       obj.countryList = [];
     }
     if (message.prepareList) {
-      obj.prepareList = message.prepareList.map((e) =>
-        e ? Prepare.toJSON(e) : undefined
-      );
+      obj.prepareList = message.prepareList.map((e) => e ? Prepare.toJSON(e) : undefined);
     } else {
       obj.prepareList = [];
     }
-    message.prepareCount !== undefined &&
-      (obj.prepareCount = message.prepareCount);
+    message.prepareCount !== undefined && (obj.prepareCount = Math.round(message.prepareCount));
     if (message.invasionList) {
-      obj.invasionList = message.invasionList.map((e) =>
-        e ? Invasion.toJSON(e) : undefined
-      );
+      obj.invasionList = message.invasionList.map((e) => e ? Invasion.toJSON(e) : undefined);
     } else {
       obj.invasionList = [];
     }
-    message.invasionCount !== undefined &&
-      (obj.invasionCount = message.invasionCount);
+    message.invasionCount !== undefined && (obj.invasionCount = Math.round(message.invasionCount));
     return obj;
   },
 
-  fromPartial(object: DeepPartial<GenesisState>): GenesisState {
-    const message = { ...baseGenesisState } as GenesisState;
-    message.belongingList = [];
-    message.countryList = [];
-    message.prepareList = [];
-    message.invasionList = [];
-    if (object.params !== undefined && object.params !== null) {
-      message.params = Params.fromPartial(object.params);
-    } else {
-      message.params = undefined;
-    }
-    if (object.belongingList !== undefined && object.belongingList !== null) {
-      for (const e of object.belongingList) {
-        message.belongingList.push(Belonging.fromPartial(e));
-      }
-    }
-    if (object.countryList !== undefined && object.countryList !== null) {
-      for (const e of object.countryList) {
-        message.countryList.push(Country.fromPartial(e));
-      }
-    }
-    if (object.prepareList !== undefined && object.prepareList !== null) {
-      for (const e of object.prepareList) {
-        message.prepareList.push(Prepare.fromPartial(e));
-      }
-    }
-    if (object.prepareCount !== undefined && object.prepareCount !== null) {
-      message.prepareCount = object.prepareCount;
-    } else {
-      message.prepareCount = 0;
-    }
-    if (object.invasionList !== undefined && object.invasionList !== null) {
-      for (const e of object.invasionList) {
-        message.invasionList.push(Invasion.fromPartial(e));
-      }
-    }
-    if (object.invasionCount !== undefined && object.invasionCount !== null) {
-      message.invasionCount = object.invasionCount;
-    } else {
-      message.invasionCount = 0;
-    }
+  fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
+    const message = createBaseGenesisState();
+    message.params = (object.params !== undefined && object.params !== null)
+      ? Params.fromPartial(object.params)
+      : undefined;
+    message.belongingList = object.belongingList?.map((e) => Belonging.fromPartial(e)) || [];
+    message.countryList = object.countryList?.map((e) => Country.fromPartial(e)) || [];
+    message.prepareList = object.prepareList?.map((e) => Prepare.fromPartial(e)) || [];
+    message.prepareCount = object.prepareCount ?? 0;
+    message.invasionList = object.invasionList?.map((e) => Invasion.fromPartial(e)) || [];
+    message.invasionCount = object.invasionCount ?? 0;
     return message;
   },
 };
 
 declare var self: any | undefined;
 declare var window: any | undefined;
+declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {
@@ -245,7 +191,11 @@ function longToNumber(long: Long): number {
   return long.toNumber();
 }
 
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
 }

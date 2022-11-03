@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Writer, Reader } from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "chainjustice.chainjustice.justice";
 
@@ -9,10 +9,12 @@ export interface Belonging {
   country: string;
 }
 
-const baseBelonging: object = { index: "", address: "", country: "" };
+function createBaseBelonging(): Belonging {
+  return { index: "", address: "", country: "" };
+}
 
 export const Belonging = {
-  encode(message: Belonging, writer: Writer = Writer.create()): Writer {
+  encode(message: Belonging, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.index !== "") {
       writer.uint32(10).string(message.index);
     }
@@ -25,10 +27,10 @@ export const Belonging = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): Belonging {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+  decode(input: _m0.Reader | Uint8Array, length?: number): Belonging {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseBelonging } as Belonging;
+    const message = createBaseBelonging();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -50,23 +52,11 @@ export const Belonging = {
   },
 
   fromJSON(object: any): Belonging {
-    const message = { ...baseBelonging } as Belonging;
-    if (object.index !== undefined && object.index !== null) {
-      message.index = String(object.index);
-    } else {
-      message.index = "";
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = String(object.address);
-    } else {
-      message.address = "";
-    }
-    if (object.country !== undefined && object.country !== null) {
-      message.country = String(object.country);
-    } else {
-      message.country = "";
-    }
-    return message;
+    return {
+      index: isSet(object.index) ? String(object.index) : "",
+      address: isSet(object.address) ? String(object.address) : "",
+      country: isSet(object.country) ? String(object.country) : "",
+    };
   },
 
   toJSON(message: Belonging): unknown {
@@ -77,34 +67,26 @@ export const Belonging = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<Belonging>): Belonging {
-    const message = { ...baseBelonging } as Belonging;
-    if (object.index !== undefined && object.index !== null) {
-      message.index = object.index;
-    } else {
-      message.index = "";
-    }
-    if (object.address !== undefined && object.address !== null) {
-      message.address = object.address;
-    } else {
-      message.address = "";
-    }
-    if (object.country !== undefined && object.country !== null) {
-      message.country = object.country;
-    } else {
-      message.country = "";
-    }
+  fromPartial<I extends Exact<DeepPartial<Belonging>, I>>(object: I): Belonging {
+    const message = createBaseBelonging();
+    message.index = object.index ?? "";
+    message.address = object.address ?? "";
+    message.country = object.country ?? "";
     return message;
   },
 };
 
-type Builtin = Date | Function | Uint8Array | string | number | undefined;
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
+}

@@ -24,7 +24,7 @@ func (k msgServer) FundCountry(goCtx context.Context, msg *types.MsgFundCountry)
 		Index:   msg.Creator,
 		Address: msg.Creator,
 		Food:    "0",
-		Nmembers: "0"
+		Nmembers: "0",
 	}
 
 	_, isFound = k.GetBelonging(
