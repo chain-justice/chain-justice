@@ -384,45 +384,6 @@ export default {
 		},
 		
 		
-		async sendMsgInvasionResult({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgInvasionResult({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgInvasionResult:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgInvasionResult:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgPrepareStart({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgPrepareStart({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgPrepareStart:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgPrepareStart:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgBelongContry({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgBelongContry({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgBelongContry:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgBelongContry:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgPrepareResult({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -433,19 +394,6 @@ export default {
 					throw new Error('TxClient:MsgPrepareResult:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgPrepareResult:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgInvasionStart({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgInvasionStart({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgInvasionStart:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgInvasionStart:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -462,16 +410,29 @@ export default {
 				}
 			}
 		},
-		async sendMsgFallCountry({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgPrepareStart({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgFallCountry({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgPrepareStart({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgFallCountry:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgPrepareStart:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgFallCountry:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgPrepareStart:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgInvasionResult({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgInvasionResult({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgInvasionResult:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgInvasionResult:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -488,46 +449,46 @@ export default {
 				}
 			}
 		},
-		
-		async MsgInvasionResult({ rootGetters }, { value }) {
+		async sendMsgBelongContry({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgInvasionResult({value})
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgInvasionResult:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgInvasionResult:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgPrepareStart({ rootGetters }, { value }) {
-			try {
-				const client=initClient(rootGetters)
-				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgPrepareStart({value})
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgPrepareStart:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgPrepareStart:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgBelongContry({ rootGetters }, { value }) {
-			try {
-				const client=initClient(rootGetters)
-				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgBelongContry({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgBelongContry({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgBelongContry:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgBelongContry:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgBelongContry:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		async sendMsgFallCountry({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgFallCountry({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgFallCountry:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgFallCountry:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgInvasionStart({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const result = await client.ChainjusticeChainjusticeJustice.tx.sendMsgInvasionStart({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgInvasionStart:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgInvasionStart:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		
 		async MsgPrepareResult({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -538,19 +499,6 @@ export default {
 					throw new Error('TxClient:MsgPrepareResult:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgPrepareResult:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgInvasionStart({ rootGetters }, { value }) {
-			try {
-				const client=initClient(rootGetters)
-				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgInvasionStart({value})
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgInvasionStart:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgInvasionStart:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -567,16 +515,29 @@ export default {
 				}
 			}
 		},
-		async MsgFallCountry({ rootGetters }, { value }) {
+		async MsgPrepareStart({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgFallCountry({value})
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgPrepareStart({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgFallCountry:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgPrepareStart:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgFallCountry:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgPrepareStart:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgInvasionResult({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgInvasionResult({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgInvasionResult:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgInvasionResult:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -590,6 +551,45 @@ export default {
 					throw new Error('TxClient:MsgLeaveCountry:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgLeaveCountry:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgBelongContry({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgBelongContry({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgBelongContry:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgBelongContry:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgFallCountry({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgFallCountry({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgFallCountry:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgFallCountry:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgInvasionStart({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.ChainjusticeChainjusticeJustice.tx.msgInvasionStart({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgInvasionStart:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgInvasionStart:Create Could not create message: ' + e.message)
 				}
 			}
 		},
