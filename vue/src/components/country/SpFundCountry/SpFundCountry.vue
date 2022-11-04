@@ -60,7 +60,7 @@ import SpCard from '@starport/vue/src/components/SpCard'
 import SpClipboard from '@starport/vue/src/components/SpClipboard'
 import SpQrCode from '@starport/vue/src/components/SpQrCode'
 import {TxFailed, TxSuccess, TxOnGoing, TxWalletLocked} from '@starport/vue/src/components/transaction/common'
-import { useOwnedCountry } from '../../../composables'
+import { useBelongings } from '../../../composables'
 
 // types
 export interface TxData {
@@ -125,7 +125,7 @@ export default defineComponent({
     // composables
     let { address } = useAddress({ $s })
     let { balances } = useAssets({ $s })
-    let { hasCountryInfo, establishCountryTx } = await useOwnedCountry({ $s })
+    let { hasCountryInfo, establishCountryTx } = await useBelongings({ $s })
 
     // actions
 
@@ -150,6 +150,7 @@ export default defineComponent({
       let memo = state.tx.memo
 
       // let isIBC = state.tx.ch !== ''
+      // let send;
 
       try {
         // if (isIBC) {

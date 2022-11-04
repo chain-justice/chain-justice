@@ -1,1 +1,1 @@
-export { default as useOwnedCountry } from './useOwnedCountry'
+export { default as useBelongings } from './useBelonging'

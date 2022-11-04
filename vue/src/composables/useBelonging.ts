@@ -1,14 +1,14 @@
 import axios, { AxiosResponse } from 'axios'
-import { Country } from 'chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice'
+import { Belonging } from 'chain-justice-chain-justice-client-ts/chainjustice.chainjustice.justice'
 import { computed, ComputedRef, Ref, ref, watch } from 'vue'
 import { Store } from 'vuex'
 import { Amount } from '@starport/vue/src/utils/interfaces'
 
 
 type Response = {
-  ownedCountry: Ref<Country | undefined>,
-  hasCountryInfo: ComputedRef<boolean>,
-  establishCountryTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
+  belonging: Ref<Belonging | undefined>,
+  hasBelongingInfo: ComputedRef<boolean>,
+  establishBelongingTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
 }
 
 type Params = {
@@ -18,44 +18,45 @@ type Params = {
 
 export default async function ({ $s }: Params): Promise<Response> {
   // state
-  let ownedCountry = ref<Country | undefined>(undefined)
+  let belonging = ref<Belonging | undefined>(undefined)
   
   // computed
   let address = computed<string>(() => $s.getters['common/wallet/address'])
   let API_COSMOS = computed<string>(() => $s.getters['common/env/apiCosmos'])
-  let hasCountryInfo = computed<boolean>(() => {
-    return ownedCountry.value?.address ? true : false
+  let hasBelongingInfo = computed<boolean>(() => {
+    return belonging.value?.address ? true : false
 })
 
-  let normalizeAPIResponse: (resp: AxiosResponse)=>Country = (resp: AxiosResponse) => {
+  let normalizeAPIResponse: (resp: AxiosResponse)=>Belonging = (resp: AxiosResponse) => {
     let belonging = resp.data?.belonging
       return {
         ...belonging
-      } as Country
+      } as Belonging
   }
 
-  let fetchOwnedCountryInfo = async () => {
+  let fetchbelongingInfo = async () => {
       return axios.get(
         `${API_COSMOS.value}` +
         `/chain-justice/chain-justice/justice/belonging/${address.value}`
       )    
   }
 
-  let updateOwnedCountryInfo = async () => {
+  let updatebelongingInfo = async () => {
     let res;
     if (address?.value){
-      res = normalizeAPIResponse(await fetchOwnedCountryInfo())
+      res = normalizeAPIResponse(await fetchbelongingInfo())
     }
     if(res){
-      ownedCountry.value = {...res} as Country
+      console.log("hello",res)
+      belonging.value = {...res} as Belonging
     }
   }
 
-  let establishCountryTx = async (payload:any, fee: Array<Amount>, memo: string) => {
-    let sendMsgFundCountry = (opts: any) =>
-      $s.dispatch('chainjustice.chainjustice.justice/sendMsgFundCountry', opts)
+  let establishBelongingTx = async (payload:any, fee: Array<Amount>, memo: string) => {
+    let sendMsgFundBelonging = (opts: any) =>
+      $s.dispatch('chainjustice.chainjustice.justice/sendMsgFundBelonging', opts)
     let send = () =>
-      sendMsgFundCountry({
+      sendMsgFundBelonging({
         value: payload,
         fee,
         memo
@@ -67,7 +68,7 @@ export default async function ({ $s }: Params): Promise<Response> {
         throw new Error()
       }
       
-    await updateOwnedCountryInfo()
+    await updatebelongingInfo()
     return txResult
   }
   
@@ -80,18 +81,18 @@ export default async function ({ $s }: Params): Promise<Response> {
     async () => {
       let res;
       if (address?.value){
-        res = normalizeAPIResponse(await fetchOwnedCountryInfo())
+        res = normalizeAPIResponse(await fetchbelongingInfo())
       }
       if(res){
-        ownedCountry.value = {...res} as Country
+        belonging.value = {...res} as Belonging
       }
     },
     { immediate: true }
   )
 
   return {
-    ownedCountry,
-    hasCountryInfo,
-    establishCountryTx
+    belonging,
+    hasBelongingInfo,
+    establishBelongingTx
   }
 }

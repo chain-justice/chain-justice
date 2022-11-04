@@ -2,7 +2,14 @@
     <div class="container">
       <div class="row row-sm-revers">
         <div class="col-md-6">
-          <SpAssets />
+          <Suspense>
+            <template #default>
+              <SpCountryInfo />
+            </template>
+            <template #fallback>
+              <div>Loading</div>
+            </template>
+          </Suspense>
           <SpTokenTransferList />
         </div>
         <div class="col-md-5 col-lg-4 col-md-offset-1 col-lg-offset-2">
@@ -37,20 +44,21 @@
   import { computed } from 'vue'
   import { useStore } from 'vuex'
   import { SpFundCountry } from '../components/country'
-  import { useOwnedCountry } from '../composables'
+  import { useBelongings } from '../composables'
+  import { SpCountryInfo } from '../components/country'
   
   export default defineComponent(    
     {
       name: 'Country',
     
-      components: { SpFundCountry, SpAssets, SpTokenTransferList },
+      components: { SpFundCountry, SpAssets, SpTokenTransferList, SpCountryInfo },
     
       setup() {
         // store
         let $s = useStore()
         
         // composable
-        let {ownedCountry, hasCountryInfo} = useOwnedCountry({ $s })
+        let {belonging, hasCountryInfo} = useBelongings({ $s })
     
         // computed
         let address = computed(() => $s.getters['common/wallet/address'])
@@ -58,7 +66,7 @@
 
         return {
           address,
-          ownedCountry,
+          belonging,
           hasCountryInfo,
         }
       }
