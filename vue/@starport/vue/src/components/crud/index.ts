@@ -1,0 +1,5 @@
+export { default as SpCrud } from './SpCrud'
+export { default as SpCrudCreate } from './SpCrudCreate'
+export { default as SpCrudDelete } from './SpCrudDelete'
+export { default as SpCrudRead } from './SpCrudRead'
+export { default as SpCrudUpdate } from './SpCrudUpdate'
