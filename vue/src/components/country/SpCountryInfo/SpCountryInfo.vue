@@ -81,7 +81,7 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belonging?.index}}
+            {{belongingCountry?.index}}
           </td>
         </tr>
         <tr
@@ -93,7 +93,7 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belonging?.address}}
+            {{belongingCountry?.address}}
           </td>
         </tr>
         <tr
@@ -105,7 +105,7 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belonging?.nmembers}}
+            {{belongingCountry?.nmembers}}
           </td>
         </tr>
         <tr
@@ -117,7 +117,7 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belonging?.food}}
+            {{belongingCountry?.food}}
           </td>
         </tr>
       </tbody>
@@ -131,7 +131,7 @@ import { useStore } from 'vuex'
 
 import { useAddress } from '@starport/vue/src/composables'
 import SpDenom from '@starport/vue/src/components/SpDenom'
-import { useBelongings } from '../../../composables'
+import useCountry from '../../../composables/useCountry'
 
 export default defineComponent({
   name: 'SpCopuntryInfo',
@@ -144,13 +144,12 @@ export default defineComponent({
 
     // composables
     let { address } = useAddress({ $s })
-    let { belonging, hasCountryInfo } = await useBelongings({ $s })
-    console.log(belonging.value)
+    let { belongingCountry, hasCountryInfo } = await useCountry({ $s })
 
 
     return {
       address,
-      belonging,
+      belongingCountry,
       hasCountryInfo,
     }
   }
