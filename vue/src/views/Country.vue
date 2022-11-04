@@ -18,7 +18,7 @@
   import { useStore } from 'vuex'
   
   export default {
-    name: 'Portfolio',
+    name: 'Country',
   
     components: { SpFundCountry, SpAssets, SpTokenTransferList },
   
@@ -29,8 +29,6 @@
       // computed
       const address = computed(() => $s.getters['common/wallet/address'])
       
-      console.log(address)
-  
       return {
         address
       }

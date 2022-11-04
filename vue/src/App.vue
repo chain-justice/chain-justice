@@ -28,7 +28,7 @@ export default {
 
     // state
     const navbarLinks = [
-      { name: 'Justice', url: '/justice'},
+      { name: 'Country', url: '/country'},
       { name: 'Portfolio', url: '/portfolio' },
       { name: 'Data', url: '/data' }
     ]
