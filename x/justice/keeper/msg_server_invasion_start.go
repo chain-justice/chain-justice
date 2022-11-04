@@ -11,7 +11,7 @@ import (
 
 func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionStart) (*types.MsgInvasionStartResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	
+
 	_, isFound := k.GetBelonging(
 		ctx,
 		msg.Creator,
@@ -20,20 +20,35 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You have to belong to a contry")
 	}
 
-	_, isFound = k.GetCountry(
+	country, isFoundCountry := k.GetCountry(
 		ctx,
 		msg.CountryAddress,
 	)
-	if !isFound {
+	if !isFoundCountry {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No Such Country")
+	}
+	food, err := strconv.ParseInt(country.Food, 10, 64)
+	if err != nil {
+		panic(err)
+	}
+
+	if food < 10 {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Not enough Food!")
 	}
 
 	var invasion = types.Invasion{
-		Index:   msg.Creator,
-		FromAddress: msg.Creator,
-		ToAddress: msg.CountryAddress,
-		RequireBlockHeigt: strconv.FormatInt(ctx.BlockHeight(),10),
+		Index:             msg.Creator,
+		FromAddress:       msg.Creator,
+		ToAddress:         msg.CountryAddress,
+		RequireBlockHeigt: strconv.FormatInt(ctx.BlockHeight(), 10),
 	}
 	k.SetInvasion(ctx, invasion)
+
+	k.SetCountry(ctx, types.Country{
+		Index:    country.Index,
+		Address:  country.Address,
+		Food:     strconv.FormatInt(food-10, 10),
+		Nmembers: country.Nmembers,
+	})
 	return &types.MsgInvasionStartResponse{}, nil
 }

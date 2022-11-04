@@ -36,7 +36,7 @@ func (k msgServer) PrepareResult(goCtx context.Context, msg *types.MsgPrepareRes
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You don't belong to any country")
 	}
 
-	_, isFoundCountry := k.GetCountry(
+	country, isFoundCountry := k.GetCountry(
 		ctx,
 		belonging.Country,
 	)
@@ -44,7 +44,17 @@ func (k msgServer) PrepareResult(goCtx context.Context, msg *types.MsgPrepareRes
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No such country")
 	}
 
-	// to do change contry status
+	food, err := strconv.ParseInt(country.Food, 10, 64)
+	if err != nil {
+		panic(err)
+	}
 
+	// to do change contry status
+	k.SetCountry(ctx, types.Country{
+		Index:    country.Index,
+		Address:  country.Address,
+		Food:     strconv.FormatInt(5+ctx.BlockHeight()%5+food, 10),
+		Nmembers: country.Nmembers,
+	})
 	return &types.MsgPrepareResultResponse{}, nil
 }

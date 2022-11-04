@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 
+	"cosmossdk.io/math"
 	"github.com/chain-justice/chain-justice/x/justice/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -36,7 +37,7 @@ func (k msgServer) InvasionResult(goCtx context.Context, msg *types.MsgInvasionR
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You don't belong to any country")
 	}
 
-	_, isFoundFromCountry := k.GetCountry(
+	from, isFoundFromCountry := k.GetCountry(
 		ctx,
 		invasion.FromAddress,
 	)
@@ -44,7 +45,7 @@ func (k msgServer) InvasionResult(goCtx context.Context, msg *types.MsgInvasionR
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No such country")
 	}
 
-	_, isFoundDestinyCountry := k.GetCountry(
+	to, isFoundDestinyCountry := k.GetCountry(
 		ctx,
 		invasion.ToAddress,
 	)
@@ -52,7 +53,16 @@ func (k msgServer) InvasionResult(goCtx context.Context, msg *types.MsgInvasionR
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No such country")
 	}
 
+	fromAddress, _ := sdk.AccAddressFromBech32(from.Address)
+	toAddress, _ := sdk.AccAddressFromBech32(to.Address)
+	_ = k.bankKeeper.SpendableCoins(ctx, fromAddress)
+	toCoins := k.bankKeeper.SpendableCoins(ctx, toAddress)
+
+	amount, _ := toCoins.SafeQuoInt(math.NewInt(100))
+	// amount, err := sdk.ParseCoinsNormalized("100token")
+	// ParseCoinsNormalized(1.0 / (1.0 + math.Exp(-fromCoins+toCoins)))
 	// to do change contry status
+	k.bankKeeper.SendCoins(ctx, toAddress, fromAddress, amount)
 
 	return &types.MsgInvasionResultResponse{}, nil
 }
