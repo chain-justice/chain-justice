@@ -29,7 +29,3 @@ export {
     SpTokenTransfer,
     SpGetTokenTransferList
 } from './transaction/transfer'
-
-export {
-    SpFundCountry
-} from './transaction/country'

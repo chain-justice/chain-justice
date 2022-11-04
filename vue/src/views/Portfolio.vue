@@ -29,7 +29,6 @@ export default {
     // computed
     const address = computed(() => $s.getters['common/wallet/address'])
     
-    console.log(address)
 
     return {
       address

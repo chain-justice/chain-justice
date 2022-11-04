@@ -34,34 +34,12 @@
 
     <!-- establish -->
     <div v-else>
-      <div v-if="showSend">
+      <div >
         <!-- TODO show country information when wallet user has established or been belonging to coountry -->
         <div>
           <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendTx"
             >Establish Country</SpButton
           >
-        </div>
-      </div>
-
-      <!-- receive-->
-      <div v-else-if="showReceive">
-        <div class="receive-wrapper">
-          <SpCard>
-            <template #top>
-              <div class="qrcode-wrapper">
-                <SpQrCode :value="address" color="#000" width="112" />
-              </div>
-            </template>
-
-            <template #bottom>
-              <div class="address-wrapper">
-                <div class="address">
-                  {{ address }}
-                </div>
-                <div class="copy"><SpClipboard :text="address" /></div>
-              </div>
-            </template>
-          </SpCard>
         </div>
       </div>
     </div>
@@ -72,16 +50,17 @@
 import { computed, defineComponent, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 
-import { AssetForUI } from '../../../../composables/useAssets'
-import { Amount } from '../../../../utils/interfaces'
+import { AssetForUI } from '@starport/vue/src/composables/useAssets'
+import { Amount } from '@starport/vue/src/utils/interfaces'
 
-import { useAddress, useAssets } from '../../../../composables'
-import SpAmountSelect from '../../../SpAmountSelect'
-import SpButton from '../../../SpButton'
-import SpCard from '../../../SpCard'
-import SpClipboard from '../../../SpClipboard'
-import SpQrCode from '../../../SpQrCode'
-import {TxFailed, TxSuccess, TxOnGoing, TxWalletLocked} from '../../common'
+import { useAddress, useAssets } from '@starport/vue/src/composables'
+import SpAmountSelect from '@starport/vue/src/components/SpAmountSelect'
+import SpButton from '@starport/vue/src/components/SpButton'
+import SpCard from '@starport/vue/src/components/SpCard'
+import SpClipboard from '@starport/vue/src/components/SpClipboard'
+import SpQrCode from '@starport/vue/src/components/SpQrCode'
+import {TxFailed, TxSuccess, TxOnGoing, TxWalletLocked} from '@starport/vue/src/components/transaction/common'
+import { useOwnedCountry } from '../../../composables'
 
 // types
 export interface TxData {
@@ -136,7 +115,7 @@ export default defineComponent({
     TxWalletLocked
   },
 
-  setup() {
+  async setup() {
     // store
     let $s = useStore()
 
@@ -146,10 +125,9 @@ export default defineComponent({
     // composables
     let { address } = useAddress({ $s })
     let { balances } = useAssets({ $s })
+    let { hasCountryInfo, establishCountryTx } = await useOwnedCountry({ $s })
 
     // actions
-    let sendMsgFundCountry = (opts: any) =>
-      $s.dispatch('chainjustice.chainjustice.justice/sendMsgFundCountry', opts)
 
     let resetTx = (): void => {
       state.currentUIState = UI_STATE.SEND
@@ -173,8 +151,6 @@ export default defineComponent({
 
       // let isIBC = state.tx.ch !== ''
 
-      let send;
-
       try {
         // if (isIBC) {
         //   payload = {
@@ -195,18 +171,7 @@ export default defineComponent({
         //       memo
         //     })
         // } else {
-        send = () =>
-          sendMsgFundCountry({
-            value: payload,
-            fee,
-            memo
-          })
-
-        const txResult = await send()
-
-        if (txResult.code) {
-          throw new Error()
-        }
+        await establishCountryTx(payload, fee, memo)
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
         console.error(e)
@@ -251,10 +216,10 @@ export default defineComponent({
     let ableToTx = computed<boolean>(
       () =>
         validTxFees.value &&
-        !!address.value
+        !!address.value &&
+        !hasCountryInfo.value
     )
 
-    //watch
     watch(
       () => address.value,
       async () => {

@@ -6,34 +6,64 @@
           <SpTokenTransferList />
         </div>
         <div class="col-md-5 col-lg-4 col-md-offset-1 col-lg-offset-2">
-          <SpFundCountry />
+          <Suspense>
+            <template #default>
+              <SpFundCountry />
+            </template>
+            <template #fallback>
+              <div class="tx-list">
+                <div class="title">Transactions</div>
+                <div v-for="n in 4" :key="n" class="loading__row">
+                  <div class="loading__col">
+                    <span class="loading__avatar"></span>
+                    <span class="loading__denom"></span>
+                  </div>
+
+                  <div class="loading__col loading__col--justify-end">
+                    <span class="loading__amount"></span>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </Suspense>
         </div>
       </div>
     </div>
   </template>
   
   <script>
-  import { SpAssets, SpFundCountry, SpTokenTransferList } from '@starport/vue'
+  import { defineComponent } from 'vue'
+  import { SpAssets, SpTokenTransferList } from '@starport/vue'
   import { computed } from 'vue'
   import { useStore } from 'vuex'
+  import { SpFundCountry } from '../components/country'
+  import { useOwnedCountry } from '../composables'
   
-  export default {
-    name: 'Country',
-  
-    components: { SpFundCountry, SpAssets, SpTokenTransferList },
-  
-    setup() {
-      // store
-      const $s = useStore()
-      
-      // computed
-      const address = computed(() => $s.getters['common/wallet/address'])
-      
-      return {
-        address
+  export default defineComponent(    
+    {
+      name: 'Country',
+    
+      components: { SpFundCountry, SpAssets, SpTokenTransferList },
+    
+      setup() {
+        // store
+        let $s = useStore()
+        
+        // composable
+        let {ownedCountry, hasCountryInfo} = useOwnedCountry({ $s })
+    
+        // computed
+        let address = computed(() => $s.getters['common/wallet/address'])
+        
+
+        return {
+          address,
+          ownedCountry,
+          hasCountryInfo,
+        }
       }
     }
-  }
+  )
   </script>
   
   <style scoped>
