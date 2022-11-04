@@ -77,7 +77,7 @@
         >
           <td class="country-info-table__denom">
             <div class="sp-denom-name">
-              <span>country address</span>
+              <span>country_address</span>
             </div>
           </td>
           <td class="country-info-table__amount">

@@ -3,7 +3,7 @@ $animation-duration: 1.6s;
 $shine-color: rgba(0, 0, 0, 0.06);
 $avatar-offset: 32 + 16;
 
-.assets-header {
+.country-info-header {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -83,7 +83,7 @@ $avatar-offset: 32 + 16;
   }
 }
 
-.assets-table {
+.country-info-table {
   width: 100%;
 
   &__denom {
@@ -92,7 +92,7 @@ $avatar-offset: 32 + 16;
     vertical-align: middle;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
-    width: 35.4%;
+    width: 36.4%;
   }
 
   &__amount {
@@ -109,7 +109,7 @@ $avatar-offset: 32 + 16;
     text-align: right;
     text-indent: 0;
     vertical-align: middle;
-    font-weight: 700;
+    font-weight: 500;
   }
 
   &__channels {
