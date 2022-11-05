@@ -74,13 +74,13 @@
         <div style="width: 100%; height: 24px" />
 
         <div>
-          <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendInvastionStartTx"
+          <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendInvasionStartTx"
             >Start Invasion</SpButton
           >
         </div>
         <div style="width: 100%; height: 24px" />
         <div>
-          <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendInvastionResultTx"
+          <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendInvasionResultTx"
             >Check Result Invasion</SpButton
           >
         </div>
@@ -207,7 +207,7 @@ export default defineComponent({
     let parseAmount = (amount: string): number => {
       return amount == '' ? 0 : parseInt(amount)
     }
-    let sendInvastionStartTx = async (): Promise<void> => {
+    let sendInvasionStartTx = async (): Promise<void> => {
       state.currentUIState = UI_STATE.TX_SIGNING
 
       let fee: Array<Amount> = state.tx.fees.map((x: AssetForUI) => ({
@@ -217,7 +217,7 @@ export default defineComponent({
 
       let payload: any = {
         creator: address.value,
-        countryAddress: state.tx.target,
+        CountryAddress: state.tx.target,
       }
 
       let memo = state.tx.memo
@@ -231,7 +231,7 @@ export default defineComponent({
       }
     }
 
-    let sendInvastionResultTx = async (): Promise<void> => {
+    let sendInvasionResultTx = async (): Promise<void> => {
       state.currentUIState = UI_STATE.TX_SIGNING
 
       let fee: Array<Amount> = state.tx.fees.map((x: AssetForUI) => ({
@@ -377,8 +377,8 @@ export default defineComponent({
       switchToInvasion,
       parseAmount,
       resetTx,
-      sendInvastionStartTx,
-      sendInvastionResultTx,
+      sendInvasionStartTx,
+      sendInvasionResultTx,
       sendPrepareStartTx,
       sendPrepareResultTx,
       resetFees,
