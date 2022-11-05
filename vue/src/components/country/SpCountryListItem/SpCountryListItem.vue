@@ -23,9 +23,10 @@
             <!-- <SpDenom :denom="a.denom" /> -->
           </span>
         </template>
-        <div class="tx-denom" v-if="nmenbers?.length">
+        <!-- 国に所属するメンバーがレスポンスで帰るようになったらコメントアウトはずす -->
+        <!-- <div class="tx-denom" v-if="nmenbers?.length">
           members: {{ nmenbers }}
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

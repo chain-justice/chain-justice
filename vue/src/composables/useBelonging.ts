@@ -8,7 +8,7 @@ import { Amount } from '@starport/vue/src/utils/interfaces'
 type Response = {
   belonging: Ref<Belonging | undefined>,
   hasBelongingInfo: ComputedRef<boolean>,
-  establishBelongingTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
+  belongCountryTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
 }
 
 type Params = {
@@ -34,27 +34,26 @@ export default async function ({ $s }: Params): Promise<Response> {
       } as Belonging
   }
 
-  let fetchbelongingInfo = async () => {
+  let fetchBelongingInfo = async () => {
       return axios.get(
         `${API_COSMOS.value}` +
         `/chain-justice/chain-justice/justice/belonging/${address.value}`
       )    
   }
 
-  let updatebelongingInfo = async () => {
+  let updateBelongingInfo = async () => {
     let res;
     if (address?.value){
-      res = normalizeAPIResponse(await fetchbelongingInfo())
+      res = normalizeAPIResponse(await fetchBelongingInfo())
     }
     if(res){
-      console.log("hello",res)
       belonging.value = {...res} as Belonging
     }
   }
 
-  let establishBelongingTx = async (payload:any, fee: Array<Amount>, memo: string) => {
+  let belongCountryTx = async (payload:any, fee: Array<Amount>, memo: string) => {
     let sendMsgFundBelonging = (opts: any) =>
-      $s.dispatch('chainjustice.chainjustice.justice/sendMsgFundBelonging', opts)
+      $s.dispatch('chainjustice.chainjustice.justice/sendMsgBelongContry', opts)
     let send = () =>
       sendMsgFundBelonging({
         value: payload,
@@ -68,10 +67,9 @@ export default async function ({ $s }: Params): Promise<Response> {
         throw new Error()
       }
       
-    await updatebelongingInfo()
+    await updateBelongingInfo()
     return txResult
   }
-  
   
   
 
@@ -81,7 +79,7 @@ export default async function ({ $s }: Params): Promise<Response> {
     async () => {
       let res;
       if (address?.value){
-        res = normalizeAPIResponse(await fetchbelongingInfo())
+        res = normalizeAPIResponse(await fetchBelongingInfo())
       }
       if(res){
         belonging.value = {...res} as Belonging
@@ -93,6 +91,6 @@ export default async function ({ $s }: Params): Promise<Response> {
   return {
     belonging,
     hasBelongingInfo,
-    establishBelongingTx
+    belongCountryTx
   }
 }

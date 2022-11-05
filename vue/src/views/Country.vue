@@ -15,7 +15,10 @@
         <div class="col-md-5 col-lg-4 col-md-offset-1 col-lg-offset-2">
           <Suspense>
             <template #default>
-              <SpFundCountry />
+              <div>
+                <SpFundCountry />
+                <SpBelongCountry />
+              </div>
             </template>
             <template #fallback>
               <div class="tx-list">
@@ -42,14 +45,14 @@
   import { defineComponent } from 'vue'
   import { computed } from 'vue'
   import { useStore } from 'vuex'
-  import { SpFundCountry, SpCountryInfo, SpCountryList } from '../components/country'
+  import { SpFundCountry, SpCountryInfo, SpCountryList, SpBelongCountry } from '../components/country'
   import { useBelongings } from '../composables'
   
   export default defineComponent(    
     {
       name: 'Country',
     
-      components: { SpFundCountry, SpCountryList, SpCountryInfo },
+      components: { SpFundCountry, SpCountryList, SpCountryInfo, SpBelongCountry },
     
       setup() {
         // store
