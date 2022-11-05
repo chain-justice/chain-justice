@@ -50,7 +50,7 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 	}
 
 	if food < 10 {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Not enough Food!")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Not enough Food! at least 10 is needed")
 	}
 
 	var invasion = types.Invasion{
