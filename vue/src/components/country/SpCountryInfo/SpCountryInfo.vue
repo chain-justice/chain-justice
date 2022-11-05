@@ -67,8 +67,8 @@
       <thead class="country-info-table__thead">
         <tr>
           <td>parameter</td>
-          <td></td>
           <td class="country-info-table__align-right">value</td>
+          <td></td>
         </tr>
       </thead>
       <tbody>
@@ -81,10 +81,11 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belongingCountry?.index}}
+            <div class="copy">{{countryAddress}}</div>
           </td>
+          <td><SpClipboard v-if="countryAddress" :text="countryAddress" /></td>
         </tr>
-        <tr
+        <!-- <tr
           class="country-info-table__row"
         >
           <td class="country-info-table__denom">
@@ -93,10 +94,10 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belongingCountry?.address}}
+            {{address}}
           </td>
-        </tr>
-        <tr
+        </tr> -->
+        <!-- <tr
           class="country-info-table__row"
         >
           <td class="country-info-table__denom">
@@ -105,9 +106,9 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belongingCountry?.nmembers}}
+            {{nmembers}}
           </td>
-        </tr>
+        </tr> -->
         <tr
           class="country-info-table__row"
         >
@@ -117,7 +118,7 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            {{belongingCountry?.food}}
+            {{food}}
           </td>
         </tr>
       </tbody>
@@ -126,16 +127,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 
 import { useAddress } from '@starport/vue/src/composables'
 import SpDenom from '@starport/vue/src/components/SpDenom'
 import useCountry from '../../../composables/useCountry'
+import SpClipboard from '@starport/vue/src/components/SpClipboard'
+import {shortenAddress} from '../../../utils/wallet'
 
 export default defineComponent({
   name: 'SpCopuntryInfo',
-  components: { SpDenom },
+  components: { SpDenom, SpClipboard },
 
 
   async setup() {
@@ -146,11 +149,33 @@ export default defineComponent({
     let { address } = useAddress({ $s })
     let { belongingCountry, hasCountryInfo } = await useCountry({ $s })
 
+    let countryAddress = computed<string>(
+      () => shortenAddress(belongingCountry.value?.index)
+    )
+
+    let ownerAddress = computed<string>(
+      () => shortenAddress(belongingCountry.value?.address)
+    )
+
+    let nmenbers = computed<string>(
+      () => belongingCountry.value?.nmembers || ""
+    )
+
+    let food = computed<string>(
+      () => belongingCountry.value?.food || ""
+    )
+
+
+
 
     return {
       address,
       belongingCountry,
       hasCountryInfo,
+      countryAddress,
+      ownerAddress,
+      nmenbers,
+      food
     }
   }
 })

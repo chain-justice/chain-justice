@@ -14,7 +14,7 @@
     </div>
 
     <div v-else-if="isTxError" class="feedback">
-      <TxFailed failed_message=" Failed to establish country." />
+      <TxFailed :failed_message="errorMessage" />
 
       <div style="width: 100%">
         <SpButton style="width: 100%" @click="sendTx">Try again</SpButton>
@@ -88,6 +88,7 @@ export enum UI_STATE {
 
 export interface State {
   tx: TxData,
+  error_message: string,
   currentUIState: UI_STATE
 }
 
@@ -97,6 +98,7 @@ export let initialState: State = {
     memo: '',
     fees: []
   },
+  error_message: '',
   currentUIState: UI_STATE.SEND,
 }
 
@@ -176,6 +178,7 @@ export default defineComponent({
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
         console.error(e)
+        state.error_message = e.message
         state.currentUIState = UI_STATE.TX_ERROR
         // TODO FundCountryするとなぜかエラーになるが、実際はうまくできているのでエスケープ
         // state.currentUIState = UI_STATE.TX_SUCCESS
@@ -222,6 +225,9 @@ export default defineComponent({
         !!address.value &&
         !hasCountryInfo.value
     )
+    let errorMessage = computed<string>(
+      () => state.error_message || "something wrong during transaction"
+    )
 
     watch(
       () => address.value,
@@ -250,6 +256,7 @@ export default defineComponent({
       resetTx,
       sendTx,
       resetFees,
+      errorMessage
     }
   }
 })

@@ -71,7 +71,7 @@ export default async function ({ $s }: Params): Promise<Response> {
       const txResult = await send()
       
       if (txResult.code) {
-        throw new Error()
+        throw new Error(txResult.rawLog)
       }
       
     return txResult

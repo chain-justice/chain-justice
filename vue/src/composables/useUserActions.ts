@@ -34,6 +34,7 @@ export default async function ({ $s }: Params): Promise<Response> {
 
 
       if (txResult.code) {
+        console.error(txResult)
         throw new Error(txResult.rawLog)
       }
       
@@ -51,6 +52,7 @@ export default async function ({ $s }: Params): Promise<Response> {
       const txResult = await send()
       
       if (txResult.code) {
+        console.error(txResult)
         throw new Error(txResult.rawLog)
       }
       
@@ -69,6 +71,7 @@ export default async function ({ $s }: Params): Promise<Response> {
       const txResult = await send()
       
       if (txResult.code) {
+        console.error(txResult)
         throw new Error(txResult.rawLog)
       }
       
@@ -87,6 +90,7 @@ export default async function ({ $s }: Params): Promise<Response> {
       const txResult = await send()
       
       if (txResult.code) {
+        console.error(txResult)
         throw new Error(txResult.rawLog)
       }
       

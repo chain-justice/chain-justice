@@ -74,13 +74,13 @@
         <div style="width: 100%; height: 24px" />
 
         <div>
-          <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendInvasionStartTx"
+          <SpButton style="width: 100%" :disabled="!ableToInvadeTx" @click="sendInvasionStartTx"
             >Start Invasion</SpButton
           >
         </div>
         <div style="width: 100%; height: 24px" />
         <div>
-          <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendInvasionResultTx"
+          <SpButton style="width: 100%" :disabled="!ableToInvadeTx" @click="sendInvasionResultTx"
             >Check Result Invasion</SpButton
           >
         </div>
@@ -92,13 +92,13 @@
           <div style="width: 100%; height: 95px" />
 
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendPrepareStartTx"
+            <SpButton style="width: 100%" :disabled="!ableToPrepareTx" @click="sendPrepareStartTx"
               >Start Prepare</SpButton
             >
           </div>
           <div style="width: 100%; height: 24px" />
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendPrepareResultTx"
+            <SpButton style="width: 100%" :disabled="!ableToPrepareTx" @click="sendPrepareResultTx"
               >Check Result Prepare</SpButton
             >
           </div>
@@ -227,6 +227,7 @@ export default defineComponent({
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
         console.error(e)
+        state.error_message = e.message
         state.currentUIState = UI_STATE.TX_ERROR
       }
     }
@@ -272,6 +273,8 @@ export default defineComponent({
         await prepareStartTx(payload, fee, memo)
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
+        console.error(e)
+        state.error_message = e.message
         state.currentUIState = UI_STATE.TX_ERROR
       }
     }
@@ -295,6 +298,7 @@ export default defineComponent({
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
         console.error(e)
+        state.error_message = e.message
         state.currentUIState = UI_STATE.TX_ERROR
       }
     }
@@ -343,8 +347,11 @@ export default defineComponent({
     let isTxError = computed<boolean>(() => {
       return state.currentUIState === UI_STATE.TX_ERROR
     })
-    let ableToTx = computed<boolean>(
+    let ableToInvadeTx = computed<boolean>(
       () => !!state.tx.target && !!hasCountryInfo.value
+    )
+    let ableToPrepareTx = computed<boolean>(
+      () => !!hasCountryInfo.value
     )
     let errorMessage = computed<string>(
       () => state.error_message || "Something wrong when transactions"
@@ -371,7 +378,8 @@ export default defineComponent({
       isTxSuccess,
       isTxError,
       hasCountryInfo,
-      ableToTx,
+      ableToInvadeTx,
+      ableToPrepareTx,
       // methods
       switchToPrepare,
       switchToInvasion,
