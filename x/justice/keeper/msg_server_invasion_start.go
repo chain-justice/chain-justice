@@ -13,7 +13,7 @@ import (
 func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionStart) (*types.MsgInvasionStartResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, isFound := k.GetBelonging(
+	belonging, isFound := k.GetBelonging(
 		ctx,
 		msg.Creator,
 	)
@@ -26,11 +26,21 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		msg.CountryAddress,
 	)
 	if !isFoundCountry {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No Such Country")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No Such Country :"+msg.CountryAddress)
 	}
-	food, err := strconv.ParseInt(country.Food, 10, 64)
+
+	myCountry, _ := k.GetCountry(
+		ctx,
+		belonging.Country,
+	)
+
+	food, err := strconv.ParseInt(myCountry.Food, 10, 64)
 	if err != nil {
 		panic(err)
+	}
+
+	if food < 10 {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "at least 10 food is needed:"+myCountry.Food)
 	}
 
 	_, isFound = k.GetPrepare(
@@ -47,10 +57,6 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 	)
 	if isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You are in another action")
-	}
-
-	if food < 10 {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Not enough Food! at least 10 is needed")
 	}
 
 	var invasion = types.Invasion{

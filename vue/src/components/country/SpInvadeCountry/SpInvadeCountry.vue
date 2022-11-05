@@ -92,13 +92,13 @@
           <div style="width: 100%; height: 95px" />
 
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToPrepareTx" @click="sendPrepareStartTx"
+            <SpButton style="width: 100%" :disabled="!hasCountryInfo" @click="sendPrepareStartTx"
               >Start Prepare</SpButton
             >
           </div>
           <div style="width: 100%; height: 24px" />
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToPrepareTx" @click="sendPrepareResultTx"
+            <SpButton style="width: 100%" :disabled="!hasCountryInfo" @click="sendPrepareResultTx"
               >Check Result Prepare</SpButton
             >
           </div>
@@ -217,8 +217,9 @@ export default defineComponent({
 
       let payload: any = {
         creator: address.value,
-        CountryAddress: state.tx.target,
+        countryAddress: state.tx.target,
       }
+      console.log(state.tx.target)
 
       let memo = state.tx.memo
 
