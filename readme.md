@@ -79,7 +79,12 @@ InvasionResultでは、ブロックの高さが十分であれば結果を反映
 
 ### Try on a Local Computer
 Cosmos Sdk を用いているので、一般的な方法でチェーンを起動することができます。  
-※ ignite のバージョンは `0.25.1` をお使いください（2022.11.12時点の最新）
+以下の環境をご用意ください
+```
+ignite version 0.25.1 (2022.11.12 時点最新)
+node version 18.5 以上
+npm version 8.8 以上
+```
 
 1. `ignite chain serve --reset-once` でチェーンを起動します。
 1. 別のターミナルを起動し、`ignite generate ts-client`, `ignite generate vuex` を実行し、クライアントのファイルを更新します。
