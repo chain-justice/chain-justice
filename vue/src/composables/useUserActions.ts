@@ -7,10 +7,10 @@ import useBelonging from './useBelonging'
 
 
 type Response = {
-  invasionStart : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>,
-  invasionResult : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
-  prepareStart : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>,
-  prepareResult : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
+  invasionStartTx : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>,
+  invasionResultTx : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
+  prepareStartTx : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>,
+  prepareResultTx : (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
 }
 
 type Params = {
@@ -33,7 +33,7 @@ export default async function ({ $s }: Params): Promise<Response> {
     return belongingCountry.value?.address ? true : false
 })
 
-  let invasionStart = async (payload:any, fee: Array<Amount>, memo: string) => {
+  let invasionStartTx = async (payload:any, fee: Array<Amount>, memo: string) => {
     let sendMsgInvasionStart = (opts: any) =>
       $s.dispatch('chainjustice.chainjustice.justice/sendMsgInvasionStart', opts)
     let send = () =>
@@ -50,7 +50,7 @@ export default async function ({ $s }: Params): Promise<Response> {
       
     return txResult
   }
-  let invasionResult = async (payload:any, fee: Array<Amount>, memo: string) => {
+  let invasionResultTx = async (payload:any, fee: Array<Amount>, memo: string) => {
     let sendMsgInvasionResult = (opts: any) =>
       $s.dispatch('chainjustice.chainjustice.justice/sendMsgInvasionResult', opts)
     let send = () =>
@@ -68,7 +68,7 @@ export default async function ({ $s }: Params): Promise<Response> {
     return txResult
   }
 
-  let prepareStart = async (payload:any, fee: Array<Amount>, memo: string) => {
+  let prepareStartTx = async (payload:any, fee: Array<Amount>, memo: string) => {
     let sendMsgPrepareResult = (opts: any) =>
       $s.dispatch('chainjustice.chainjustice.justice/sendMsgPrepareResult', opts)
     let send = () =>
@@ -86,7 +86,7 @@ export default async function ({ $s }: Params): Promise<Response> {
     return txResult
   }
   
-  let prepareResult = async (payload:any, fee: Array<Amount>, memo: string) => {
+  let prepareResultTx = async (payload:any, fee: Array<Amount>, memo: string) => {
     let sendMsgPrepareResult = (opts: any) =>
       $s.dispatch('chainjustice.chainjustice.justice/sendMsgPrepareResult', opts)
     let send = () =>
@@ -105,9 +105,9 @@ export default async function ({ $s }: Params): Promise<Response> {
   }
 
   return {
-    invasionStart,
-    invasionResult,
-    prepareStart,
-    prepareResult,
+    invasionStartTx,
+    invasionResultTx,
+    prepareStartTx,
+    prepareResultTx,
   }
 }

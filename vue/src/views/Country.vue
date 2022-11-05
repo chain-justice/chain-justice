@@ -33,6 +33,11 @@
               </div>
             </template>
           </Suspense>
+          <Suspense>
+            <template #default>
+              <SpInvadeCountry />
+            </template>
+          </Suspense>
         </div>
       </div>
     </div>
@@ -46,12 +51,13 @@
   import { SpFundCountry } from '../components/country'
   import { useBelongings } from '../composables'
   import { SpCountryInfo } from '../components/country'
+  import { SpInvadeCountry } from '../components/country'
   
   export default defineComponent(    
     {
       name: 'Country',
     
-      components: { SpFundCountry, SpAssets, SpTokenTransferList, SpCountryInfo },
+      components: { SpFundCountry, SpAssets, SpTokenTransferList, SpCountryInfo, SpInvadeCountry },
     
       setup() {
         // store
