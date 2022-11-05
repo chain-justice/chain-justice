@@ -28,9 +28,9 @@ export default {
 
     // state
     const navbarLinks = [
-      { name: 'Country', url: '/country'},
+      { name: 'Game', url: '/game'},
       { name: 'Portfolio', url: '/portfolio' },
-      { name: 'Data', url: '/data' }
+      // { name: 'Data', url: '/data' }
     ]
 
     // computed
