@@ -38,7 +38,7 @@ Cosmos Sdk を用いているので、一般的な方法でチェーンを起動
 ※ ignite のバージョンは `0.25.1` をお使いください（2022.11.12時点の最新）
 
 1. `ignite chain serve --reset-once` でチェーンを起動します。
-1. `ignite generate ts-client`, `ignite generate vuex` を実行し、クライアントのファイルを更新します。
+1. 別のターミナルを起動し、`ignite generate ts-client`, `ignite generate vuex` を実行し、クライアントのファイルを更新します。
 1. `cd vue && npm ci && npm run dev` でクライアントを起動します。
 1. Google Chrome にCosmos系のウォレットのKeplrをインストールします。
 1. Google Chrome で localhost:3000 へアクセスし、Keplrを連携します。
