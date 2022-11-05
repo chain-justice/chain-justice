@@ -39,12 +39,10 @@ export default async function ({ $s }: Params): Promise<Response> {
       } as Country
   }
 
-  console.log(belonging)
-
   let fetchcBelongingCountryInfo = async () => {
     return axios.get(
       `${API_COSMOS.value}` +
-      `/chain-justice/chain-justice/justice/country/${belonging.value?.index}`
+      `/chain-justice/chain-justice/justice/country/${belonging.value?.country}`
     )    
   }
 
