@@ -81,7 +81,7 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            <div class="copy">{{countryAddress}}</div>
+            <div class="copy">{{shotenCountryAddress}}</div>
           </td>
           <td><SpClipboard v-if="countryAddress" :text="countryAddress" /></td>
         </tr>
@@ -149,8 +149,12 @@ export default defineComponent({
     let { address } = useAddress({ $s })
     let { belongingCountry, hasCountryInfo } = await useCountry({ $s })
 
-    let countryAddress = computed<string>(
+    let shotenCountryAddress = computed<string>(
       () => shortenAddress(belongingCountry.value?.index)
+    )
+    
+    let countryAddress = computed<string>(
+      () => belongingCountry.value?.index || ""
     )
 
     let ownerAddress = computed<string>(
@@ -172,6 +176,7 @@ export default defineComponent({
       address,
       belongingCountry,
       hasCountryInfo,
+      shotenCountryAddress,
       countryAddress,
       ownerAddress,
       nmenbers,
