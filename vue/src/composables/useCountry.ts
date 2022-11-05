@@ -49,6 +49,7 @@ export default async function ({ $s }: Params): Promise<Response> {
 
   let updateBelongingCountryInfo = async () => {
     let res;
+    if (!belonging?.value?.country) return null
     if (address?.value){
       res = normalizeAPIResponse(await fetchcBelongingCountryInfo())
     }

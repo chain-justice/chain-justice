@@ -29,7 +29,6 @@
       <TxWalletLocked />
     </div>
 
-    <!-- establish -->
     <!-- invasion/prepare -->
     <div v-else>
       <div class="title-wrapper">
@@ -60,7 +59,7 @@
               v-model="state.tx.target"
               class="input"
               :class="{
-                error: state.tx.target.length > 0
+                error: state.tx.target.length > 0 && !validTarget
               }"
               placeholder="target country address"
               :disabled="!hasCountryInfo"
@@ -94,13 +93,13 @@
           <div style="width: 100%; height: 95px" />
 
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToTx&&!hasCountryInfo" @click="sendPrepareStartTx"
+            <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendPrepareStartTx"
               >Start Prepare</SpButton
             >
           </div>
           <div style="width: 100%; height: 24px" />
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToTx&&!hasCountryInfo" @click="sendPrepareResultTx"
+            <SpButton style="width: 100%" :disabled="!ableToTx" @click="sendPrepareResultTx"
               >Check Result Prepare</SpButton
             >
           </div>
@@ -344,12 +343,7 @@ export default defineComponent({
       return state.currentUIState === UI_STATE.TX_ERROR
     })
     let ableToTx = computed<boolean>(
-      () =>{
-        console.log(state.tx.target);
-        console.log(hasCountryInfo.value);
-        
-        return !!state.tx.target && !hasCountryInfo.value
-      }
+      () => !!state.tx.target && !!hasCountryInfo.value
     )
 
     watch(
