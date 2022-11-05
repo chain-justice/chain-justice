@@ -70,7 +70,7 @@ export default async function ({ $s }: Params): Promise<Response> {
 
   let prepareStartTx = async (payload:any, fee: Array<Amount>, memo: string) => {
     let sendMsgPrepareResult = (opts: any) =>
-      $s.dispatch('chainjustice.chainjustice.justice/sendMsgPrepareResult', opts)
+      $s.dispatch('chainjustice.chainjustice.justice/sendMsgPrepareStart', opts)
     let send = () =>
         sendMsgPrepareResult({
         value: payload,
