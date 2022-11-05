@@ -32,6 +32,22 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		panic(err)
 	}
 
+	_, isFound = k.GetPrepare(
+		ctx,
+		msg.Creator,
+	)
+	if isFound {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You are in another action")
+	}
+
+	_, isFound = k.GetInvasion(
+		ctx,
+		msg.Creator,
+	)
+	if isFound {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You are in another action")
+	}
+
 	if food < 10 {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Not enough Food!")
 	}

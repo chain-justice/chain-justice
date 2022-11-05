@@ -64,5 +64,9 @@ func (k msgServer) InvasionResult(goCtx context.Context, msg *types.MsgInvasionR
 	// to do change contry status
 	k.bankKeeper.SendCoins(ctx, toAddress, fromAddress, amount)
 
+	k.RemoveInvasion(
+		ctx,
+		msg.Creator,
+	)
 	return &types.MsgInvasionResultResponse{}, nil
 }

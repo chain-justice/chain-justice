@@ -56,5 +56,10 @@ func (k msgServer) PrepareResult(goCtx context.Context, msg *types.MsgPrepareRes
 		Food:     strconv.FormatInt(5+ctx.BlockHeight()%5+food, 10),
 		Nmembers: country.Nmembers,
 	})
+
+	k.RemovePrepare(
+		ctx,
+		msg.Creator,
+	)
 	return &types.MsgPrepareResultResponse{}, nil
 }

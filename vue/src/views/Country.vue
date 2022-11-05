@@ -36,6 +36,11 @@
               </div>
             </template>
           </Suspense>
+          <Suspense>
+            <template #default>
+              <SpInvadeCountry />
+            </template>
+          </Suspense>
         </div>
       </div>
     </div>
@@ -47,12 +52,13 @@
   import { useStore } from 'vuex'
   import { SpFundCountry, SpCountryInfo, SpCountryList, SpBelongCountry } from '../components/country'
   import { useBelongings } from '../composables'
+  import { SpInvadeCountry } from '../components/country'
   
   export default defineComponent(    
     {
       name: 'Country',
     
-      components: { SpFundCountry, SpCountryList, SpCountryInfo, SpBelongCountry },
+      components: { SpFundCountry, SpCountryList, SpCountryInfo, SpInvadeCountry, SpBelongCountry },
     
       setup() {
         // store
