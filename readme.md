@@ -18,6 +18,15 @@ Game rule is written in a chain and everyone can create sub game on it.
 Chain Justice is a Blockchain Game running **as** a Blockchain.  
 Game rule is written in a chain and everyone can create sub game on it. 
 
+### ノードの立て方
+```
+./chain-justiced init shohet --chain-id justice
+./chain-justiced keys add shohet
+./chain-justiced add-genesis-account <上で出てきたアドレス> 1000000token,100000000stake
+./chain-justiced gentx shohet 1000000stake --chain-id justice
+./chain-justiced start
+```
+
 
 ### Technicality
 取り組んでいる問題の複雑さ、またはその解決へのアプローチとは？
