@@ -43,6 +43,7 @@ export default async function ({ $s }: Params): Promise<Response> {
         memo
       })
       const txResult = await send()
+      console.log(txResult)
       
       if (txResult.code) {
         throw new Error()

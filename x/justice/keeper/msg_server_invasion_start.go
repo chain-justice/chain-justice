@@ -13,7 +13,7 @@ import (
 func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionStart) (*types.MsgInvasionStartResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, isFound := k.GetBelonging(
+	belonging, isFound := k.GetBelonging(
 		ctx,
 		msg.Creator,
 	)
@@ -26,9 +26,15 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		msg.CountryAddress,
 	)
 	if !isFoundCountry {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No Such Country")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "No Such Country :"+msg.CountryAddress)
 	}
-	food, err := strconv.ParseInt(country.Food, 10, 64)
+
+	myCountry, _ := k.GetCountry(
+		ctx,
+		belonging.Country,
+	)
+
+	food, err := strconv.ParseInt(myCountry.Food, 10, 64)
 	if err != nil {
 		panic(err)
 	}
