@@ -1,24 +1,14 @@
 <template>
   <div class="tx-list">
     <div class="title">Country List</div>
-    <div v-if="newTxs" class="load-more" role="button" @click="loadNewItems">
-      <template v-if="state.isNewTxLoading">
-        <SpSpinner :size="16"></SpSpinner>
-      </template>
-      <template v-else>
-        {{ showMoreText }}
-      </template>
-    </div>
-    <div v-if="!address || Object.keys(txByMonth).length <= 0" class="empty">
+    <div v-if="!address || list.length <= 0" class="empty">
       Country List is empty
     </div>
-    <div v-else-if="Object.keys(txByMonth).length > 0" class="list">
-      <div v-for="(txs, month, index) in txByMonth" :key="`${index}`">
-        <h3 class="tx-list__subheading" v-text="getMonthGroup(month)"></h3>
+    <div v-else-if="list.length > 0" class="list">
+      <div v-for="(country, index) in list" :key="`${index}`">
         <SpCountryListItem
-          v-for="(tx, i) in txs"
-          :key="`${tx.hash}-${tx.timestamp}-${i}`"
-          :tx="tx"
+          :key="country.index"
+          :country="country"
         />
       </div>
     </div>
@@ -51,10 +41,11 @@
 import { computed, defineComponent, reactive } from 'vue'
 import { useStore } from 'vuex'
 
-import { useAddress, useTxs } from '@starport/vue/src/composables'
-import { TxForUI } from '@starport/vue/src/composables/useTxs'
+import { useAddress  } from '@starport/vue/src/composables'
 import SpSpinner from '@starport/vue/src/components/SpSpinner'
 import SpCountryListItem from '../SpCountryListItem'
+import { useCountryList } from '../../../composables'
+import { CountryForUI } from '../../../composables/useCountryList'
 
 export interface State {
   listSize: number
@@ -82,73 +73,42 @@ export default defineComponent({
 
     // composables
     let { address } = useAddress({ $s })
-    let { pager, normalize, newTxs, filterSupportedTypes } = await useTxs({
+    let { pager, normalize } = await useCountryList({
       $s,
       opts: { order: 'desc', realTime: true }
     })
     
     // computed
-    let list = computed<TxForUI[]>(() => {
+    let list = computed<CountryForUI[]>(() => {
       return pager.value.page.value
-        .filter(filterSupportedTypes)
         .map(normalize)
         .slice(0, state.listSize)
-        .sort((a, b) => b.height - a.height)
     })
-    let txByMonth = computed(() => {
-      const groupByYear = groupBy('timestamp')
-      return groupByYear(list.value)
-    })
+    
     let leftToShowMore = computed<boolean>(
       () =>
         state.listSize < state.listMaxSize &&
         pager.value.page.value.length > state.listSize
     )
-    let showMoreText = computed<string>(
-      () => `${newTxs.value} new ${newTxs.value > 1 ? 'items' : 'item'}`
-    )
 
     // methods
-    let loadNewItems = async () => {
+    let reloadItems = async () => {
       state.isNewTxLoading = true
       await pager.value.load()
-      state.isNewTxLoading = !!newTxs.value
+      state.isNewTxLoading = false
     }
     let showMoreItems = () => {
       state.listSize = state.listMaxSize
     }
-    let getTxMonth = (timestamp): string =>
-      new Date(timestamp).toLocaleString('en-US', {
-        year: 'numeric',
-        month: 'long'
-      })
-    let groupBy = (key) => (array) =>
-      array.reduce((acc, obj) => {
-        const property = getTxMonth(obj[key])
-        acc[property] = (acc[property] || []).concat(obj)
-        return acc
-      }, {})
-    let getMonthGroup = (month) => {
-      const currentYear = new Date().getFullYear()
-      const monthYear = Number(month.replace(/\D/g, ''))
 
-      return monthYear < currentYear ? month : month.replace(/[0-9]/g, '')
-    }
 
     return {
-      // state
-      newTxs,
       // computed
       address,
       list,
       leftToShowMore,
-      showMoreText,
       /// methods
-      loadNewItems,
       showMoreItems,
-      txByMonth,
-      getTxMonth,
-      getMonthGroup,
       state
     }
   }
