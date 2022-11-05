@@ -63,7 +63,7 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		Index:             msg.Creator,
 		FromAddress:       msg.Creator,
 		ToAddress:         msg.CountryAddress,
-		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight(), 10)),
+		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight()+10, 10)),
 	}
 	k.SetInvasion(ctx, invasion)
 
