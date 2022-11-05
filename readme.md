@@ -1,52 +1,36 @@
-# chainjustice
-**chainjustice** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
+<samp>
+<div align="center">
 
-## Get started
+# Chain Justice
 
-```
-ignite chain serve
-```
+</div>
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
 
-### Configure
+## What is Chain Justice
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
+Chain Justice is a Blockchain Game running **as** a Blockchain.  
+Game rule is written in a chain and everyone can create sub game on it. 
 
-### Web Frontend
 
-Ignite CLI has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
 
-```
-cd vue
-npm install
-npm run serve
-```
+## What is Chain Justice
 
-The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
+Chain Justice is a Blockchain Game running **as** a Blockchain.  
+Game rule is written in a chain and everyone can create sub game on it. 
 
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
 
-```
-git tag v0.1
-git push origin v0.1
-```
+### Technicality
+取り組んでいる問題の複雑さ、またはその解決へのアプローチとは？
 
-After a draft release is created, make your final changes from the release page and publish it.
+### Originality
+新しい問題や未解決の問題に取り組んでいるか、既存の問題に対してユニークで創造的な解決策を生み出しているか？
 
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
+### Practicality
+プロジェクトの完成度や機能性はどうか？想定される利用者が使用できる状態になっているか？
 
-```
-curl https://get.ignite.com/chain-justice/chain-justice@latest! | sudo bash
-```
-`chain-justice/chain-justice` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
+### Usability (UI/UX/DX)
+プロジェクトは使いやすいか？ユーザーとの摩擦をなくすための努力がなされているか？
 
-## Learn more
+### WOW factor
 
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+</samp>
