@@ -14,8 +14,7 @@
     </div>
 
     <div v-else-if="isTxError" class="feedback">
-      <TxFailed failed_message=" Failed to Start Invasion." />
-
+      <TxFailed :failed_message="errorMessage" />
       <div style="width: 100%">
 
         <SpButton style="width: 100%" type="secondary" @click="resetTx"
@@ -157,6 +156,7 @@ export enum UI_STATE {
 
 export interface State {
   tx: TxData,
+  error_message: string,
   currentUIState: UI_STATE
 }
 
@@ -165,8 +165,9 @@ export let initialState: State = {
     ch: '',
     target: '',
     memo: '',
-    fees: []
+    fees: [],
   },
+  error_message: '',
   currentUIState: UI_STATE.SEND,
 }
 
@@ -216,7 +217,7 @@ export default defineComponent({
 
       let payload: any = {
         creator: address.value,
-        toAddress: state.tx.target,
+        countryAddress: state.tx.target,
       }
 
       let memo = state.tx.memo
@@ -249,6 +250,7 @@ export default defineComponent({
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
         console.error(e)
+        state.error_message = e.message
         state.currentUIState = UI_STATE.TX_ERROR
       }
     }
@@ -270,7 +272,6 @@ export default defineComponent({
         await prepareStartTx(payload, fee, memo)
         state.currentUIState = UI_STATE.TX_SUCCESS
       } catch (e) {
-        console.error(e)
         state.currentUIState = UI_STATE.TX_ERROR
       }
     }
@@ -345,6 +346,9 @@ export default defineComponent({
     let ableToTx = computed<boolean>(
       () => !!state.tx.target && !!hasCountryInfo.value
     )
+    let errorMessage = computed<string>(
+      () => state.error_message || "Something wrong when transactions"
+    )
 
     watch(
       () => address.value,
@@ -378,7 +382,8 @@ export default defineComponent({
       sendPrepareStartTx,
       sendPrepareResultTx,
       resetFees,
-      validTarget
+      validTarget,
+      errorMessage
     }
   }
 })
