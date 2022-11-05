@@ -16,8 +16,18 @@
           <Suspense>
             <template #default>
               <div>
-                <SpFundCountry />
-                <SpBelongCountry />
+                <div>
+                  <h3 class="title">Country Action</h3>
+                  <div style="width: 100%; height: 24px" />
+                  <SpFundCountry />
+                  <SpBelongCountry />
+                </div>
+                <div style="width: 100%; height: 48px" />
+                <div v-if="address">
+                  <h3 class="title">User Action</h3>
+                  <div style="width: 100%; height: 16px" />
+                  <SpInvadeCountry />
+                </div>
               </div>
             </template>
             <template #fallback>
@@ -36,11 +46,6 @@
               </div>
             </template>
           </Suspense>
-          <Suspense>
-            <template #default>
-              <SpInvadeCountry />
-            </template>
-          </Suspense>
         </div>
       </div>
     </div>
@@ -56,7 +61,7 @@
   
   export default defineComponent(    
     {
-      name: 'Country',
+      name: 'Game',
     
       components: { SpFundCountry, SpCountryList, SpCountryInfo, SpInvadeCountry, SpBelongCountry },
     
