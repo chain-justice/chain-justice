@@ -7,6 +7,7 @@
       </div>
       <div class="col-md-5 col-lg-4 col-md-offset-1 col-lg-offset-2">
         <SpTokenTransfer />
+        <SpFaucet />
       </div>
     </div>
   </div>
@@ -16,18 +17,20 @@
 import { SpAssets, SpTokenTransfer, SpTokenTransferList } from '@starport/vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { SpFaucet } from '../components/faucet'
 
 export default {
   name: 'Portfolio',
 
-  components: { SpTokenTransfer, SpAssets, SpTokenTransferList },
+  components: { SpTokenTransfer, SpAssets, SpTokenTransferList, SpFaucet },
 
   setup() {
     // store
-    let $s = useStore()
-
+    const $s = useStore()
+    
     // computed
-    let address = computed(() => $s.getters['common/wallet/address'])
+    const address = computed(() => $s.getters['common/wallet/address'])
+    
 
     return {
       address
