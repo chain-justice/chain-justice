@@ -19,7 +19,8 @@ export default async function ({ $s }: Params): Promise<Response> {
   let API_FAUCET = process.env.VUE_APP_API_FAUCET || 'http://localhost:4500/'
 
   let fetchFaucet = async () => {
-      return await axios.post(`${API_FAUCET}`, { address: address.value, coins: ["10token"] } )    
+    
+    return await axios.post(`${API_FAUCET}`, { address: address.value, coins: ["10token"] } )    
   }
 
 
