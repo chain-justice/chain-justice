@@ -94,7 +94,7 @@
           <div style="width: 100%; height: 95px" />
 
           <div>
-            <SpButton style="width: 100%" :disabled="!ableToTx&&!hasCountryInfo" @click="sendPrepareResultTx"
+            <SpButton style="width: 100%" :disabled="!ableToTx&&!hasCountryInfo" @click="sendPrepareStartTx"
               >Start Prepare</SpButton
             >
           </div>
@@ -343,18 +343,13 @@ export default defineComponent({
     let isTxError = computed<boolean>(() => {
       return state.currentUIState === UI_STATE.TX_ERROR
     })
-    let validTxFees = computed<boolean>(() =>
-      state.tx.fees.every((x) => {
-        let parsedAmount = parseAmount(x.amount.amount)
-
-        return !isNaN(parsedAmount) && parsedAmount > 0
-      })
-    )
     let ableToTx = computed<boolean>(
-      () =>
-        validTxFees.value &&
-        !!address.value &&
-        !hasCountryInfo.value
+      () =>{
+        console.log(state.tx.target);
+        console.log(hasCountryInfo.value);
+        
+        return !!state.tx.target && !hasCountryInfo.value
+      }
     )
 
     watch(
