@@ -8,9 +8,25 @@
 ## What is Chain Justice
 
 Chain Justice is a Blockchain Game running **as** a Blockchain.  
-Game rule is written in a chain and everyone can create sub game on it. 
+Game rule is written in a chain and everyone can create sub game on it!!
 
 ## Game Rule
+Chain Justiceは、プレイヤー同士がチーム（国）として協力し、他のチーム（国）と競い合うゲームです。   
+ユーザーはまず、国に所属するか建国するかを選ぶことができます。  
+国に所属したら、または建国したら、他の国に攻めることができます。
+現在の仕様では、Invasionした場合相手の国のトークンを1%奪うことができます。  
+ただし、攻撃には10の食糧が必要となります。食糧は Prepare を行うことで国に蓄えられていきます。
+
+### 建国・所属
+#### FundCountry
+ユーザーは自分を国主として、国を建国することができます。その際、国のアドレスはユーザーのウォレットアドレスとなります。
+
+#### BelongCountry
+ユーザーは他の人が作った国に所属し、一員として Prepare・Invasionを行うことができます。
+
+### 攻撃・準備
+#### Prepare
+#### Invasion
 
 ## Game Vision
 
