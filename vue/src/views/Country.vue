@@ -10,16 +10,19 @@
               <div>Loading</div>
             </template>
           </Suspense>
-          <SpTokenTransferList />
+          <SpCountryList />
         </div>
         <div class="col-md-5 col-lg-4 col-md-offset-1 col-lg-offset-2">
           <Suspense>
             <template #default>
-              <SpFundCountry />
+              <div>
+                <SpFundCountry />
+                <SpBelongCountry />
+              </div>
             </template>
             <template #fallback>
               <div class="tx-list">
-                <div class="title">Transactions</div>
+                <div class="title">Country</div>
                 <div v-for="n in 4" :key="n" class="loading__row">
                   <div class="loading__col">
                     <span class="loading__avatar"></span>
@@ -45,19 +48,17 @@
   
   <script>
   import { defineComponent } from 'vue'
-  import { SpAssets, SpTokenTransferList } from '@starport/vue'
   import { computed } from 'vue'
   import { useStore } from 'vuex'
-  import { SpFundCountry } from '../components/country'
+  import { SpFundCountry, SpCountryInfo, SpCountryList, SpBelongCountry } from '../components/country'
   import { useBelongings } from '../composables'
-  import { SpCountryInfo } from '../components/country'
   import { SpInvadeCountry } from '../components/country'
   
   export default defineComponent(    
     {
       name: 'Country',
     
-      components: { SpFundCountry, SpAssets, SpTokenTransferList, SpCountryInfo, SpInvadeCountry },
+      components: { SpFundCountry, SpCountryList, SpCountryInfo, SpInvadeCountry, SpBelongCountry },
     
       setup() {
         // store

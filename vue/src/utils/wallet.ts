@@ -1,0 +1,1 @@
+export const shortenAddress = (addr: string) => addr.substring(0, 10) + '...' + addr.slice(-4)
