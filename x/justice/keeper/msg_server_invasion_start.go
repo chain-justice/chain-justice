@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/chain-justice/chain-justice/x/justice/types"
@@ -56,7 +57,7 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		Index:             msg.Creator,
 		FromAddress:       msg.Creator,
 		ToAddress:         msg.CountryAddress,
-		RequireBlockHeigt: strconv.FormatInt(ctx.BlockHeight(), 10),
+		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight(), 10)),
 	}
 	k.SetInvasion(ctx, invasion)
 

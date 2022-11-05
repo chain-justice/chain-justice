@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/chain-justice/chain-justice/x/justice/types"
@@ -39,7 +40,7 @@ func (k msgServer) PrepareStart(goCtx context.Context, msg *types.MsgPrepareStar
 	var prepare = types.Prepare{
 		Index:             msg.Creator,
 		Address:           msg.Creator,
-		RequireBlockHeigt: strconv.FormatInt(ctx.BlockHeight(), 10),
+		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight(), 10)),
 	}
 
 	k.SetPrepare(ctx, prepare)
