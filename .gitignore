@@ -6,5 +6,4 @@ release/
 .vscode/
 .DS_Store
 vue/src/store/generated
-config.yml
 docs/static/openapi.yml
