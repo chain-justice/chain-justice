@@ -27,6 +27,10 @@
     display: flex;
     align-items: center;
   }
+
+  .clipboard {
+    z-index: 10;
+  }
   
   .tx-meta {
     /* Body/S */

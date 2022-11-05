@@ -10,7 +10,7 @@ type Response = {
   belongingCountry: Ref<Country | undefined>,
   hasCountryInfo: ComputedRef<boolean>,
   establishCountryTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>,
-  updateBelongingCountryInfo: () => Promise<void>
+  updateBelongingCountryInfo: () => Promise<null | undefined>
 }
 
 type Params = {
