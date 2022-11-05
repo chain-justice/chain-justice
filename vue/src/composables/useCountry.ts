@@ -9,7 +9,8 @@ import useBelonging from './useBelonging'
 type Response = {
   belongingCountry: Ref<Country | undefined>,
   hasCountryInfo: ComputedRef<boolean>,
-  establishCountryTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>
+  establishCountryTx:  (payload: any, fee: Array<Amount>, memo: string) => Promise<any>,
+  updateBelongingCountryInfo: () => Promise<void>
 }
 
 type Params = {
@@ -72,7 +73,6 @@ export default async function ({ $s }: Params): Promise<Response> {
         throw new Error()
       }
       
-    await updateBelongingCountryInfo()
     return txResult
   }
   
@@ -83,13 +83,7 @@ export default async function ({ $s }: Params): Promise<Response> {
   watch(
     () => belonging.value,
     async () => {
-      let res;
-      if (belonging.value?.index){
-        res = normalizeAPIResponse(await fetchcBelongingCountryInfo())
-      }
-      if(res){
-        belongingCountry.value = {...res} as Country
-      }
+      await updateBelongingCountryInfo()
     },
     { immediate: true }
   )
@@ -97,6 +91,7 @@ export default async function ({ $s }: Params): Promise<Response> {
   return {
     belongingCountry,
     hasCountryInfo,
-    establishCountryTx
+    establishCountryTx,
+    updateBelongingCountryInfo
   }
 }

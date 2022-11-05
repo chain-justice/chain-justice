@@ -125,7 +125,7 @@ export default defineComponent({
     // composables
     let { address } = useAddress({ $s })
     let { balances } = useAssets({ $s })
-    let { hasCountryInfo, establishCountryTx } = await useCountry({ $s })
+    let { hasCountryInfo, establishCountryTx, updateBelongingCountryInfo } = await useCountry({ $s })
 
     // actions
 
@@ -177,6 +177,8 @@ export default defineComponent({
       } catch (e) {
         console.error(e)
         state.currentUIState = UI_STATE.TX_ERROR
+        // TODO FundCountryするとなぜかエラーになるが、実際はうまくできているのでエスケープ
+        // state.currentUIState = UI_STATE.TX_SUCCESS
       }
     }
     let resetFees = (): void => {
