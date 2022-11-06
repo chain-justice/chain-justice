@@ -96,7 +96,7 @@ InvasionResultでは、ブロックの高さが十分であれば結果を反映
 ## How to try Demo
 ### Demo Version
 
-Local環境で`ignite chain serve`を行うか、11/6 ~ 11/14 の間、[こちら](http://13.59.230.134)で公開しております。  
+Local環境で`ignite chain serve`を行うか、11/6 ~ 11/14 の間、[こちら](http://3.19.251.152)で公開しております。  
 ノードとウェブページの両方が稼働しているため、少し動作が重いですが、ご了承ください。
 
 1. ChromeにCosmos系のウォレットである [Keplr](https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=ja)をインストール
