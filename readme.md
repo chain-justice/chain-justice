@@ -72,6 +72,7 @@ InvasionResultでは、ブロックの高さが十分であれば結果を反映
 また、国主は独自のERCトークンなどを報酬にすることができ、内部に独自の経済圏を作ることも可能です
 
 <div align="center">
+
 ![TokenEconomics](./img/tokeneconomics.png)
 </div>
 
