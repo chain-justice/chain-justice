@@ -8,12 +8,13 @@
 
       <div class="tx-info">
         <div class="tx-direction" v-if="index?.length">
-          address: {{ index }}
+          address: {{ shotenCountryAddress }}
         </div>
-        <div class="tx-meta" v-if="address?.length">
+        <!-- <div class="tx-meta" v-if="address?.length">
           boss: {{ address }}
-        </div>
+        </div> -->
       </div>
+      <SpClipboard class="clipboard" v-if="index" :text="index" />
       <div class="tx-payload">
         <template v-if="food?.length">
           <span
@@ -33,9 +34,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import SpDenom from '@starport/vue/src/components/SpDenom'
+import SpClipboard from '@starport/vue/src/components/SpClipboard'
 import { CountryForUI } from '../../../composables/useCountryList'
+import { shortenAddress } from '../../../utils/wallet'
 
 
 export default defineComponent({
@@ -48,11 +51,16 @@ export default defineComponent({
     }
   },
 
-  components: { SpDenom },
+  components: { SpDenom, SpClipboard },
 
   setup(props) {
 
+    let shotenCountryAddress = computed<string>(
+      () => shortenAddress(props.country?.index)
+    )
+
     return {
+      shotenCountryAddress,
       ...props.country
     }
   }
