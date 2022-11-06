@@ -72,11 +72,11 @@
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 
-import SpSpacer from '../../SpSpacer'
-import SpTypography from '../../SpTypography'
-import SpButton from '../../SpButton'
-import SpDropdown from '../../SpDropdown'
-import SpModal from '../../SpModal'
+import SpSpacer from '../SpSpacer'
+import SpTypography from '../SpTypography'
+import SpButton from '../SpButton'
+import SpDropdown from '../SpDropdown'
+import SpModal from '../SpModal'
 
 export default defineComponent({
   name: 'SpCrudDelete',

@@ -119,12 +119,12 @@
 import { computed, defineComponent, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
-import { useAddress } from '../../../composables'
-import SpButton from '../../SpButton'
-import SpDropdown from '../../SpDropdown'
-import SpModal from '../../SpModal'
-import SpSpacer from '../../SpSpacer'
-import SpTypography from '../../SpTypography'
+import { useAddress } from '../../composables'
+import SpButton from '../SpButton'
+import SpDropdown from '../SpDropdown'
+import SpModal from '../SpModal'
+import SpSpacer from '../SpSpacer'
+import SpTypography from '../SpTypography'
 
 export default defineComponent({
   name: 'SpCrudRead',

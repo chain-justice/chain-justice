@@ -141,10 +141,10 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 
-import SpAcc from '../../SpAcc'
-import SpButton from '../../SpButton'
-import SpModal from '../../SpModal'
-import SpSystemBar from '../../SpSystemBar'
+import SpAcc from '../SpAcc'
+import SpButton from '../SpButton'
+import SpModal from '../SpModal'
+import SpSystemBar from '../SpSystemBar'
 
 export interface NavbarLink {
   name: string

@@ -11,21 +11,15 @@ export { default as SpSpacer } from './SpSpacer'
 export { default as SpSystemBar } from './SpSystemBar'
 export { default as SpTypography } from './SpTypography'
 
-export {
-    SpNavbar,
-    SpTheme
-} from './global'
+export { default as SpNavbar } from './SpNavbar'
+export { default as SpTheme } from './SpTheme'
 
-export {
-    SpCrud,
-    SpCrudCreate,
-    SpCrudDelete,
-    SpCrudRead,
-    SpCrudUpdate
-} from './crud'
+export { default as SpCrud } from './SpCrud'
+export { default as SpCrudCreate } from './SpCrudCreate'
+export { default as SpCrudDelete } from './SpCrudDelete'
+export { default as SpCrudRead } from './SpCrudRead'
+export { default as SpCrudUpdate } from './SpCrudUpdate'
 
-export {
-    SpTokenTransferList,
-    SpTokenTransfer,
-    SpGetTokenTransferList
-} from './transaction/transfer'
+export { default as SpTokenTransferList,} from './transaction/transfer/SpTokenTransferList'
+export { default as SpTokenTransfer,} from './transaction/transfer/SpTokenTransfer'
+export { default as SpGetTokenTransferList} from './transaction/transfer/SpGetTokenTransferList'

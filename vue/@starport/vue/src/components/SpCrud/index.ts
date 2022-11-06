@@ -1,8 +1,8 @@
 import { App as Application } from 'vue'
 
-import { registerComponent } from '../../../utils/plugins/index'
+import { registerComponent } from '../../utils/plugins'
 // @ts-ignore
-import C from './SpCrudCreate.vue'
+import C from './SpCrud.vue'
 
 export const Plugin = {
   install(vue: Application): void {

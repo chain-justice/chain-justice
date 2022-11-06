@@ -66,13 +66,13 @@
 import { computed, defineComponent, reactive, ref, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
-import { useAddress } from '../../../composables'
-import SpButton from '../../SpButton'
+import { useAddress } from '../../composables'
+import SpButton from '../SpButton'
 import SpCrudCreate from '../SpCrudCreate'
 import SpCrudDelete from '../SpCrudDelete'
 import SpCrudRead from '../SpCrudRead'
 import SpCrudUpdate from '../SpCrudUpdate'
-import SpTypography from '../../SpTypography'
+import SpTypography from '../SpTypography'
 
 export interface State {
   visibleModal: string

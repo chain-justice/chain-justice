@@ -1,13 +1,13 @@
 <template>
   <SpModal
     :visible="true"
-    :title="`Create ${itemName}`"
+    :title="`Edit ${itemName.toLowerCase()}`"
     :close-icon="true"
     :submit-button="true"
     :cancel-button="true"
     style="text-align: center"
     @close="$emit('close')"
-    @submit="submitItem"
+    @submit="editItem"
   >
     <template #body>
       <SpSpacer size="sm" />
@@ -33,14 +33,14 @@
 import { computed, defineComponent, reactive } from 'vue'
 import { useStore } from 'vuex'
 
-import SpButton from '../../SpButton'
-import SpDropdown from '../../SpDropdown'
-import SpModal from '../../SpModal'
-import SpSpacer from '../../SpSpacer'
-import SpTypography from '../../SpTypography'
+import SpButton from '../SpButton'
+import SpDropdown from '../SpDropdown'
+import SpModal from '../SpModal'
+import SpSpacer from '../SpSpacer'
+import SpTypography from '../SpTypography'
 
 export default defineComponent({
-  name: 'SpCrudCreate',
+  name: 'SpCrudUpdate',
 
   components: {
     SpSpacer,
@@ -61,6 +61,11 @@ export default defineComponent({
       required: true
     },
 
+    itemData: {
+      type: Object,
+      required: true
+    },
+
     commandName: {
       type: String,
       required: true
@@ -70,7 +75,7 @@ export default defineComponent({
   setup(props, { emit }) {
     // store
     let $s = useStore()
-    let formData = reactive({})
+    let formData = reactive({ ...props.itemData })
 
     // computed
     let itemFields = computed(() =>
@@ -81,9 +86,9 @@ export default defineComponent({
     )
     let creator = $s.getters['common/wallet/address']
 
-    let submitItem = async () => {
+    let editItem = async () => {
       $s.dispatch(props.storeName + props.commandName, {
-        value: { ...formData, creator }
+        value: { ...formData, creator, id: props.itemData.id }
       })
       emit('close')
     }
@@ -91,7 +96,7 @@ export default defineComponent({
     return {
       itemFieldsFiltered,
       formData,
-      submitItem
+      editItem
     }
   }
 })
@@ -123,17 +128,6 @@ export default defineComponent({
   text-align: left;
   width: 100%;
   margin: 0 4px;
-
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 153.8%;
-  /* identical to box height, or 20px */
-
-  /* light/muted */
-
-  color: rgba(0, 0, 0, 0.667);
 }
 .sp-input {
   display: flex;
