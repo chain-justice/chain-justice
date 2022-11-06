@@ -90,6 +90,22 @@ InvasionResultでは、ブロックの高さが十分であれば結果を反映
 ## How to try Demo
 ### Demo Version
 
+Local環境で`ignite chain serve`を行うか、11/6 ~ 11/14 の間、[こちら](http://13.59.230.134)で公開しております。  
+ノードとウェブページの両方が稼働しているため、少し動作が重いですが、ご了承ください。
+
+1. ChromeにCosmos系のウォレットである [Keplr](https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=ja)をインストール
+1. Keplrウォレットでウォレットを作成
+1. 上記のリンク、または localで実行している場合は localhost へアクセス
+1. 右上の Connect Walletからウォレットを連携
+1. Faucetからトークンを取得しましょう
+1. 左上のメニューから Gameを選択
+1. Fund Countryか、他の人がすでに国を作っていれば Belong to Countryを実行しましょう
+1. 国に所属したら、Prepareから食糧をつくりInvasionから他国に攻撃しましょう
+   1. StartPrepare / StartInvasion で開始します。10ブロックの生成（およそ10秒）間、他の行動を取ることはできません。
+   1. CheckResultPrepare/ CheckResultInvasion を実行すると、十分な時間が経過していれば、アクションの結果が反映されます。（自動では行動の結果は反映されません）
+1. Prepare で食糧が増え、Invasionでトークンが増え食糧が減ることを確認しましょう。国主の場合は、自分のトークンが上限します！
+
+
 ### Try on a Local Computer
 Cosmos Sdk を用いているので、一般的な方法でチェーンを起動することができます。  
 以下の環境をご用意ください
