@@ -1,11 +1,13 @@
+version: 1
 accounts:
   - name: alice
-    coins: ["20000token", "200000000stake"]
+    coins: ["2000000token", "200000000stake"]
   - name: bob
     coins: ["10000token", "100000000stake"]
-validator:
-  name: alice
-  staked: "100000000stake"
+    address: "cosmos1k5u3yecxsx0z999mfutxserd6ssvyhp8gj3rd7"
+validators:
+  - name: alice
+    bonded: "100000000stake"
 client:
   openapi:
     path: "docs/static/openapi.yml"
@@ -14,5 +16,7 @@ client:
   vuex:
     path: "vue/src/store"
 faucet:
-  name: bob
+  name: alice
   coins: ["5token", "100000stake"]
+  coins_max: ["100token", "100000stake"]
+  rate_limit_window: "60s"
