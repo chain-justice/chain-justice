@@ -71,7 +71,9 @@ InvasionResultでは、ブロックの高さが十分であれば結果を反映
 報酬はゲーム内で消費するか、外部の価値に交換することができます。  
 また、国主は独自のERCトークンなどを報酬にすることができ、内部に独自の経済圏を作ることも可能です
 
+<div align="center">
 ![TokenEconomics](./img/tokeneconomics.png)
+</div>
 
 ## Technical Description
 以下の技術を用いました
