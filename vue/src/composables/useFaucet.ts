@@ -20,7 +20,7 @@ export default async function ({ $s }: Params): Promise<Response> {
 
   let fetchFaucet = async () => {
     
-    return await axios.post(`${API_FAUCET}`, { address: address.value, coins: ["10token"] } )    
+    return await axios.post(`${API_FAUCET}`, { address: address.value, coins: ["100token"] } )    
   }
 
 
