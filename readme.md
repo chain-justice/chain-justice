@@ -24,7 +24,7 @@ CosmosSDKを使っているため、外の経済との接点は開発は用意�
 |name|description|
 |---|---|
 |[デモサイト](http://3.19.251.152/)|デモサイトです。インスタンスサイズが小さくたまに落ちるので、落ちていたらご連絡ください。
-|[デモ動画]((https://www.youtube.com/watch?v=k3coKI7HfaA))|使い方を簡潔に解説しています。|
+|[デモ動画](https://www.youtube.com/watch?v=k3coKI7HfaA)|使い方を簡潔に解説しています。|
 |[Keplr](https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=ja)|Cosmos系のWalletです。デモサイトの利用にはインストールが必要です。|
 |[OpenAPI.yml](http://3.19.251.152/1317)|API定義書です。|
 
