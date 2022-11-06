@@ -21,7 +21,7 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "You have to belong to a contry")
 	}
 
-	country, isFoundCountry := k.GetCountry(
+	_, isFoundCountry := k.GetCountry(
 		ctx,
 		msg.CountryAddress,
 	)
@@ -63,15 +63,15 @@ func (k msgServer) InvasionStart(goCtx context.Context, msg *types.MsgInvasionSt
 		Index:             msg.Creator,
 		FromAddress:       msg.Creator,
 		ToAddress:         msg.CountryAddress,
-		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight()+10, 10)),
+		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight()+15, 10)),
 	}
 	k.SetInvasion(ctx, invasion)
 
 	k.SetCountry(ctx, types.Country{
-		Index:    country.Index,
-		Address:  country.Address,
+		Index:    myCountry.Index,
+		Address:  myCountry.Address,
 		Food:     strconv.FormatInt(food-10, 10),
-		Nmembers: country.Nmembers,
+		Nmembers: myCountry.Nmembers,
 	})
 	return &types.MsgInvasionStartResponse{}, nil
 }
