@@ -20,8 +20,12 @@ CosmosSDKを使っているため、外の経済との接点は開発は用意�
 今回は短い開発期間ということもあり、チェーンの作成とプレーのデモを行いました。
 
 ## Demo Video
-(Demo撮影後にリンクを貼ります)
-![demovideo]()
+
+
+<div align="center">
+
+[![alt設定](http://img.youtube.com/vi/k3coKI7HfaA/0.jpg)](https://www.youtube.com/watch?v=k3coKI7HfaA)
+</div>
    
 ## Game Rule
 Chain Justiceは、プレイヤー同士がチーム（国）として協力し、他のチーム（国）と競い合うゲームです。   
