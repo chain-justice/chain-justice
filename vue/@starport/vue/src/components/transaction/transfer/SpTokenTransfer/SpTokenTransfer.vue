@@ -203,7 +203,7 @@
                 <div class="address">
                   {{ address }}
                 </div>
-                <div class="copy"><SpClipboard :text="address" /></div>
+                <!-- <div class="copy"><SpClipboard :text="address" /></div> -->
               </div>
             </template>
           </SpCard>

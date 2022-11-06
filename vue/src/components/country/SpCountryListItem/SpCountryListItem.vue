@@ -8,13 +8,13 @@
 
       <div class="tx-info">
         <div class="tx-direction" v-if="index?.length">
-          address: {{ shotenCountryAddress }}
+          address: {{ index }}
         </div>
         <!-- <div class="tx-meta" v-if="address?.length">
           boss: {{ address }}
         </div> -->
       </div>
-      <SpClipboard class="clipboard" v-if="index" :text="index" />
+      <!-- <SpClipboard class="clipboard" v-if="index" :text="index" /> -->
       <div class="tx-payload">
         <template v-if="food?.length">
           <span

@@ -81,9 +81,9 @@
             </div>
           </td>
           <td class="country-info-table__amount">
-            <div class="copy">{{shotenCountryAddress}}</div>
+            <div class="copy">{{countryAddress}}</div>
           </td>
-          <td><SpClipboard v-if="countryAddress" :text="countryAddress" /></td>
+          <!-- <td><SpClipboard v-if="countryAddress" :text="countryAddress" /></td> -->
         </tr>
         <!-- <tr
           class="country-info-table__row"
