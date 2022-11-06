@@ -18,6 +18,10 @@ Game rule is written in a chain and everyone can create sub game on it!!
 GameFiとしては、外の経済との接点が重要ですが、CosmosSDKを使っているため、トークンの交換機能の開発は用意にできるでしょう。
 今回は短い開発期間ということもあり、チェーンの作成とプレーのデモを行いました。
 
+## Demo Video
+(Demo撮影後にリンクを貼ります)
+![サービス紹介動画]()
+   
 ## Game Rule
 Chain Justiceは、プレイヤー同士がチーム（国）として協力し、他のチーム（国）と競い合うゲームです。   
 ユーザーはまず、国に所属するか建国するかを選ぶことができます。  
