@@ -40,7 +40,7 @@ func (k msgServer) PrepareStart(goCtx context.Context, msg *types.MsgPrepareStar
 	var prepare = types.Prepare{
 		Index:             msg.Creator,
 		Address:           msg.Creator,
-		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight()+10, 10)),
+		RequireBlockHeigt: fmt.Sprint(strconv.FormatInt(ctx.BlockHeight()+15, 10)),
 	}
 
 	k.SetPrepare(ctx, prepare)
